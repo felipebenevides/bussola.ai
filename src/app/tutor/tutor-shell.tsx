@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { formatDuration } from "@/lib/utils";
+import { ThemeToggleButton } from "@/components/theme-toggle";
 import type {
   AvailableCourse,
   CoursesResponse,
@@ -87,7 +88,6 @@ export function TutorShell({
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [coursesError, setCoursesError] = useState<string | null>(null);
 
-  // selectedCourseId: null = todos os cursos, número = curso específico
   const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
   const [search, setSearch] = useState("");
 
@@ -108,7 +108,6 @@ export function TutorShell({
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Carrega cursos
   async function refreshCourses() {
     try {
       setCoursesError(null);
@@ -129,7 +128,6 @@ export function TutorShell({
     void refreshCourses();
   }, []);
 
-  // Auto-scroll
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading, onboarding.messages, onboarding.ingestLog]);
@@ -160,7 +158,6 @@ export function TutorShell({
     );
   }, [courses.available, search]);
 
-  // ─── Envio de pergunta ──────────────────────────────────────────
   async function send(message: string) {
     const text = message.trim();
     if (!text || loading) return;
@@ -218,11 +215,9 @@ export function TutorShell({
     setSelectedCourseId(id);
     setMobileSidebarOpen(false);
     setOnboarding((s) => ({ ...s, active: false }));
-    // mantém histórico de mensagens para continuidade visual
     setTimeout(() => inputRef.current?.focus(), 50);
   }
 
-  // ─── Onboarding de indexação ────────────────────────────────────
   function openOnboarding() {
     setMobileSidebarOpen(false);
     setOnboarding({
@@ -379,7 +374,6 @@ export function TutorShell({
     });
   }
 
-  // ─── Render ─────────────────────────────────────────────────────
   const conversationTitle = onboarding.active
     ? "Indexar novo curso"
     : selectedCourse
@@ -396,16 +390,29 @@ export function TutorShell({
         )} trechos timestampados`;
 
   return (
-    <div className="flex h-[100dvh] w-full overflow-hidden bg-[#0b141a] text-[#e9edef]">
-      {/* ─── Sidebar ─── */}
+    <div
+      className="flex h-[100dvh] w-full overflow-hidden"
+      style={{
+        backgroundColor: "var(--wa-app)",
+        color: "var(--wa-text-primary)",
+      }}
+    >
       <aside
-        className={`absolute inset-y-0 left-0 z-30 flex w-[340px] max-w-[85vw] flex-col border-r border-[#222d34] bg-[#111b21] transition-transform sm:relative sm:translate-x-0 ${
+        className={`absolute inset-y-0 left-0 z-30 flex w-[340px] max-w-[85vw] flex-col border-r transition-transform sm:relative sm:translate-x-0 ${
           mobileSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
         }`}
+        style={{
+          backgroundColor: "var(--wa-sidebar)",
+          borderColor: "var(--wa-border)",
+        }}
       >
-        <SidebarHeader firstName={firstName} isLoggedIn={isLoggedIn} onClose={() => setMobileSidebarOpen(false)} />
+        <SidebarHeader
+          firstName={firstName}
+          isLoggedIn={isLoggedIn}
+          onClose={() => setMobileSidebarOpen(false)}
+        />
 
-        <div className="border-b border-[#222d34] bg-[#111b21] px-3 py-3">
+        <div className="border-b px-3 py-3" style={{ borderColor: "var(--wa-border)" }}>
           <button
             type="button"
             onClick={openOnboarding}
@@ -426,21 +433,24 @@ export function TutorShell({
           </button>
         </div>
 
-        <div className="border-b border-[#222d34] px-3 py-2">
-          <div className="flex items-center gap-2 rounded-lg bg-[#202c33] px-3 py-2 text-sm">
-            <Search className="h-4 w-4 text-[#8696a0]" />
+        <div className="border-b px-3 py-2" style={{ borderColor: "var(--wa-border)" }}>
+          <div
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm"
+            style={{ backgroundColor: "var(--wa-active)" }}
+          >
+            <Search className="h-4 w-4" style={{ color: "var(--wa-text-muted)" }} />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Buscar curso ou matéria"
-              className="flex-1 bg-transparent text-[#e9edef] placeholder:text-[#8696a0] focus:outline-none"
+              className="flex-1 bg-transparent focus:outline-none"
+              style={{ color: "var(--wa-text-primary)" }}
             />
           </div>
         </div>
 
         <nav className="flex-1 overflow-y-auto pb-4">
-          {/* Todos os cursos */}
           <CourseRow
             active={selectedCourseId === null && !onboarding.active}
             avatar={<Library className="h-5 w-5 text-white/90" />}
@@ -456,7 +466,7 @@ export function TutorShell({
           />
 
           {coursesError && (
-            <div className="px-4 py-3 text-xs text-red-300">
+            <div className="px-4 py-3 text-xs text-red-500 dark:text-red-300">
               Erro ao listar cursos: {coursesError}
             </div>
           )}
@@ -478,11 +488,13 @@ export function TutorShell({
               }
               badge={
                 c.chunkCount > 0 ? (
-                  <span className="rounded-full bg-emerald-900/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
+                  <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
                     {c.chunkCount}
                   </span>
                 ) : (
-                  <span className="text-[10px] text-[#8696a0]">meta</span>
+                  <span className="text-[10px]" style={{ color: "var(--wa-text-muted)" }}>
+                    meta
+                  </span>
                 )
               }
               onClick={() => selectCourse(c.id)}
@@ -500,7 +512,7 @@ export function TutorShell({
             filteredIndexed.length === 0 &&
             filteredAvailable.length === 0 &&
             search.length > 0 && (
-              <div className="px-5 py-6 text-xs text-[#8696a0]">
+              <div className="px-5 py-6 text-xs" style={{ color: "var(--wa-text-muted)" }}>
                 Nada encontrado pra &quot;{search}&quot;.
               </div>
             )}
@@ -509,7 +521,6 @@ export function TutorShell({
         <SidebarFooter isLoggedIn={isLoggedIn} />
       </aside>
 
-      {/* Overlay mobile */}
       {mobileSidebarOpen && (
         <button
           aria-label="Fechar sidebar"
@@ -518,7 +529,6 @@ export function TutorShell({
         />
       )}
 
-      {/* ─── Chat Pane ─── */}
       <main className="relative flex flex-1 flex-col">
         <ChatHeader
           title={conversationTitle}
@@ -532,9 +542,9 @@ export function TutorShell({
         <div
           className="relative flex-1 overflow-y-auto px-3 py-4 sm:px-8"
           style={{
-            backgroundColor: "#0b141a",
+            backgroundColor: "var(--wa-chat)",
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, var(--wa-wallpaper-dot) 1px, transparent 0)",
             backgroundSize: "24px 24px",
           }}
         >
@@ -548,8 +558,7 @@ export function TutorShell({
               />
             )}
 
-            {!onboarding.active &&
-              messages.map((m) => <MessageBubble key={m.id} message={m} />)}
+            {!onboarding.active && messages.map((m) => <MessageBubble key={m.id} message={m} />)}
 
             {onboarding.active && (
               <OnboardingThread
@@ -562,14 +571,17 @@ export function TutorShell({
             )}
 
             {loading && !onboarding.active && (
-              <div className="flex items-center gap-2 px-2 text-xs text-[#8696a0]">
+              <div
+                className="flex items-center gap-2 px-2 text-xs"
+                style={{ color: "var(--wa-text-muted)" }}
+              >
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 Bússola está digitando…
               </div>
             )}
 
             {error && (
-              <div className="rounded-md border border-red-900/60 bg-red-950/60 p-3 text-sm text-red-200">
+              <div className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/60 dark:text-red-200">
                 {error}
               </div>
             )}
@@ -613,17 +625,34 @@ function SidebarHeader({
   onClose: () => void;
 }) {
   return (
-    <header className="flex items-center justify-between border-b border-[#222d34] bg-[#202c33] px-4 py-3">
+    <header
+      className="flex items-center justify-between border-b px-4 py-3"
+      style={{
+        backgroundColor: "var(--wa-header)",
+        borderColor: "var(--wa-header-border)",
+      }}
+    >
       <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
         <div className="relative">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 text-lg shadow-md">
             🧭
           </div>
-          <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#202c33] bg-emerald-500" />
+          <span
+            className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 bg-emerald-500"
+            style={{ borderColor: "var(--wa-header)" }}
+          />
         </div>
         <div>
-          <div className="text-sm font-semibold leading-tight text-[#e9edef]">Bússola</div>
-          <div className="text-[11px] leading-tight text-[#8696a0]">
+          <div
+            className="text-sm font-semibold leading-tight"
+            style={{ color: "var(--wa-text-primary)" }}
+          >
+            Bússola
+          </div>
+          <div
+            className="text-[11px] leading-tight"
+            style={{ color: "var(--wa-text-muted)" }}
+          >
             {isLoggedIn
               ? firstName
                 ? `online · ${firstName}`
@@ -632,38 +661,57 @@ function SidebarHeader({
           </div>
         </div>
       </Link>
-      <button
-        type="button"
-        onClick={onClose}
-        className="rounded-full p-1.5 text-[#aebac1] transition-colors hover:bg-white/5 sm:hidden"
-        aria-label="Fechar"
-      >
-        <X className="h-5 w-5" />
-      </button>
+      <div className="flex items-center gap-1">
+        <ThemeToggleButton variant="inline" />
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-full p-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5 sm:hidden"
+          aria-label="Fechar"
+          style={{ color: "var(--wa-text-secondary)" }}
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
     </header>
   );
 }
 
 function SidebarFooter({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <div className="space-y-2 border-t border-[#222d34] bg-[#111b21] px-3 py-3 text-xs">
+    <div
+      className="space-y-2 border-t px-3 py-3 text-xs"
+      style={{
+        backgroundColor: "var(--wa-sidebar)",
+        borderColor: "var(--wa-border)",
+      }}
+    >
       <Link
         href="/conectar-whatsapp"
-        className="flex items-center gap-3 rounded-lg border border-emerald-900/40 bg-emerald-950/30 px-3 py-2 transition-colors hover:bg-emerald-950/60"
+        className="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50/80 px-3 py-2 transition-colors hover:bg-emerald-100/80 dark:border-emerald-900/40 dark:bg-emerald-950/30 dark:hover:bg-emerald-950/60"
       >
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-base">
           💬
         </span>
         <span className="flex-1">
-          <span className="block font-medium text-emerald-200">Conectar WhatsApp</span>
-          <span className="block text-[10px] text-[#8696a0]">Tutor no zap via Evolution API</span>
+          <span className="block font-medium text-emerald-700 dark:text-emerald-200">
+            Conectar WhatsApp
+          </span>
+          <span className="block text-[10px]" style={{ color: "var(--wa-text-muted)" }}>
+            Tutor no zap via Evolution API
+          </span>
         </span>
       </Link>
 
       {!isLoggedIn && (
         <Link
           href="/login"
-          className="block rounded-lg border border-[#2a3942] bg-[#202c33] px-3 py-2 text-center text-[#aebac1] transition-colors hover:bg-[#2a3942]"
+          className="block rounded-lg border px-3 py-2 text-center transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+          style={{
+            backgroundColor: "var(--wa-active)",
+            borderColor: "var(--wa-border)",
+            color: "var(--wa-text-secondary)",
+          }}
         >
           Entrar com CEFIS
         </Link>
@@ -671,7 +719,12 @@ function SidebarFooter({ isLoggedIn }: { isLoggedIn: boolean }) {
       {isLoggedIn && (
         <Link
           href="/plano"
-          className="block rounded-lg border border-[#2a3942] bg-[#202c33] px-3 py-2 text-center text-[#aebac1] transition-colors hover:bg-[#2a3942]"
+          className="block rounded-lg border px-3 py-2 text-center transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+          style={{
+            backgroundColor: "var(--wa-active)",
+            borderColor: "var(--wa-border)",
+            color: "var(--wa-text-secondary)",
+          }}
         >
           Meu plano de estudos
         </Link>
@@ -682,7 +735,10 @@ function SidebarFooter({ isLoggedIn }: { isLoggedIn: boolean }) {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-5 pb-1 pt-4 text-[10px] font-bold uppercase tracking-wider text-[#8696a0]">
+    <div
+      className="px-5 pb-1 pt-4 text-[10px] font-bold uppercase tracking-wider"
+      style={{ color: "var(--wa-text-muted)" }}
+    >
       {children}
     </div>
   );
@@ -709,9 +765,16 @@ function CourseRow({
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors ${
-        active ? "bg-[#2a3942]" : "hover:bg-[#202c33]"
-      }`}
+      className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors"
+      style={{
+        backgroundColor: active ? "var(--wa-active)" : "transparent",
+      }}
+      onMouseEnter={(e) => {
+        if (!active) e.currentTarget.style.backgroundColor = "var(--wa-hover)";
+      }}
+      onMouseLeave={(e) => {
+        if (!active) e.currentTarget.style.backgroundColor = "transparent";
+      }}
     >
       <span
         className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full shadow-inner ${avatarBg}`}
@@ -720,10 +783,17 @@ function CourseRow({
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-center justify-between gap-2">
-          <span className="truncate text-sm font-medium text-[#e9edef]">{title}</span>
+          <span
+            className="truncate text-sm font-medium"
+            style={{ color: "var(--wa-text-primary)" }}
+          >
+            {title}
+          </span>
           {badge}
         </span>
-        <span className="block truncate text-xs text-[#8696a0]">{subtitle}</span>
+        <span className="block truncate text-xs" style={{ color: "var(--wa-text-muted)" }}>
+          {subtitle}
+        </span>
       </span>
     </button>
   );
@@ -738,21 +808,30 @@ function AvailableCourseRow({
 }) {
   return (
     <div className="flex items-center gap-3 px-4 py-2.5 opacity-80 transition-opacity hover:opacity-100">
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-dashed border-[#3b4a52] bg-[#1a242a]">
-        <Hash className="h-4 w-4 text-[#8696a0]" />
+      <span
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-dashed"
+        style={{
+          borderColor: "var(--wa-border)",
+          backgroundColor: "var(--wa-hover)",
+        }}
+      >
+        <Hash className="h-4 w-4" style={{ color: "var(--wa-text-muted)" }} />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-medium text-[#aebac1]">
+        <span
+          className="block truncate text-sm font-medium"
+          style={{ color: "var(--wa-text-secondary)" }}
+        >
           {course.title}
         </span>
-        <span className="block truncate text-xs text-[#8696a0]">
+        <span className="block truncate text-xs" style={{ color: "var(--wa-text-muted)" }}>
           #{course.id} · {course.lessonCount} aulas · não indexado
         </span>
       </span>
       <button
         type="button"
         onClick={onIngest}
-        className="shrink-0 rounded-full bg-[#202c33] p-1.5 text-emerald-400 transition-colors hover:bg-emerald-950/40"
+        className="shrink-0 rounded-full bg-emerald-50 p-1.5 text-emerald-600 transition-colors hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-400 dark:hover:bg-emerald-950/60"
         aria-label={`Indexar ${course.title}`}
         title="Indexar este curso"
       >
@@ -785,12 +864,19 @@ function ChatHeader({
         : "from-emerald-400 to-emerald-700";
 
   return (
-    <header className="flex items-center gap-3 border-b border-[#222d34] bg-[#202c33] px-3 py-2.5 sm:px-6">
+    <header
+      className="flex items-center gap-3 border-b px-3 py-2.5 sm:px-6"
+      style={{
+        backgroundColor: "var(--wa-header)",
+        borderColor: "var(--wa-header-border)",
+      }}
+    >
       <button
         type="button"
         onClick={onMenu}
-        className="rounded-full p-1.5 text-[#aebac1] transition-colors hover:bg-white/5 sm:hidden"
+        className="rounded-full p-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5 sm:hidden"
         aria-label="Abrir lista de cursos"
+        style={{ color: "var(--wa-text-secondary)" }}
       >
         <Menu className="h-5 w-5" />
       </button>
@@ -802,24 +888,29 @@ function ChatHeader({
       </div>
 
       <div className="min-w-0 flex-1">
-        <div className="truncate text-sm font-semibold text-[#e9edef]">{title}</div>
-        <div className="truncate text-[11px] text-[#8696a0]">{subtitle}</div>
+        <div className="truncate text-sm font-semibold" style={{ color: "var(--wa-text-primary)" }}>
+          {title}
+        </div>
+        <div className="truncate text-[11px]" style={{ color: "var(--wa-text-muted)" }}>
+          {subtitle}
+        </div>
       </div>
 
       {isOnboarding ? (
         <button
           type="button"
           onClick={onCloseOnboarding}
-          className="rounded-full p-1.5 text-[#aebac1] transition-colors hover:bg-white/5"
+          className="rounded-full p-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
           aria-label="Fechar onboarding"
           title="Voltar pra conversa"
+          style={{ color: "var(--wa-text-secondary)" }}
         >
           <ArrowLeft className="h-5 w-5" />
         </button>
       ) : (
         <Link
           href="/conectar-whatsapp"
-          className="hidden items-center gap-2 rounded-full bg-emerald-600/15 px-3 py-1.5 text-xs font-medium text-emerald-300 transition-colors hover:bg-emerald-600/25 sm:inline-flex"
+          className="hidden items-center gap-2 rounded-full bg-emerald-100/80 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-200/80 dark:bg-emerald-600/15 dark:text-emerald-300 dark:hover:bg-emerald-600/25 sm:inline-flex"
         >
           <span>💬</span>
           <span>Receber no WhatsApp</span>
@@ -846,15 +937,20 @@ function EmptyState({
         <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400/20 to-emerald-700/20 text-3xl shadow-inner">
           🧭
         </div>
-        <h2 className="text-xl font-semibold text-[#e9edef]">
+        <h2 className="text-xl font-semibold" style={{ color: "var(--wa-text-primary)" }}>
           {firstName ? `E aí, ${firstName}!` : "E aí!"}{" "}
-          <span className="text-[#8696a0]">Sobre o que vamos conversar?</span>
+          <span style={{ color: "var(--wa-text-muted)" }}>
+            Sobre o que vamos conversar?
+          </span>
         </h2>
-        <p className="text-sm text-[#aebac1]">
+        <p className="text-sm" style={{ color: "var(--wa-text-secondary)" }}>
           {selectedCourse ? (
             <>
-              Foco em <strong className="text-emerald-300">{selectedCourse.title}</strong>.
-              Pergunte qualquer coisa do conteúdo — vou abrir os trechos no segundo exato.
+              Foco em{" "}
+              <strong className="text-emerald-700 dark:text-emerald-300">
+                {selectedCourse.title}
+              </strong>
+              . Pergunte qualquer coisa do conteúdo — vou abrir os trechos no segundo exato.
             </>
           ) : (
             <>
@@ -871,9 +967,17 @@ function EmptyState({
             key={s}
             type="button"
             onClick={() => onSuggestion(s)}
-            className="group rounded-xl border border-[#222d34] bg-[#111b21]/80 px-4 py-3 text-sm text-[#e9edef] transition-all hover:-translate-y-0.5 hover:border-emerald-700/60 hover:bg-[#111b21]"
+            className="group rounded-xl border px-4 py-3 text-sm transition-all hover:-translate-y-0.5 hover:border-emerald-500 dark:hover:border-emerald-700/60"
+            style={{
+              backgroundColor: "var(--wa-bubble-received)",
+              borderColor: "var(--wa-border)",
+              color: "var(--wa-text-primary)",
+            }}
           >
-            <span className="block text-[10px] uppercase tracking-wider text-[#8696a0] transition-colors group-hover:text-emerald-400">
+            <span
+              className="block text-[10px] uppercase tracking-wider transition-colors group-hover:text-emerald-500"
+              style={{ color: "var(--wa-text-muted)" }}
+            >
               Sugestão
             </span>
             <span>{s}</span>
@@ -881,16 +985,24 @@ function EmptyState({
         ))}
       </div>
 
-      <div className="rounded-2xl border border-emerald-900/40 bg-emerald-950/20 p-4 text-left text-xs text-[#aebac1]">
-        <div className="mb-1 flex items-center gap-2 text-emerald-300">
+      <div
+        className="rounded-2xl border p-4 text-left text-xs"
+        style={{
+          backgroundColor: "var(--wa-citation-bg)",
+          borderColor: "var(--wa-citation-border)",
+          color: "var(--wa-text-secondary)",
+        }}
+      >
+        <div className="mb-1 flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
           <span>💬</span>
           <strong>Atalho WhatsApp</strong>
         </div>
         <p>
-          {isLoggedIn
-            ? "Vai em "
-            : "Faça login na CEFIS e depois vá em "}
-          <Link href="/conectar-whatsapp" className="font-semibold text-emerald-300 underline-offset-4 hover:underline">
+          {isLoggedIn ? "Vai em " : "Faça login na CEFIS e depois vá em "}
+          <Link
+            href="/conectar-whatsapp"
+            className="font-semibold text-emerald-700 underline-offset-4 hover:underline dark:text-emerald-300"
+          >
             Conectar WhatsApp
           </Link>{" "}
           pra mandar essas mesmas perguntas pelo zap — o roteamento passa pelo Evolution API e
@@ -905,9 +1017,18 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   if (message.role === "user") {
     return (
       <div className="flex justify-end">
-        <div className="relative max-w-[85%] rounded-2xl rounded-br-md bg-[#005c4b] px-3 py-2 text-sm leading-relaxed text-[#e9edef] shadow-sm">
+        <div
+          className="relative max-w-[85%] rounded-2xl rounded-br-md px-3 py-2 text-sm leading-relaxed shadow-sm"
+          style={{
+            backgroundColor: "var(--wa-bubble-sent)",
+            color: "var(--wa-bubble-sent-text)",
+          }}
+        >
           <div className="whitespace-pre-wrap">{message.content}</div>
-          <div className="mt-1 flex items-center justify-end gap-1 text-[10px] text-[#a3c2bd]">
+          <div
+            className="mt-1 flex items-center justify-end gap-1 text-[10px]"
+            style={{ color: "var(--wa-bubble-sent-time)" }}
+          >
             <span>{message.time}</span>
             <CheckCheck className="h-3 w-3" />
           </div>
@@ -919,16 +1040,25 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex">
-        <div className="max-w-[92%] rounded-2xl rounded-bl-md bg-[#202c33] px-3.5 py-2.5 text-sm leading-relaxed text-[#e9edef] shadow-sm">
-          <div className="prose prose-invert prose-sm max-w-none prose-p:my-1.5 prose-strong:text-emerald-200">
+        <div
+          className="max-w-[92%] rounded-2xl rounded-bl-md px-3.5 py-2.5 text-sm leading-relaxed shadow-sm"
+          style={{
+            backgroundColor: "var(--wa-bubble-received)",
+            color: "var(--wa-bubble-received-text)",
+          }}
+        >
+          <div className="prose prose-sm max-w-none dark:prose-invert prose-p:my-1.5 prose-strong:text-emerald-700 dark:prose-strong:text-emerald-300">
             <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
           {message.groundedInCefis === false && (
-            <p className="mt-1.5 text-[11px] italic text-[#8696a0]">
+            <p className="mt-1.5 text-[11px] italic" style={{ color: "var(--wa-text-muted)" }}>
               (Resposta sem base nas transcrições — conhecimento geral)
             </p>
           )}
-          <div className="mt-1 flex items-center justify-end gap-1 text-[10px] text-[#8696a0]">
+          <div
+            className="mt-1 flex items-center justify-end gap-1 text-[10px]"
+            style={{ color: "var(--wa-bubble-received-time)" }}
+          >
             <span>{message.time}</span>
             <Check className="h-3 w-3" />
           </div>
@@ -937,7 +1067,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 
       {message.citations && message.citations.length > 0 && (
         <div className="ml-2 space-y-1.5 sm:ml-4">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
             📺 {message.citations.length} aula
             {message.citations.length > 1 ? "s" : ""} CEFIS embasando
           </p>
@@ -951,7 +1081,10 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 
       {message.suggestedCourses && message.suggestedCourses.length > 0 && (
         <div className="ml-2 space-y-1.5 sm:ml-4">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-[#8696a0]">
+          <p
+            className="text-[10px] font-bold uppercase tracking-wider"
+            style={{ color: "var(--wa-text-muted)" }}
+          >
             Cursos relacionados
           </p>
           <div className="grid gap-1.5 sm:grid-cols-2">
@@ -961,9 +1094,14 @@ function MessageBubble({ message }: { message: ChatMessage }) {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg border border-[#2a3942] bg-[#1a242a] px-3 py-2 text-xs text-[#aebac1] transition-colors hover:bg-[#202c33]"
+                className="flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                style={{
+                  backgroundColor: "var(--wa-bubble-received)",
+                  borderColor: "var(--wa-border)",
+                  color: "var(--wa-text-secondary)",
+                }}
               >
-                <BookOpen className="h-3.5 w-3.5 text-emerald-400" />
+                <BookOpen className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span className="truncate">{s.title}</span>
               </a>
             ))}
@@ -980,20 +1118,30 @@ function CitationCardDark({ citation }: { citation: Citation }) {
       href={citation.deepLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-3 rounded-lg border border-emerald-900/60 bg-gradient-to-br from-emerald-950/60 to-[#0f1e1a] px-3 py-2.5 transition-all hover:border-emerald-600/80 hover:from-emerald-900/60"
+      className="group flex items-center gap-3 rounded-lg border px-3 py-2.5 transition-all hover:scale-[1.01]"
+      style={{
+        backgroundColor: "var(--wa-citation-bg)",
+        borderColor: "var(--wa-citation-border)",
+      }}
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-emerald-600 text-white shadow-sm transition-colors group-hover:bg-emerald-500">
         ▶
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-xs font-medium text-[#e9edef]">
+        <span
+          className="block truncate text-xs font-medium"
+          style={{ color: "var(--wa-text-primary)" }}
+        >
           {citation.lessonTitle}
         </span>
-        <span className="block truncate text-[10px] text-[#8696a0]">
+        <span className="block truncate text-[10px]" style={{ color: "var(--wa-text-muted)" }}>
           {citation.courseTitle} · relevância {Math.round(citation.similarity * 100)}%
         </span>
       </span>
-      <span className="shrink-0 rounded-md bg-[#202c33] px-2 py-1 font-mono text-[10px] font-semibold text-emerald-300">
+      <span
+        className="shrink-0 rounded-md px-2 py-1 font-mono text-[10px] font-semibold text-emerald-700 dark:text-emerald-300"
+        style={{ backgroundColor: "var(--wa-active)" }}
+      >
         {formatDuration(citation.startSeconds)}
       </span>
     </a>
@@ -1019,32 +1167,61 @@ function OnboardingThread({
         if (m.role === "user") {
           return (
             <div key={i} className="flex justify-end">
-              <div className="max-w-[85%] rounded-2xl rounded-br-md bg-[#005c4b] px-3 py-2 text-sm text-[#e9edef] shadow-sm">
+              <div
+                className="max-w-[85%] rounded-2xl rounded-br-md px-3 py-2 text-sm shadow-sm"
+                style={{
+                  backgroundColor: "var(--wa-bubble-sent)",
+                  color: "var(--wa-bubble-sent-text)",
+                }}
+              >
                 <div className="whitespace-pre-wrap">{m.content}</div>
-                <div className="mt-1 text-right text-[10px] text-[#a3c2bd]">{m.time}</div>
+                <div
+                  className="mt-1 text-right text-[10px]"
+                  style={{ color: "var(--wa-bubble-sent-time)" }}
+                >
+                  {m.time}
+                </div>
               </div>
             </div>
           );
         }
         return (
           <div key={i} className="flex">
-            <div className="max-w-[92%] rounded-2xl rounded-bl-md bg-[#202c33] px-3.5 py-2.5 text-sm leading-relaxed text-[#e9edef] shadow-sm">
-              <div className="prose prose-invert prose-sm max-w-none prose-p:my-1.5 prose-strong:text-violet-200">
+            <div
+              className="max-w-[92%] rounded-2xl rounded-bl-md px-3.5 py-2.5 text-sm leading-relaxed shadow-sm"
+              style={{
+                backgroundColor: "var(--wa-bubble-received)",
+                color: "var(--wa-bubble-received-text)",
+              }}
+            >
+              <div className="prose prose-sm max-w-none dark:prose-invert prose-p:my-1.5 prose-strong:text-violet-700 dark:prose-strong:text-violet-200">
                 <ReactMarkdown>{m.content}</ReactMarkdown>
               </div>
-              <div className="mt-1 text-right text-[10px] text-[#8696a0]">{m.time}</div>
+              <div
+                className="mt-1 text-right text-[10px]"
+                style={{ color: "var(--wa-bubble-received-time)" }}
+              >
+                {m.time}
+              </div>
             </div>
           </div>
         );
       })}
 
       {log.length > 0 && (
-        <div className="ml-2 max-w-[92%] rounded-xl border border-violet-900/50 bg-[#1a1428]/80 px-3 py-2.5 font-mono text-[11px] leading-relaxed text-violet-200 shadow-sm sm:ml-4">
+        <div
+          className="ml-2 max-w-[92%] rounded-xl border px-3 py-2.5 font-mono text-[11px] leading-relaxed shadow-sm sm:ml-4"
+          style={{
+            backgroundColor: "var(--wa-onboarding-bg)",
+            borderColor: "var(--wa-onboarding-border)",
+            color: "var(--wa-onboarding-text)",
+          }}
+        >
           {log.map((line, i) => (
             <div key={i}>{line}</div>
           ))}
           {ingesting && (
-            <div className="mt-1 flex items-center gap-2 text-violet-300">
+            <div className="mt-1 flex items-center gap-2">
               <Loader2 className="h-3 w-3 animate-spin" />
               <span>processando…</span>
             </div>
@@ -1080,12 +1257,20 @@ const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function Compose
   { input, onChange, onSubmit, disabled, placeholder },
   ref
 ) {
+  const isDisabled = disabled || input.trim().length === 0;
   return (
     <form
       onSubmit={onSubmit}
-      className="flex items-end gap-2 border-t border-[#222d34] bg-[#202c33] px-3 py-3 sm:px-6"
+      className="flex items-end gap-2 border-t px-3 py-3 sm:px-6"
+      style={{
+        backgroundColor: "var(--wa-composer)",
+        borderColor: "var(--wa-header-border)",
+      }}
     >
-      <div className="flex flex-1 items-end gap-2 rounded-2xl bg-[#2a3942] px-3 py-1.5">
+      <div
+        className="flex flex-1 items-end gap-2 rounded-2xl px-3 py-1.5"
+        style={{ backgroundColor: "var(--wa-input-bg)" }}
+      >
         <textarea
           ref={ref}
           rows={1}
@@ -1099,13 +1284,19 @@ const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function Compose
               onSubmit(e);
             }
           }}
-          className="max-h-32 flex-1 resize-none bg-transparent py-2 text-sm leading-snug text-[#e9edef] placeholder:text-[#8696a0] focus:outline-none disabled:opacity-50"
+          className="max-h-32 flex-1 resize-none bg-transparent py-2 text-sm leading-snug focus:outline-none disabled:opacity-50"
+          style={{ color: "var(--wa-text-primary)" }}
         />
       </div>
       <button
         type="submit"
-        disabled={disabled || input.trim().length === 0}
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-md transition-all hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-[#2a3942] disabled:text-[#8696a0]"
+        disabled={isDisabled}
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-md transition-all hover:bg-emerald-500 disabled:cursor-not-allowed"
+        style={
+          isDisabled
+            ? { backgroundColor: "var(--wa-active)", color: "var(--wa-text-muted)" }
+            : { backgroundColor: "#059669" }
+        }
         aria-label="Enviar"
       >
         <Send className="h-4 w-4 translate-x-[1px]" />
