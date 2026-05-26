@@ -37,6 +37,11 @@ yarn-error.log*
 # claude
 .claude/
 
+# MCP — connection strings e project refs nunca vão para o repo
+.mcp.json
+.mcp.local.json
+mcp.json
+
 # data (ingested transcriptions, audios gerados)
 /data/
 
