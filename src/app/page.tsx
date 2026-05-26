@@ -49,6 +49,10 @@ export default function Home() {
 
       <p className="max-w-md text-xs text-zinc-500">
         Hackathon CEFIS · 26/05/2026 · Projeto solo.{" "}
+        <Link href="/docs" className="underline">
+          Docs
+        </Link>
+        {" · "}
         <Link href="/admin" className="underline">
           Admin
         </Link>
