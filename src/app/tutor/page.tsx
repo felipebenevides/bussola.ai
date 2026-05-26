@@ -1,4 +1,5 @@
 import { getCefisClient } from "@/lib/cefis-server";
+import { getSettings } from "@/lib/settings";
 import { TutorShell } from "./tutor-shell";
 
 export const dynamic = "force-dynamic";
@@ -21,5 +22,13 @@ export default async function TutorPage() {
     // ignora — UI funciona sem login
   }
 
-  return <TutorShell isLoggedIn={isLoggedIn} firstName={firstName} />;
+  let botPhone: string | null = null;
+  try {
+    const settings = await getSettings();
+    botPhone = settings.evolution_bot_phone ?? null;
+  } catch {
+    // sem settings, sem telefone — modal mostra aviso
+  }
+
+  return <TutorShell isLoggedIn={isLoggedIn} firstName={firstName} botPhone={botPhone} />;
 }

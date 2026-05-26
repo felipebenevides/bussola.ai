@@ -113,8 +113,8 @@ const PROJECTS = [
     period: "2026 · Hackathon CEFIS",
     role: "Solo · Product + Engineering",
     description:
-      "Tutora de IA que indexa o catálogo CEFIS por transcrição e responde abrindo o vídeo da aula no segundo exato (deep-link). Onboarding conversacional, plano de estudos gerado e canal WhatsApp via Evolution API.",
-    stack: ["Next.js 16", "Supabase + pgvector", "OpenAI", "OpenRouter", "Evolution API", "Bun"],
+      "Tutora de IA que indexa o catálogo CEFIS por transcrição e responde abrindo o vídeo da aula no segundo exato (deep-link). Onboarding conversacional, plano de estudos gerado e atendimento por WhatsApp.",
+    stack: ["Next.js 16", "Supabase + pgvector", "OpenAI", "OpenRouter", "WhatsApp", "Bun"],
     href: "/",
     cta: "Abrir Bússola",
     clients: undefined as { name: string; url: string }[] | undefined,

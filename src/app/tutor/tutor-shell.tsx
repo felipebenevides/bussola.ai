@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { formatDuration } from "@/lib/utils";
 import { ThemeToggleButton } from "@/components/theme-toggle";
+import { WhatsappModal } from "@/components/whatsapp-modal";
 import type {
   AvailableCourse,
   CoursesResponse,
@@ -80,10 +81,13 @@ function makeId() {
 export function TutorShell({
   isLoggedIn,
   firstName,
+  botPhone,
 }: {
   isLoggedIn: boolean;
   firstName: string | null;
+  botPhone: string | null;
 }) {
+  const [waModalOpen, setWaModalOpen] = useState(false);
   const [courses, setCourses] = useState<CoursesResponse>({ indexed: [], available: [] });
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [coursesError, setCoursesError] = useState<string | null>(null);
@@ -518,7 +522,10 @@ export function TutorShell({
             )}
         </nav>
 
-        <SidebarFooter isLoggedIn={isLoggedIn} />
+        <SidebarFooter
+          isLoggedIn={isLoggedIn}
+          onOpenWhatsapp={() => setWaModalOpen(true)}
+        />
       </aside>
 
       {mobileSidebarOpen && (
@@ -552,9 +559,9 @@ export function TutorShell({
             {!onboarding.active && messages.length === 0 && !loading && (
               <EmptyState
                 firstName={firstName}
-                isLoggedIn={isLoggedIn}
                 selectedCourse={selectedCourse}
                 onSuggestion={(s) => send(s)}
+                onOpenWhatsapp={() => setWaModalOpen(true)}
               />
             )}
 
@@ -607,6 +614,12 @@ export function TutorShell({
           }
         />
       </main>
+
+      <WhatsappModal
+        open={waModalOpen}
+        onClose={() => setWaModalOpen(false)}
+        botPhone={botPhone}
+      />
     </div>
   );
 }
@@ -677,7 +690,13 @@ function SidebarHeader({
   );
 }
 
-function SidebarFooter({ isLoggedIn }: { isLoggedIn: boolean }) {
+function SidebarFooter({
+  isLoggedIn,
+  onOpenWhatsapp,
+}: {
+  isLoggedIn: boolean;
+  onOpenWhatsapp: () => void;
+}) {
   return (
     <div
       className="space-y-2 border-t px-3 py-3 text-xs"
@@ -686,22 +705,23 @@ function SidebarFooter({ isLoggedIn }: { isLoggedIn: boolean }) {
         borderColor: "var(--wa-border)",
       }}
     >
-      <Link
-        href="/conectar-whatsapp"
-        className="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50/80 px-3 py-2 transition-colors hover:bg-emerald-100/80 dark:border-emerald-900/40 dark:bg-emerald-950/30 dark:hover:bg-emerald-950/60"
+      <button
+        type="button"
+        onClick={onOpenWhatsapp}
+        className="flex w-full items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-left transition-colors hover:bg-emerald-100/80 dark:border-emerald-900/40 dark:bg-emerald-950/30 dark:hover:bg-emerald-950/60"
       >
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-base">
           💬
         </span>
         <span className="flex-1">
           <span className="block font-medium text-emerald-700 dark:text-emerald-200">
-            Conectar WhatsApp
+            Receber no WhatsApp
           </span>
           <span className="block text-[10px]" style={{ color: "var(--wa-text-muted)" }}>
-            Tutor no zap via Evolution API
+            Mande dúvidas direto pelo zap
           </span>
         </span>
-      </Link>
+      </button>
 
       {!isLoggedIn && (
         <Link
@@ -922,14 +942,14 @@ function ChatHeader({
 
 function EmptyState({
   firstName,
-  isLoggedIn,
   selectedCourse,
   onSuggestion,
+  onOpenWhatsapp,
 }: {
   firstName: string | null;
-  isLoggedIn: boolean;
   selectedCourse: IndexedCourse | null;
   onSuggestion: (s: string) => void;
+  onOpenWhatsapp: () => void;
 }) {
   return (
     <div className="mx-auto mt-8 max-w-2xl space-y-6 text-center">
@@ -985,30 +1005,30 @@ function EmptyState({
         ))}
       </div>
 
-      <div
-        className="rounded-2xl border p-4 text-left text-xs"
+      <button
+        type="button"
+        onClick={onOpenWhatsapp}
+        className="group w-full rounded-2xl border p-4 text-left text-xs transition-all hover:-translate-y-0.5 hover:shadow-md"
         style={{
           backgroundColor: "var(--wa-citation-bg)",
           borderColor: "var(--wa-citation-border)",
           color: "var(--wa-text-secondary)",
         }}
       >
-        <div className="mb-1 flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
-          <span>💬</span>
-          <strong>Atalho WhatsApp</strong>
+        <div className="mb-1 flex items-center justify-between gap-2 text-emerald-700 dark:text-emerald-300">
+          <span className="flex items-center gap-2">
+            <span>💬</span>
+            <strong>Também no WhatsApp</strong>
+          </span>
+          <span className="text-[10px] font-semibold uppercase tracking-wider opacity-70 transition-opacity group-hover:opacity-100">
+            abrir →
+          </span>
         </div>
         <p>
-          {isLoggedIn ? "Vai em " : "Faça login na CEFIS e depois vá em "}
-          <Link
-            href="/conectar-whatsapp"
-            className="font-semibold text-emerald-700 underline-offset-4 hover:underline dark:text-emerald-300"
-          >
-            Conectar WhatsApp
-          </Link>{" "}
-          pra mandar essas mesmas perguntas pelo zap — o roteamento passa pelo Evolution API e
-          a resposta volta com o link da aula no segundo certo.
+          Prefere mandar pelo zap? Clica aqui pra abrir uma conversa com a Bússola — ela
+          responde com o link da aula no segundo certo, igualzinho aqui na web.
         </p>
-      </div>
+      </button>
     </div>
   );
 }
