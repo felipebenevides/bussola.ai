@@ -1,10 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { embed, genObject } from "@/lib/ai";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getCurrentUserId } from "@/lib/cefis-server";
 import { getSettings } from "@/lib/settings";
 import { loadPlan } from "@/lib/plan";
+
+const ModeSchema = z.object({
+  mode: z.enum(["auto", "course", "custom"]).default("auto"),
+  courseId: z.number().int().positive().optional(),
+  customName: z.string().min(2).max(80).optional(),
+  customGoal: z.string().min(3).max(500).optional(),
+});
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,14 +82,50 @@ ADAPTAÇÃO AO ESTILO DE APRENDIZAGEM (campo "Estilo" no perfil):
 Nunca use APENAS conteúdo IA — sempre tenha pelo menos 2 'cefis_lesson' por semana pra ancorar no
 catálogo real.`;
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   const userId = await getCurrentUserId();
   if (!userId) {
     return NextResponse.json({ error: "Não autenticado. Faça login em /login." }, { status: 401 });
   }
 
+  let modeBody: z.infer<typeof ModeSchema> = { mode: "auto" };
+  try {
+    const json = await req.json().catch(() => ({}));
+    const parsed = ModeSchema.safeParse(json);
+    if (parsed.success) modeBody = parsed.data;
+  } catch {
+    // body opcional — segue com mode=auto
+  }
+
   const supabase = supabaseAdmin();
   const settings = await getSettings();
+
+  // Validação do mode
+  let scopedCourse: { id: number; title: string } | null = null;
+  if (modeBody.mode === "course") {
+    if (!modeBody.courseId) {
+      return NextResponse.json(
+        { error: "courseId é obrigatório quando mode=course" },
+        { status: 400 }
+      );
+    }
+    const { data: course } = await supabase
+      .from("cefis_courses")
+      .select("id, title")
+      .eq("id", modeBody.courseId)
+      .maybeSingle();
+    if (!course) {
+      return NextResponse.json({ error: "Curso CEFIS não encontrado" }, { status: 404 });
+    }
+    scopedCourse = course;
+  }
+
+  if (modeBody.mode === "custom" && (!modeBody.customName || !modeBody.customGoal)) {
+    return NextResponse.json(
+      { error: "customName e customGoal são obrigatórios quando mode=custom" },
+      { status: 400 }
+    );
+  }
 
   // 1. Carregar perfil
   const { data: profile, error: profErr } = await supabase
@@ -108,8 +151,13 @@ export async function POST() {
   const weakArea =
     skills?.find((s) => s.status === "lacuna_critica")?.skill_label ?? "negociacao";
 
-  // 3. RAG sobre o conteúdo CEFIS, query = goal + weakArea
-  const ragQuery = `${profile.goal}. Foco: ${weakArea}. Persona: contador buscando melhorar habilidades práticas.`;
+  // 3. RAG sobre o conteúdo CEFIS — query muda conforme o mode
+  const effectiveGoal =
+    modeBody.mode === "custom" && modeBody.customGoal ? modeBody.customGoal : profile.goal;
+  const ragQuery =
+    modeBody.mode === "course" && scopedCourse
+      ? `${scopedCourse.title}. ${effectiveGoal}.`
+      : `${effectiveGoal}. Foco: ${weakArea}. Persona: contador buscando melhorar habilidades práticas.`;
 
   let chunks: Array<{
     course_id: number;
@@ -130,11 +178,12 @@ export async function POST() {
 
   try {
     const [vec] = await embed(ragQuery);
+    const fetchCount = modeBody.mode === "course" ? 30 : 8;
     const [chunkRes, courseRes] = await Promise.all([
       supabase.rpc("match_lesson_chunks", {
         query_embedding: vec,
-        match_threshold: Math.min(settings.rag_match_threshold, 0.65),
-        match_count: 8,
+        match_threshold: Math.min(settings.rag_match_threshold, 0.55),
+        match_count: fetchCount,
       }),
       supabase.rpc("match_courses", {
         query_embedding: vec,
@@ -144,6 +193,17 @@ export async function POST() {
     ]);
     chunks = (chunkRes.data as typeof chunks | null) ?? [];
     courses = (courseRes.data as typeof courses | null) ?? [];
+
+    // Filtra chunks por curso quando mode=course
+    if (modeBody.mode === "course" && scopedCourse) {
+      const filtered = chunks.filter((c) => c.course_id === scopedCourse!.id);
+      if (filtered.length > 0) {
+        chunks = filtered.slice(0, 8);
+      }
+      // se vazio depois do filtro, deixa os top globais — melhor ter algo do que nada
+      // o prompt vai avisar que o curso era esperado
+      courses = courses.filter((c) => c.course_id === scopedCourse!.id);
+    }
   } catch (err) {
     console.error("[curator] RAG falhou:", err);
   }
@@ -167,12 +227,19 @@ export async function POST() {
         .join("\n")
     : "(nenhum curso correlacionado)";
 
+  const modeNote =
+    modeBody.mode === "course" && scopedCourse
+      ? `\nMODO: Plano focado no curso CEFIS "${scopedCourse.title}" (id=${scopedCourse.id}). Use prioritariamente chunks/aulas DESSE curso.`
+      : modeBody.mode === "custom" && modeBody.customName
+        ? `\nMODO: Plano avulso "${modeBody.customName}" — usuário definiu nome e meta. Não fixe em um curso CEFIS específico; use o catálogo livremente onde fizer sentido.`
+        : "";
+
   const userPrompt = `PERFIL DO ALUNO:
-- Objetivo: ${profile.goal}
+- Objetivo: ${effectiveGoal}
 - Minutos/dia: ${profile.available_minutes_per_day ?? 30}
 - Deadline: ${profile.deadline ?? "sem deadline definida"}
 - Estilo: ${profile.learning_style ?? "mixed"}
-- Área fraca prioritária: ${weakArea}
+- Área fraca prioritária: ${weakArea}${modeNote}
 
 CONTEXTO CEFIS — CHUNKS COM TRANSCRIÇÃO (use chunk_index nos items):
 ${chunkLines}
@@ -198,11 +265,19 @@ Monte o plano de 1 semana agora.`;
   // 6. Desativar planos anteriores + inserir novo
   await supabase.from("study_plan").update({ active: false }).eq("user_id", userId);
 
+  // Title respeita customName quando mode=custom
+  const finalTitle =
+    modeBody.mode === "custom" && modeBody.customName
+      ? modeBody.customName
+      : modeBody.mode === "course" && scopedCourse
+        ? `${scopedCourse.title}: ${plan.title}`
+        : plan.title;
+
   const { data: planRow, error: planErr } = await supabase
     .from("study_plan")
     .insert({
       user_id: userId,
-      title: plan.title,
+      title: finalTitle,
       total_weeks: 1,
       active: true,
       rationale: plan.rationale,
