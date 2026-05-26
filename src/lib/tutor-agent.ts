@@ -60,7 +60,10 @@ export function buildLessonDeepLink(courseId: number, lessonId: number, startSec
   return `https://cefis.com.br/curso/${courseId}/aula/${lessonId}?t=${t}`;
 }
 
-async function ragSearch(query: string): Promise<{
+async function ragSearch(
+  query: string,
+  courseId?: number | null
+): Promise<{
   chunks: RagChunk[];
   courses: CourseMatch[];
 }> {
@@ -69,22 +72,36 @@ async function ragSearch(query: string): Promise<{
 
   const [vec] = await embed(query);
 
+  // Quando o usuário escolheu um curso na sidebar, pegamos mais candidatos do
+  // RPC e filtramos client-side para o course_id alvo. O sample tem ~58 chunks
+  // no total — buscar 60 cobre todos os cursos com folga.
+  const isScoped = typeof courseId === "number" && courseId > 0;
+  const matchCount = isScoped ? 60 : settings.rag_top_k;
+
   const chunkRes = await supabase.rpc("match_lesson_chunks", {
     query_embedding: vec,
-    match_threshold: settings.rag_match_threshold,
-    match_count: settings.rag_top_k,
+    match_threshold: isScoped ? 0.4 : settings.rag_match_threshold,
+    match_count: matchCount,
   });
 
   const courseRes = await supabase.rpc("match_courses", {
     query_embedding: vec,
     match_threshold: 0.5,
-    match_count: 3,
+    match_count: isScoped ? 30 : 3,
   });
 
-  return {
-    chunks: (chunkRes.data as RagChunk[] | null) ?? [],
-    courses: (courseRes.data as CourseMatch[] | null) ?? [],
-  };
+  const allChunks = (chunkRes.data as RagChunk[] | null) ?? [];
+  const allCourses = (courseRes.data as CourseMatch[] | null) ?? [];
+
+  const filteredChunks = isScoped
+    ? allChunks.filter((c) => c.course_id === courseId).slice(0, settings.rag_top_k)
+    : allChunks;
+
+  const filteredCourses = isScoped
+    ? allCourses.filter((c) => c.course_id === courseId).slice(0, 3)
+    : allCourses;
+
+  return { chunks: filteredChunks, courses: filteredCourses };
 }
 
 const AnswerSchema = z.object({
@@ -126,6 +143,8 @@ export async function askTutor(opts: {
   query: string;
   userId?: string | null;
   channel?: "web" | "whatsapp";
+  courseId?: number | null;
+  courseTitle?: string | null;
 }): Promise<TutorAnswer> {
   const query = opts.query.trim();
   if (!query) {
@@ -135,7 +154,7 @@ export async function askTutor(opts: {
   let chunks: RagChunk[] = [];
   let courses: CourseMatch[] = [];
   try {
-    const r = await ragSearch(query);
+    const r = await ragSearch(query, opts.courseId ?? null);
     chunks = r.chunks;
     courses = r.courses;
   } catch {
@@ -162,7 +181,11 @@ export async function askTutor(opts: {
     });
   }
 
-  const userPrompt = `Pergunta do aluno: ${query}
+  const scopeLine = opts.courseTitle
+    ? `O aluno está com foco específico no curso "${opts.courseTitle}". Priorize material desse curso e, se a pergunta fugir totalmente do escopo, avise gentilmente.\n\n`
+    : "";
+
+  const userPrompt = `${scopeLine}Pergunta do aluno: ${query}
 
 ${contextLines.join("\n\n")}`;
 
