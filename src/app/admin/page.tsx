@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 interface SettingsView {
   openai_api_key: string | null;
   openrouter_api_key: string | null;
+  google_api_key: string | null;
   cefis_demo_api_key: string | null;
   chat_model: string;
   embedding_model: string;
@@ -25,6 +26,7 @@ interface SettingsView {
   evolution_webhook_secret: string | null;
   _hasOpenAI: boolean;
   _hasOpenRouter: boolean;
+  _hasGoogle: boolean;
   _hasCefisDemo: boolean;
   _hasEvolutionKey: boolean;
   _hasEvolutionSecret: boolean;
@@ -38,6 +40,7 @@ export default function AdminPage() {
   // Inputs em branco = manter o valor atual; preencher = substituir
   const [openaiInput, setOpenaiInput] = useState("");
   const [openrouterInput, setOpenrouterInput] = useState("");
+  const [googleInput, setGoogleInput] = useState("");
   const [cefisInput, setCefisInput] = useState("");
   const [chatModel, setChatModel] = useState("gpt-4o-mini");
   const [embeddingModel, setEmbeddingModel] = useState("text-embedding-3-small");
@@ -105,6 +108,7 @@ export default function AdminPage() {
     };
     if (openaiInput.trim()) body.openai_api_key = openaiInput.trim();
     if (openrouterInput.trim()) body.openrouter_api_key = openrouterInput.trim();
+    if (googleInput.trim()) body.google_api_key = googleInput.trim();
     if (cefisInput.trim()) body.cefis_demo_api_key = cefisInput.trim();
     if (evoKeyInput.trim()) body.evolution_api_key = evoKeyInput.trim();
     if (evoSecretInput.trim()) body.evolution_webhook_secret = evoSecretInput.trim();
@@ -122,6 +126,7 @@ export default function AdminPage() {
       setMessage("Configurações salvas.");
       setOpenaiInput("");
       setOpenrouterInput("");
+      setGoogleInput("");
       setCefisInput("");
       setEvoKeyInput("");
       setEvoSecretInput("");
@@ -229,7 +234,27 @@ export default function AdminPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="openai">OpenAI API Key (fallback de chat + embeddings/Whisper)</Label>
+              <Label htmlFor="google">Google API Key (embeddings via Gemini)</Label>
+              <Input
+                id="google"
+                type="password"
+                placeholder={
+                  settings?._hasGoogle ? `Atual: ${settings.google_api_key}` : "AIza..."
+                }
+                value={googleInput}
+                onChange={(e) => setGoogleInput(e.target.value)}
+                autoComplete="off"
+              />
+              <p className="text-xs text-zinc-500">
+                {settings?._hasGoogle ? "✓ configurada" : "✗ não configurada"} — quando
+                presente, embeddings vão pro Google (<code>gemini-embedding-001</code>,{" "}
+                <code>outputDimensionality=1536</code>). <strong>Não misture providers</strong> —
+                vectors da Google não são comparáveis com os da OpenAI; trocar = re-ingerir.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="openai">OpenAI API Key (fallback de chat + Whisper + embeddings)</Label>
               <Input
                 id="openai"
                 type="password"
@@ -239,8 +264,9 @@ export default function AdminPage() {
                 autoComplete="off"
               />
               <p className="text-xs text-zinc-500">
-                {settings?._hasOpenAI ? "✓ configurada" : "✗ não configurada"} — obrigatória para
-                embeddings/Whisper mesmo com OpenRouter ativo.
+                {settings?._hasOpenAI ? "✓ configurada" : "✗ não configurada"} — sempre obrigatória
+                para Whisper (áudio → texto). Para embeddings só é usada se Google não estiver
+                configurada acima.
               </p>
             </div>
 

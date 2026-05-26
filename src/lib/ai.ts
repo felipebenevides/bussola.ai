@@ -119,13 +119,74 @@ export async function getOpenAIRaw() {
   return new OpenAI({ apiKey: settings.openai_api_key });
 }
 
+/**
+ * Gera embeddings para uma string ou batch. Provider é escolhido pela
+ * presença da key em settings (Google ganha quando tem `google_api_key`),
+ * porque embeddings de providers diferentes NÃO são comparáveis — misturar
+ * destrói o RAG. Não há fallback automático aqui.
+ *
+ * Dimensão sempre 1536 (casa com a coluna `vector(1536)` no Postgres).
+ * - OpenAI: `text-embedding-3-small` é 1536 nativo.
+ * - Google: `gemini-embedding-001` retorna 3072 por default; pedimos
+ *   `outputDimensionality=1536` (Matryoshka truncation).
+ */
 export async function embed(input: string | string[]): Promise<number[][]> {
   const settings = await getSettings();
-  const oai = await getOpenAIRaw();
   const inputs = Array.isArray(input) ? input : [input];
+
+  if (settings.google_api_key) {
+    return embedWithGoogle(settings.google_api_key, inputs);
+  }
+
+  const oai = await getOpenAIRaw();
   const res = await oai.embeddings.create({
     model: settings.embedding_model,
     input: inputs,
   });
   return res.data.map((d) => d.embedding);
+}
+
+const GOOGLE_EMBED_MODEL = "gemini-embedding-001";
+const GOOGLE_EMBED_DIM = 1536;
+const GOOGLE_BATCH_LIMIT = 100;
+
+async function embedWithGoogle(apiKey: string, inputs: string[]): Promise<number[][]> {
+  const out: number[][] = [];
+  for (let i = 0; i < inputs.length; i += GOOGLE_BATCH_LIMIT) {
+    const slice = inputs.slice(i, i + GOOGLE_BATCH_LIMIT);
+    const batch = await googleBatchEmbed(apiKey, slice);
+    out.push(...batch);
+  }
+  return out;
+}
+
+async function googleBatchEmbed(apiKey: string, texts: string[]): Promise<number[][]> {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GOOGLE_EMBED_MODEL}:batchEmbedContents`;
+  const body = {
+    requests: texts.map((text) => ({
+      model: `models/${GOOGLE_EMBED_MODEL}`,
+      content: { parts: [{ text }] },
+      outputDimensionality: GOOGLE_EMBED_DIM,
+    })),
+  };
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": apiKey,
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(`Google embed ${res.status}: ${errText.slice(0, 200)}`);
+  }
+  const json = (await res.json()) as { embeddings?: Array<{ values?: number[] }> };
+  if (!json.embeddings || json.embeddings.length !== texts.length) {
+    throw new Error(`Google embed retornou ${json.embeddings?.length ?? 0} de ${texts.length}`);
+  }
+  return json.embeddings.map((e, idx) => {
+    if (!e.values) throw new Error(`Google embed sem values no índice ${idx}`);
+    return e.values;
+  });
 }
