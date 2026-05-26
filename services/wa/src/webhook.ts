@@ -74,12 +74,22 @@ async function handleMessageUpsert(body: EvolutionWebhookBody) {
   }
 
   const msg = body.data?.message ?? {};
+  const messageType = body.data?.messageType ?? null;
+  // Apenas conversation/extendedTextMessage entram como texto utilizável.
+  // Caption de imagem/vídeo/doc é ignorada — o Next.js decide "em construção"
+  // por messageType. Áudio segue baixando base64 pra transcrição lá no Next.js
+  // (com fallback pra "em construção" caso o Whisper falhe por cota/etc).
   const text =
-    msg.conversation ?? msg.extendedTextMessage?.text ?? msg.imageMessage?.caption ?? null;
-  const audio = msg.audioMessage ?? null;
+    messageType === "conversation"
+      ? msg.conversation ?? null
+      : messageType === "extendedTextMessage"
+        ? msg.extendedTextMessage?.text ?? null
+        : null;
 
+  const isAudio = messageType === "audioMessage" || messageType === "pttMessage";
   let audioPayload: RelayPayload["audio"] = null;
-  if (!text && audio && k?.id && k?.remoteJid) {
+  if (isAudio && k?.id && k?.remoteJid) {
+    const audioMeta = msg.audioMessage ?? null;
     const { base64, mimetype } = await downloadMediaBase64({
       id: k.id,
       remoteJid: k.remoteJid,
@@ -88,8 +98,8 @@ async function handleMessageUpsert(body: EvolutionWebhookBody) {
     if (base64) {
       audioPayload = {
         base64,
-        mimetype: mimetype ?? audio.mimetype ?? null,
-        ...(audio.seconds !== undefined && { seconds: audio.seconds }),
+        mimetype: mimetype ?? audioMeta?.mimetype ?? null,
+        ...(audioMeta?.seconds !== undefined && { seconds: audioMeta.seconds }),
       };
     }
   }
@@ -115,10 +125,11 @@ async function handleMessageUpsert(body: EvolutionWebhookBody) {
     event: "messages.upsert",
     phone,
     text: text ?? null,
+    messageType,
     audio: audioPayload,
     pushName: body.data?.pushName ?? null,
     evolutionMessageId: k?.id ?? null,
-    raw: { messageType: body.data?.messageType, timestamp: body.data?.messageTimestamp },
+    raw: { messageType, timestamp: body.data?.messageTimestamp },
   });
 }
 

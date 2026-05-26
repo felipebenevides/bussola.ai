@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { sendText, sendAudio, downloadMediaBase64 } from "./evolution";
 import { hmacMiddleware, parseBody } from "./middleware";
+import { enqueueOutbound, queueSize } from "./queue";
 import { log } from "./log";
 
 const TextSchema = z.object({
@@ -28,18 +29,20 @@ sendRouter.post("/send/text", async (c) => {
   const parsed = TextSchema.safeParse(parseBody(c));
   if (!parsed.success) return c.json({ error: "invalid body" }, 400);
 
-  const id = await withRetry(() => sendText(parsed.data.phone, parsed.data.text));
-  if (id === undefined) return c.json({ error: "send failed" }, 502);
-  return c.json({ messageId: id });
+  enqueueOutbound(`text:${parsed.data.phone.slice(-4)}`, () =>
+    withRetry(() => sendText(parsed.data.phone, parsed.data.text)).then((id) => id ?? null)
+  );
+  return c.json({ queued: true, position: queueSize() }, 202);
 });
 
 sendRouter.post("/send/audio", async (c) => {
   const parsed = AudioSchema.safeParse(parseBody(c));
   if (!parsed.success) return c.json({ error: "invalid body" }, 400);
 
-  const id = await withRetry(() => sendAudio(parsed.data.phone, parsed.data.audio_base64));
-  if (id === undefined) return c.json({ error: "send failed" }, 502);
-  return c.json({ messageId: id });
+  enqueueOutbound(`audio:${parsed.data.phone.slice(-4)}`, () =>
+    withRetry(() => sendAudio(parsed.data.phone, parsed.data.audio_base64)).then((id) => id ?? null)
+  );
+  return c.json({ queued: true, position: queueSize() }, 202);
 });
 
 sendRouter.post("/media/download", async (c) => {

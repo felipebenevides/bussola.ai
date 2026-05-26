@@ -6,6 +6,13 @@ export interface RelayPayload {
   event: "messages.upsert" | "connection.update" | "other";
   phone?: string;
   text?: string | null;
+  /**
+   * Tipo bruto da mensagem do Evolution (conversation, extendedTextMessage,
+   * audioMessage, imageMessage, videoMessage, documentMessage, stickerMessage,
+   * etc.). Promovido pro topo do payload pra o Next.js poder decidir o fluxo
+   * sem precisar baixar mídia.
+   */
+  messageType?: string | null;
   audio?: {
     base64: string;
     mimetype: string | null;

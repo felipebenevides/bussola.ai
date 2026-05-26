@@ -5,6 +5,7 @@ import { pingEvolution } from "./evolution";
 import { webhookRouter } from "./webhook";
 import { sendRouter } from "./send";
 import { instanceRouter } from "./instance";
+import { queueSize } from "./queue";
 
 env(); // valida configuração no boot — sai com exit 1 se faltar algo
 
@@ -18,6 +19,7 @@ app.get("/health", async (c) => {
     ok: true,
     service: "bussola-wa",
     evolutionReachable: reachable,
+    queue: queueSize(),
     ts: new Date().toISOString(),
   });
 });
