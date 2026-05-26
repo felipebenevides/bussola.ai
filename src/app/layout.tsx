@@ -15,14 +15,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? "https://bussola.vercel.app"
+  ),
   title: "Bússola — tutor de IA CEFIS",
   description:
     "Tutor de IA que conhece seu objetivo, diagnostica lacunas e monta um plano usando o catálogo CEFIS + conteúdo gerado sob demanda.",
+  applicationName: "Bússola",
+  appleWebApp: {
+    capable: true,
+    title: "Bússola",
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "Bússola",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 export default function RootLayout({
