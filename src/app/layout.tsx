@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider, NO_FLASH_SCRIPT } from "@/lib/theme";
+import { ThemeToggleFab } from "@/components/theme-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +34,18 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-        {children}
+        <ThemeProvider>
+          {children}
+          <ThemeToggleFab />
+        </ThemeProvider>
       </body>
     </html>
   );

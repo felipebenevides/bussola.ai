@@ -1,8 +1,99 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: aplicado quando .dark estiver em <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Tokens base — light é o padrão ──────────────────────────── */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* WhatsApp UI tokens (light) — usados em /tutor */
+  --wa-app: #f0f2f5;
+  --wa-sidebar: #ffffff;
+  --wa-chat: #efeae2;
+  --wa-header: #f0f2f5;
+  --wa-header-border: #e9edef;
+  --wa-border: #d1d7db;
+  --wa-divider: #e9edef;
+
+  --wa-bubble-sent: #d9fdd3;
+  --wa-bubble-sent-text: #111b21;
+  --wa-bubble-sent-time: #667781;
+
+  --wa-bubble-received: #ffffff;
+  --wa-bubble-received-text: #111b21;
+  --wa-bubble-received-time: #667781;
+
+  --wa-composer: #f0f2f5;
+  --wa-input: #ffffff;
+  --wa-input-bg: #ffffff;
+
+  --wa-text-primary: #111b21;
+  --wa-text-secondary: #667781;
+  --wa-text-muted: #8696a0;
+
+  --wa-hover: #f5f6f6;
+  --wa-active: #e9edef;
+
+  --wa-accent: #00a884;
+  --wa-accent-strong: #008069;
+  --wa-accent-soft: rgba(0, 168, 132, 0.12);
+
+  --wa-citation-bg: rgba(0, 168, 132, 0.08);
+  --wa-citation-border: rgba(0, 168, 132, 0.25);
+
+  --wa-onboarding-bg: rgba(139, 92, 246, 0.08);
+  --wa-onboarding-border: rgba(139, 92, 246, 0.25);
+  --wa-onboarding-text: #6d28d9;
+
+  --wa-wallpaper-dot: rgba(17, 27, 33, 0.06);
+}
+
+/* ── Tokens dark ──────────────────────────────────────────────── */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --wa-app: #0b141a;
+  --wa-sidebar: #111b21;
+  --wa-chat: #0b141a;
+  --wa-header: #202c33;
+  --wa-header-border: #222d34;
+  --wa-border: #222d34;
+  --wa-divider: #222d34;
+
+  --wa-bubble-sent: #005c4b;
+  --wa-bubble-sent-text: #e9edef;
+  --wa-bubble-sent-time: #a3c2bd;
+
+  --wa-bubble-received: #202c33;
+  --wa-bubble-received-text: #e9edef;
+  --wa-bubble-received-time: #8696a0;
+
+  --wa-composer: #202c33;
+  --wa-input: #2a3942;
+  --wa-input-bg: #2a3942;
+
+  --wa-text-primary: #e9edef;
+  --wa-text-secondary: #aebac1;
+  --wa-text-muted: #8696a0;
+
+  --wa-hover: #202c33;
+  --wa-active: #2a3942;
+
+  --wa-accent: #00a884;
+  --wa-accent-strong: #06846a;
+  --wa-accent-soft: rgba(0, 168, 132, 0.15);
+
+  --wa-citation-bg: rgba(5, 46, 22, 0.6);
+  --wa-citation-border: rgba(6, 95, 70, 0.6);
+
+  --wa-onboarding-bg: rgba(26, 20, 40, 0.8);
+  --wa-onboarding-border: rgba(91, 33, 182, 0.5);
+  --wa-onboarding-text: #c4b5fd;
+
+  --wa-wallpaper-dot: rgba(255, 255, 255, 0.025);
 }
 
 @theme inline {
@@ -12,15 +103,35 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ── View Transitions: circular reveal a partir do botão ─────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Em transições de tema, o novo desenha por cima do antigo. */
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+/* A animação real (clip-path circle) é disparada por JS via
+   element.animate() no pseudo-element ::view-transition-new(root).
+   CSS aqui só garante o stacking correto e desliga o default cross-fade. */
+
+/* Respeita prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
 }
