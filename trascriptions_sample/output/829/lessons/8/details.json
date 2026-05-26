@@ -1,0 +1,27 @@
+{
+  "id": 441583,
+  "title": "Funções do tributo",
+  "position": 8,
+  "duration": 202,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207506824/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3bdb83dd-a38f-448e-ab8f-f9516cb8cfaa/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3bdb83dd-a38f-448e-ab8f-f9516cb8cfaa/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3bdb83dd-a38f-448e-ab8f-f9516cb8cfaa/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

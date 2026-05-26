@@ -1,0 +1,27 @@
+{
+  "id": 446844,
+  "title": "Cálculo de Passivo de Arrendamento",
+  "position": 12,
+  "duration": 164,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/329411075/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bd6192be-23d8-4098-9616-5ea3d70ffe22/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bd6192be-23d8-4098-9616-5ea3d70ffe22/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bd6192be-23d8-4098-9616-5ea3d70ffe22/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

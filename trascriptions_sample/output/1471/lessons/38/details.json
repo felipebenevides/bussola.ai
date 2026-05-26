@@ -1,0 +1,27 @@
+{
+  "id": 451322,
+  "title": "Centro de Investimentos",
+  "position": 38,
+  "duration": 304,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/490216915/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/218dbade-96d4-40ca-9166-4ead20e1d1cc/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/218dbade-96d4-40ca-9166-4ead20e1d1cc/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/218dbade-96d4-40ca-9166-4ead20e1d1cc/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "data": {
+    "id": 1467,
+    "title": "Direito do Trabalho | Noções Gerais e Exame CFC",
+    "subtitle": "Noções Gerais",
+    "summary": "Neste curso de noções gerais (voltado não somente ao Exame CFC) de Direito do Trabalho você aprenderá a analisar princípios legais, casos e jurisprudências em torno da legislação trabalhista como um conteúdo exigido para sua aprovação no exame CFC.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/adba75c1853793cf40a17c6539c0c4f61728427992.jpg",
+    "goals": [
+      "Proporcionar ao aluno um conhecimento amplo e reflexivo dos direitos sociais, o quadro de disciplinas compreende o estudo dos seus principais institutos, passando por seus fundamentos constitucionais, pela análise do direito individual, coletivo e processual do trabalho."
+    ],
+    "teacher": {
+      "id": 431352,
+      "name": "FÁBIO CARDOSO",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/profile-images/ee26908bf9629eeb4b37dac350f4754a1661660748.jpeg"
+    },
+    "duration": 6813,
+    "keywords": "Direito do Trabalho e Previdenciário;direito;exame;cfc;trabalhista",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 35,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      3
+    ],
+    "watchLater": false,
+    "ratingQuantity": 235,
+    "averageRating": 9.3,
+    "practiceAverage": 9.33,
+    "trailer": {
+      "id": "b79f0675-0b6d-4679-8d81-aa3082874c16",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/b79f0675-0b6d-4679-8d81-aa3082874c16/360.mp4",
+          "height": 360
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:45.000Z",
+      "updatedAt": "2021-01-06T09:45:45.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-12-03T22:55:15.000Z",
+    "recordedAt": "2020-12-01T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

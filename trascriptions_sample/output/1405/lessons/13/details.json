@@ -1,0 +1,27 @@
+{
+  "id": 450123,
+  "title": "Como julgamos uma marca",
+  "position": 14,
+  "duration": 362,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/453521136/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f1f1e44f-7e6b-44fc-82d0-b763ec9be431/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f1f1e44f-7e6b-44fc-82d0-b763ec9be431/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f1f1e44f-7e6b-44fc-82d0-b763ec9be431/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

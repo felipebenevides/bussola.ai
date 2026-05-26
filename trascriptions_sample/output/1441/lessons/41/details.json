@@ -1,0 +1,27 @@
+{
+  "id": 450649,
+  "title": "Relação entre Análise Vertical e Horizontal",
+  "position": 41,
+  "duration": 40,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471076874/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e7d862a6-28bc-424b-87f6-bbd54e6f382b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e7d862a6-28bc-424b-87f6-bbd54e6f382b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e7d862a6-28bc-424b-87f6-bbd54e6f382b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

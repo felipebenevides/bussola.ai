@@ -1,0 +1,27 @@
+{
+  "id": 450639,
+  "title": "Questão básica",
+  "position": 31,
+  "duration": 19,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471058874/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3dc5cd5a-c30b-4a60-9deb-16b79d2ad7f2/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3dc5cd5a-c30b-4a60-9deb-16b79d2ad7f2/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3dc5cd5a-c30b-4a60-9deb-16b79d2ad7f2/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

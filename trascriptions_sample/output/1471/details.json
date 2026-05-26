@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1471,
+    "title": "Controladoria",
+    "subtitle": "Curso Prático",
+    "summary": "Neste curso de controladoria, você irá aprender as regras, doutrinas e questões práticas para realizar a gestão econômica da sua empresa. Para isso, você conhecerá a caixa de ferramentas do controller, entenderá sobre contabilidade gerencial, funções, modelos, processos e estilos de gestão, planejamento operacional, controles gerenciais, BSC, mapa estratégico, preço de transferências, estratégias e riscos, dentre outros tópicos essenciais para que você possa aplicar os conhecimentos aprendidos na prática.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/9d8e4e98e1b266186e72f9c5f2ed22681727450848.jpg",
+    "goals": [
+      "Solucionar os problemas enfrentados pelos profissionais da área da controladoria."
+    ],
+    "teacher": {
+      "id": 355295,
+      "name": "TIAGO DE VASCONCELOS",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/869486d17f542c6dcf05d8d289ab9ed11550593587.jpg"
+    },
+    "duration": 9152,
+    "keywords": "controladoria;controller;finanças",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 51,
+    "materialCount": 4,
+    "hasMaterials": true,
+    "categories": [
+      2
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2247,
+    "averageRating": 8.97,
+    "practiceAverage": 8.81,
+    "trailer": {
+      "id": "9e10299e-6fe3-4076-978e-acfc8d08352c",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/9e10299e-6fe3-4076-978e-acfc8d08352c/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/9e10299e-6fe3-4076-978e-acfc8d08352c/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/9e10299e-6fe3-4076-978e-acfc8d08352c/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:45.000Z",
+      "updatedAt": "2021-01-06T09:45:45.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 6,
+    "launchDate": "2020-12-09T22:27:30.000Z",
+    "recordedAt": "2020-12-05T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

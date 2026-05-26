@@ -1,0 +1,64 @@
+{
+  "data": {
+    "id": 1470,
+    "title": "Governança Corporativa & PLR",
+    "subtitle": "Gestão de Governança",
+    "summary": "Com este curso prático de governança corporativa & PLR, você aprenderá como criar uma agenda de governança para preservar e criar valor nas empresas. Por meio de vários exemplos práticos, você irá conhecer aspectos relacionados à participação de resultados, princípios e estrutura da governança corporativa, bem como modelos referentes às Avaliações de Resultados Mensais (AGM), avaliação de desempenho, Programa de Participação nos Lucros e Resultados (PLR), Partnership, dentre outros. Entenderá como definir as responsabilidades, através de direitos de decisão, mecanismos de resolução de conflitos, disputas e processos de investigação e deliberação dentro de uma gestão bem sucedida. Conhecerá técnicas para engajar os stakeholders na busca pela excelência e melhores resultados, e aprenderá como aplicar a Participação nos Lucros e Resultados (PLR), utilizando ferramentas de gestão de negócios eficientes, para aumentar a produtividade de uma empresa e motivar seus colaboradores.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/94e2d98857ab93e3c98fec2cc444b6661728383378.jpg",
+    "goals": [
+      "Consolidar os conceitos e ferramentas para se aplicar em um projeto de Governança Corporativa. Criar condições para que o participante possa elaborar um programa de PLR focado nas necessidades de cada empresa, considerando metas e objetivos específicos. Criar condições que propiciem um ambiente motivador aos colaboradores."
+    ],
+    "teacher": {
+      "id": 337338,
+      "name": "LUCAS MARQUES VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/uploads-v3/2d3ef0eb-9145-4630-b9f9-bdfc4f4e80bb-croppedImage.jpeg"
+    },
+    "duration": 3751,
+    "keywords": "PLR;compliance;GEstão;gerir",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 10,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      5
+    ],
+    "watchLater": false,
+    "ratingQuantity": 398,
+    "averageRating": 9.18,
+    "practiceAverage": 9.18,
+    "trailer": {
+      "id": "6ec5497c-9061-4c8c-b2d8-03a50728c931",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/6ec5497c-9061-4c8c-b2d8-03a50728c931/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/6ec5497c-9061-4c8c-b2d8-03a50728c931/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/6ec5497c-9061-4c8c-b2d8-03a50728c931/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:45.000Z",
+      "updatedAt": "2021-01-06T09:45:45.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 3,
+    "launchDate": "2020-12-09T22:33:47.000Z",
+    "recordedAt": "2020-11-25T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

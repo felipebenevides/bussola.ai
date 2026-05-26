@@ -1,0 +1,27 @@
+{
+  "id": 448456,
+  "title": "Ambiente de trabalho | parte 3",
+  "position": 15,
+  "duration": 125,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/402418734/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/be37bd19-307b-4d8e-9fca-db0a132b8dc9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/be37bd19-307b-4d8e-9fca-db0a132b8dc9/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/be37bd19-307b-4d8e-9fca-db0a132b8dc9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

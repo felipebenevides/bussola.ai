@@ -1,0 +1,21 @@
+{
+  "id": 450283,
+  "title": "Alcance  e apresentação",
+  "position": 3,
+  "duration": 148,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/9db15e21-3463-4ff7-8fc2-878c6d1dd9ff/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9db15e21-3463-4ff7-8fc2-878c6d1dd9ff/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9db15e21-3463-4ff7-8fc2-878c6d1dd9ff/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

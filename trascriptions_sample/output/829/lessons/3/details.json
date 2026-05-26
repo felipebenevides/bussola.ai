@@ -1,0 +1,27 @@
+{
+  "id": 441175,
+  "title": "Quem pode receber o tributo?",
+  "position": 3,
+  "duration": 74,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207473122/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3a744eb8-19ff-403d-8da7-9cc19d614c37/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3a744eb8-19ff-403d-8da7-9cc19d614c37/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3a744eb8-19ff-403d-8da7-9cc19d614c37/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

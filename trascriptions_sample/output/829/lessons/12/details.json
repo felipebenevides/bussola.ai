@@ -1,0 +1,27 @@
+{
+  "id": 441587,
+  "title": "Impostos Instituídos pelos Estados",
+  "position": 12,
+  "duration": 120,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207465002/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c5dbcee4-854d-4812-93f9-ecd752715225/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c5dbcee4-854d-4812-93f9-ecd752715225/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c5dbcee4-854d-4812-93f9-ecd752715225/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": 451602,
+  "title": "Lei das SA e Responsabilidade Social",
+  "position": 6,
+  "duration": 295,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/9d9d45df-f69e-4c07-83a3-0083c849d165/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9d9d45df-f69e-4c07-83a3-0083c849d165/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9d9d45df-f69e-4c07-83a3-0083c849d165/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9d9d45df-f69e-4c07-83a3-0083c849d165/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9d9d45df-f69e-4c07-83a3-0083c849d165/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 448414,
+  "title": "Em que época nós estamos?",
+  "position": 9,
+  "duration": 161,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/401557422/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/654acdd0-192a-4ab4-8e9b-2d3f0ba81c3b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/654acdd0-192a-4ab4-8e9b-2d3f0ba81c3b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/654acdd0-192a-4ab4-8e9b-2d3f0ba81c3b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

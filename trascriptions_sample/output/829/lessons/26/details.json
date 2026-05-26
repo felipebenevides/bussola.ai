@@ -1,0 +1,27 @@
+{
+  "id": 441601,
+  "title": "Extinção do Crédito Tributário",
+  "position": 26,
+  "duration": 531,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207520484/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1b51112e-4840-4fbd-8664-a8f9d4e51b21/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1b51112e-4840-4fbd-8664-a8f9d4e51b21/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1b51112e-4840-4fbd-8664-a8f9d4e51b21/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

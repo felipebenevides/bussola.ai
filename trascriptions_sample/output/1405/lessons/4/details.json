@@ -1,0 +1,27 @@
+{
+  "id": 450114,
+  "title": "Sobre o business",
+  "position": 4,
+  "duration": 102,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/453513724/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/08b2f3d6-7eb1-401d-82bf-08c924c5b4ef/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/08b2f3d6-7eb1-401d-82bf-08c924c5b4ef/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/08b2f3d6-7eb1-401d-82bf-08c924c5b4ef/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 450617,
+  "title": "Demonstração de Valor Adicionado - Lei 11.638-07",
+  "position": 11,
+  "duration": 54,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471031388/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c971cd97-c51b-4d85-bbcf-57b2ac119a4e/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c971cd97-c51b-4d85-bbcf-57b2ac119a4e/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c971cd97-c51b-4d85-bbcf-57b2ac119a4e/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

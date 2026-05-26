@@ -1,0 +1,27 @@
+{
+  "id": 441597,
+  "title": "Crédito Tributário",
+  "position": 22,
+  "duration": 147,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207472649/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/273a2339-fe3d-4db7-9ced-bbc2d6d18df1/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/273a2339-fe3d-4db7-9ced-bbc2d6d18df1/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/273a2339-fe3d-4db7-9ced-bbc2d6d18df1/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

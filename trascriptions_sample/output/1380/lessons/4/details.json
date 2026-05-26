@@ -1,0 +1,27 @@
+{
+  "id": 449963,
+  "title": "História",
+  "position": 4,
+  "duration": 109,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440745875/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a3e16b3e-767b-4213-a052-b192665ad182/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a3e16b3e-767b-4213-a052-b192665ad182/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a3e16b3e-767b-4213-a052-b192665ad182/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

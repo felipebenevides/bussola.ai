@@ -1,0 +1,27 @@
+{
+  "id": 448536,
+  "title": "Gestão por resultados | Desvantagens",
+  "position": 5,
+  "duration": 345,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/409221643/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f0ab213f-cb8f-4e81-aa08-f4eb6fc00e20/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f0ab213f-cb8f-4e81-aa08-f4eb6fc00e20/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f0ab213f-cb8f-4e81-aa08-f4eb6fc00e20/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

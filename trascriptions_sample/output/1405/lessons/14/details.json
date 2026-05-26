@@ -1,0 +1,27 @@
+{
+  "id": 450124,
+  "title": "O novo fundamento de uma marca",
+  "position": 15,
+  "duration": 282,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/453516817/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c227c500-d83f-438b-9f0d-fdac041fff27/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c227c500-d83f-438b-9f0d-fdac041fff27/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c227c500-d83f-438b-9f0d-fdac041fff27/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

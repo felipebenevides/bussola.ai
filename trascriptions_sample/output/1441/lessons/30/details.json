@@ -1,0 +1,27 @@
+{
+  "id": 450638,
+  "title": "Ciclo de análise",
+  "position": 30,
+  "duration": 29,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471058822/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4accd5d6-1545-4a90-8b66-08c395d59665/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4accd5d6-1545-4a90-8b66-08c395d59665/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4accd5d6-1545-4a90-8b66-08c395d59665/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 451295,
+  "title": "Programas de Partnership x PLR",
+  "position": 10,
+  "duration": 502,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/490038170/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bf13afd2-16fa-4c7a-81f2-13f3898ce06f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bf13afd2-16fa-4c7a-81f2-13f3898ce06f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bf13afd2-16fa-4c7a-81f2-13f3898ce06f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

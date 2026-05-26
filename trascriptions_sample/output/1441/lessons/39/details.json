@@ -1,0 +1,27 @@
+{
+  "id": 450647,
+  "title": "Análise vertical - Margens",
+  "position": 39,
+  "duration": 145,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471072671/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c0d89ca3-ac6f-4094-a2e6-3b5a7cd9ddef/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c0d89ca3-ac6f-4094-a2e6-3b5a7cd9ddef/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c0d89ca3-ac6f-4094-a2e6-3b5a7cd9ddef/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

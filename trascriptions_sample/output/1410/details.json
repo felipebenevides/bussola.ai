@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1410,
+    "title": "DVA (CPC 09)",
+    "subtitle": "Demonstração do Valor Adicionado",
+    "summary": "Neste Curso Você Aprenderá sobre a DVA - Demonstração do Valor Adicionado (CPC 09). Conhecerá na prática a finalidade da DVA e como ela é estruturada. Entenderá a relação da DVA com a formação do PIB, bem como da estrutura da DVA a partir da formação de riqueza e da sua distribuição.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/77a49a32ecd201c616f33cbfa17d83191728383363.jpg",
+    "goals": [
+      "Capacitar a elaboração e a interpretação da Demonstração do Valor Adicionado de acordo com a nova legislação societária."
+    ],
+    "teacher": {
+      "id": 355295,
+      "name": "TIAGO DE VASCONCELOS",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/869486d17f542c6dcf05d8d289ab9ed11550593587.jpg"
+    },
+    "duration": 7290,
+    "keywords": "CPC 09;DVA;valor Adicionado;Contabilidade;Demonstração do Valor Adicionado",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 36,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      2
+    ],
+    "watchLater": false,
+    "ratingQuantity": 561,
+    "averageRating": 9.17,
+    "practiceAverage": 9.1,
+    "trailer": {
+      "id": "85659ce0-0ac4-483b-a637-99f8e34926bd",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/85659ce0-0ac4-483b-a637-99f8e34926bd/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/85659ce0-0ac4-483b-a637-99f8e34926bd/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/85659ce0-0ac4-483b-a637-99f8e34926bd/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:42.000Z",
+      "updatedAt": "2021-01-06T09:45:42.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-09-09T20:55:34.000Z",
+    "recordedAt": "2020-09-15T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

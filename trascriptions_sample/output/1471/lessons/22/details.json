@@ -1,0 +1,27 @@
+{
+  "id": 451279,
+  "title": "Processos de Gestão",
+  "position": 22,
+  "duration": 143,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489948845/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/55adbcab-3b65-498a-a0c0-72e2fb20d503/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/55adbcab-3b65-498a-a0c0-72e2fb20d503/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/55adbcab-3b65-498a-a0c0-72e2fb20d503/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

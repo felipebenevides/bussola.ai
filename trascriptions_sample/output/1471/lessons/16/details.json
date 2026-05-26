@@ -1,0 +1,27 @@
+{
+  "id": 451272,
+  "title": "Função | parte 2",
+  "position": 16,
+  "duration": 137,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489940611/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2df63cbb-b6b4-4907-a10e-6e3c355243e8/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2df63cbb-b6b4-4907-a10e-6e3c355243e8/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2df63cbb-b6b4-4907-a10e-6e3c355243e8/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 441599,
+  "title": "Situação do Crédito Tributário",
+  "position": 24,
+  "duration": 184,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207473008/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eb52cf89-0c22-45d3-bd1b-95c18e3f231d/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eb52cf89-0c22-45d3-bd1b-95c18e3f231d/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eb52cf89-0c22-45d3-bd1b-95c18e3f231d/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

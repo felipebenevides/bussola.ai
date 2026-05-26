@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1441,
+    "title": "Análise das demonstrações financeiras",
+    "subtitle": "Curso Prático",
+    "summary": "Com este curso de análise de demonstrações financeiras, você irá aprender a realizar um estudo completo da situação financeira e patrimonial da sua empresa. A partir de estudos de caso, você irá entender e aplicar o passo a passo do processo de análise de demonstrações, como leitura interpretativa, estrutura de capital, modelo de negócio, modelo contábil, relatórios de auditoria independente, decisões financeiras, relação e análise vertical e horizontal, índices de liquidez e de rentabilidade, EBTIDA, fluxos financeiros e outros procedimentos fundamentais, para dominar o ciclo de análise das demonstrações contábeis na prática, bem como extrair e examinar corretamente dados financeiros importantes para a tomada de decisões acertadas sobre o seu negócio.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/a2db2d65769f4528a530e3a8bd40159e1728427896.jpg",
+    "goals": [
+      "Demonstrar de forma prática como realizar um estudo da situação financeira e patrimonial de uma empresa ou entidade, apresentar aos alunos as formas de desenvolver um exame minucioso dos dados financeiros disponíveis objetivando extrair informações que servirão para tomada de decisões."
+    ],
+    "teacher": {
+      "id": 355295,
+      "name": "TIAGO DE VASCONCELOS",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/869486d17f542c6dcf05d8d289ab9ed11550593587.jpg"
+    },
+    "duration": 9798,
+    "keywords": "análise",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 74,
+    "materialCount": 2,
+    "hasMaterials": true,
+    "categories": [
+      2
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2298,
+    "averageRating": 9.1,
+    "practiceAverage": 9.09,
+    "trailer": {
+      "id": "20ddcfcd-3b6d-4365-926c-afe3ef909cfe",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/20ddcfcd-3b6d-4365-926c-afe3ef909cfe/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/20ddcfcd-3b6d-4365-926c-afe3ef909cfe/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/20ddcfcd-3b6d-4365-926c-afe3ef909cfe/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:44.000Z",
+      "updatedAt": "2021-01-06T09:45:44.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 6,
+    "launchDate": "2020-10-22T14:54:29.000Z",
+    "recordedAt": "2020-10-17T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

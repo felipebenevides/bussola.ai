@@ -1,0 +1,27 @@
+{
+  "id": 451185,
+  "title": "Princípio | norma mais favorável",
+  "position": 7,
+  "duration": 72,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/488196874/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/7c5402ef-3387-4722-bc32-8c884635fec1/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/7c5402ef-3387-4722-bc32-8c884635fec1/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/7c5402ef-3387-4722-bc32-8c884635fec1/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

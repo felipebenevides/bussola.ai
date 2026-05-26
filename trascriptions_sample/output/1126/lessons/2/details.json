@@ -1,0 +1,27 @@
+{
+  "id": 446276,
+  "title": "Definição",
+  "position": 2,
+  "duration": 256,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/181648151/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bb838953-cd72-4319-b153-adc557cba4ad/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bb838953-cd72-4319-b153-adc557cba4ad/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bb838953-cd72-4319-b153-adc557cba4ad/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

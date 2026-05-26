@@ -1,0 +1,27 @@
+{
+  "id": 450425,
+  "title": "Exercício de fluxo de caixa | parte 1",
+  "position": 26,
+  "duration": 364,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/463142830/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/abc6e8ed-72c2-4ba8-b726-4eb6057c6c8c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/abc6e8ed-72c2-4ba8-b726-4eb6057c6c8c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/abc6e8ed-72c2-4ba8-b726-4eb6057c6c8c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

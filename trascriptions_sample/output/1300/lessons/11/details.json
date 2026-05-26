@@ -1,0 +1,27 @@
+{
+  "id": 448452,
+  "title": "Técnica pomodoro",
+  "position": 11,
+  "duration": 265,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/402402231/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/950650ad-75d5-4285-ba87-b75b922c4a9c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/950650ad-75d5-4285-ba87-b75b922c4a9c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/950650ad-75d5-4285-ba87-b75b922c4a9c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

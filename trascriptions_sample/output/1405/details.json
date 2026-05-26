@@ -1,0 +1,52 @@
+{
+  "data": {
+    "id": 1405,
+    "title": "Criação e Gestão de Marcas",
+    "subtitle": "Estratégias de Branding",
+    "summary": "O curso apresenta as teorias e principais ferramentas de branding, ou seja, o processo de gestão de marcas feitos pelas empresas. Branding é a estratégia que faz sua marca ser lembrada e desejada!\n\nConquistar a mente do seu consumidor, se diferenciar dos seus concorrentes, gerar mais negócios e fortalecer a identidade da sua marca são alguns dos resultados de um trabalho de Branding bem feito.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/69a9b5de7e0caa4fe5e54a4119a91aa71728384874.jpg",
+    "goals": [
+      "Profissionais, empreendedores e estudantes que querem ter uma maior possibilidades de assumir cargos de gestão de marcas em suas organizações, ou que pretendem dominar as técnicas de gestão de marcas para aplicar em seus próprios negócios ou nos negócios de seus\nclientes."
+    ],
+    "teacher": {
+      "id": 457842,
+      "name": "Edward Leaman",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/7a3403ae72b71e5787527b882aa0989d1598929066.jpg"
+    },
+    "duration": 5440,
+    "keywords": "branding;marcas;marketing;propaganda;empreendedorismo",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 21,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      5
+    ],
+    "watchLater": false,
+    "ratingQuantity": 167,
+    "averageRating": 8.9,
+    "practiceAverage": 8.87,
+    "trailer": {
+      "id": "32173adb-130d-4ede-8991-df64cc1c940e",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/32173adb-130d-4ede-8991-df64cc1c940e/360.mp4",
+          "height": 360
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:42.000Z",
+      "updatedAt": "2021-01-06T09:45:42.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-09-01T00:22:36.000Z",
+    "recordedAt": "2020-08-31T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

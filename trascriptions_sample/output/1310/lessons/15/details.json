@@ -1,0 +1,27 @@
+{
+  "id": 448555,
+  "title": "Táticas para gestão de equipes | 4ª",
+  "position": 15,
+  "duration": 394,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/409257087/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a3eb46d6-cd22-49aa-a4f7-834105efdd38/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a3eb46d6-cd22-49aa-a4f7-834105efdd38/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a3eb46d6-cd22-49aa-a4f7-834105efdd38/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

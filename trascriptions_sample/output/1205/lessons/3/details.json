@@ -1,0 +1,27 @@
+{
+  "id": 447481,
+  "title": "Conceito | parte 1/2",
+  "position": 3,
+  "duration": 311,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/370575805/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b0126dd6-2f60-44b9-b616-2c08f8d740aa/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b0126dd6-2f60-44b9-b616-2c08f8d740aa/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b0126dd6-2f60-44b9-b616-2c08f8d740aa/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

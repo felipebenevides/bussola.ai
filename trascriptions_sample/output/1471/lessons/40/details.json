@@ -1,0 +1,27 @@
+{
+  "id": 451305,
+  "title": "As 5 forças de competição de Porter",
+  "position": 40,
+  "duration": 166,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/490188299/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84633d9b-5022-4ac6-8056-03d03bd8dce7/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84633d9b-5022-4ac6-8056-03d03bd8dce7/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84633d9b-5022-4ac6-8056-03d03bd8dce7/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

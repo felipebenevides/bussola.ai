@@ -1,0 +1,27 @@
+{
+  "id": 446960,
+  "title": "O que é proteção patrimonial",
+  "position": 14,
+  "duration": 403,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331230802/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0321f87d-c925-4bda-9f6b-2cfe56a01a00/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0321f87d-c925-4bda-9f6b-2cfe56a01a00/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0321f87d-c925-4bda-9f6b-2cfe56a01a00/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

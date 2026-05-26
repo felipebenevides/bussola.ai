@@ -1,0 +1,27 @@
+{
+  "id": 447436,
+  "title": "Desperdícios | parte 4/4",
+  "position": 13,
+  "duration": 340,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367856434/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c0e7808f-d725-4bb7-90a2-dcc84d83a227/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c0e7808f-d725-4bb7-90a2-dcc84d83a227/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c0e7808f-d725-4bb7-90a2-dcc84d83a227/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

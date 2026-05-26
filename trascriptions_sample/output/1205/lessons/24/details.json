@@ -1,0 +1,27 @@
+{
+  "id": 447447,
+  "title": "Waster Walk",
+  "position": 24,
+  "duration": 308,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367838823/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2fc34f31-8c7a-46c0-84d5-c42c63de0b9e/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2fc34f31-8c7a-46c0-84d5-c42c63de0b9e/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2fc34f31-8c7a-46c0-84d5-c42c63de0b9e/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

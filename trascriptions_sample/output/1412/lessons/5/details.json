@@ -1,0 +1,27 @@
+{
+  "id": 450323,
+  "title": "Classificação",
+  "position": 5,
+  "duration": 232,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460638645/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3a6a77d6-cce0-40c1-bfb7-a16170993edc/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3a6a77d6-cce0-40c1-bfb7-a16170993edc/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3a6a77d6-cce0-40c1-bfb7-a16170993edc/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

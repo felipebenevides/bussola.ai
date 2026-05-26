@@ -1,0 +1,27 @@
+{
+  "id": 447466,
+  "title": "Sobre a Comunicação",
+  "position": 12,
+  "duration": 146,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/368387292/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8b12510d-1783-4c21-841b-c436e2280aa1/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8b12510d-1783-4c21-841b-c436e2280aa1/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8b12510d-1783-4c21-841b-c436e2280aa1/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

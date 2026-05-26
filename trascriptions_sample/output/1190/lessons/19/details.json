@@ -1,0 +1,27 @@
+{
+  "id": 446966,
+  "title": "ITCMD",
+  "position": 20,
+  "duration": 238,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331466421/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f646e082-cb82-4212-b428-5703a724ade1/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f646e082-cb82-4212-b428-5703a724ade1/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f646e082-cb82-4212-b428-5703a724ade1/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

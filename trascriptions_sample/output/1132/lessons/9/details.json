@@ -1,0 +1,27 @@
+{
+  "id": 447463,
+  "title": "Interesses X Posições",
+  "position": 9,
+  "duration": 215,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/368383126/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/692c3c92-19f8-43b7-9479-051460dcf1c0/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/692c3c92-19f8-43b7-9479-051460dcf1c0/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/692c3c92-19f8-43b7-9479-051460dcf1c0/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

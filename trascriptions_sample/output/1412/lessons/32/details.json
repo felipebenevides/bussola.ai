@@ -1,0 +1,27 @@
+{
+  "id": 450352,
+  "title": "Exercícios | PARTE 7",
+  "position": 33,
+  "duration": 162,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460790481/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8bac8db1-326e-46ee-a5f1-ca42a9da42df/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8bac8db1-326e-46ee-a5f1-ca42a9da42df/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8bac8db1-326e-46ee-a5f1-ca42a9da42df/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

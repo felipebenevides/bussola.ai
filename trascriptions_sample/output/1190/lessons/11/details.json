@@ -1,0 +1,27 @@
+{
+  "id": 446958,
+  "title": "Explicação do Exemplo",
+  "position": 12,
+  "duration": 385,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331227598/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ab1f51a3-f2f1-4be7-929a-f5bd8065d6ec/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ab1f51a3-f2f1-4be7-929a-f5bd8065d6ec/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ab1f51a3-f2f1-4be7-929a-f5bd8065d6ec/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

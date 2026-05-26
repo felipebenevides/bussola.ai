@@ -1,0 +1,27 @@
+{
+  "id": 450311,
+  "title": "Insumos adquiridos de terceiros",
+  "position": 30,
+  "duration": 72,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/4ce228ee-7136-4979-b2ba-cb691d66dd69/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4ce228ee-7136-4979-b2ba-cb691d66dd69/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4ce228ee-7136-4979-b2ba-cb691d66dd69/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4ce228ee-7136-4979-b2ba-cb691d66dd69/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

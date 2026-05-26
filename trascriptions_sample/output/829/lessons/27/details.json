@@ -1,0 +1,27 @@
+{
+  "id": 441602,
+  "title": "Garantias",
+  "position": 27,
+  "duration": 213,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207517776/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e586b545-d7ed-4cd2-be3c-72041503543b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e586b545-d7ed-4cd2-be3c-72041503543b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e586b545-d7ed-4cd2-be3c-72041503543b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

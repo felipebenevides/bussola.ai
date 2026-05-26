@@ -1,0 +1,27 @@
+{
+  "id": 447314,
+  "title": "Como calcular desconto simples",
+  "position": 13,
+  "duration": 382,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/350475748/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3c81f734-0fd3-4783-ad60-83f7285983e9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3c81f734-0fd3-4783-ad60-83f7285983e9/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3c81f734-0fd3-4783-ad60-83f7285983e9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

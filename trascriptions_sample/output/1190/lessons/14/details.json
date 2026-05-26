@@ -1,0 +1,27 @@
+{
+  "id": 446961,
+  "title": "Aspectos societários tributários e contábeis",
+  "position": 15,
+  "duration": 324,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331461393/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/23dc4d84-6325-4965-bae2-7aa5b9964edd/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/23dc4d84-6325-4965-bae2-7aa5b9964edd/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/23dc4d84-6325-4965-bae2-7aa5b9964edd/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

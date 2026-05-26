@@ -1,0 +1,21 @@
+{
+  "id": 450282,
+  "title": "Objetivo",
+  "position": 2,
+  "duration": 126,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/bcef54d5-0ca1-482f-8f63-5bda241fd03d/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bcef54d5-0ca1-482f-8f63-5bda241fd03d/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bcef54d5-0ca1-482f-8f63-5bda241fd03d/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

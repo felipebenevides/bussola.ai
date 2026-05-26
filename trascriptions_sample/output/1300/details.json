@@ -1,0 +1,52 @@
+{
+  "data": {
+    "id": 1300,
+    "title": "Home Office",
+    "subtitle": "Curso Prático",
+    "summary": "Neste curso prático sobre Home Office, você aprenderá tudo sobre este assunto. Desde cuidados e práticas para aumentar a produtividade até a legislação vigente que regulamenta o teletrabalho. Conhecerá algumas técnicas, como o método Pomodoro e o Kanban, até aplicativos e dicas para organizar seu ambiente de trabalho dentro de casa, para otimizar a autogestão, ser mais produtivo e eficiente no trabalho.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/73cdf4a72883a083446d65fb0aeb688b1727451424.jpg",
+    "goals": [
+      "O home office, ou trabalho de casa, foi a alternativa que diversas empresas encontraram para manter o funcionamento durante a crise do coronavírus, que desencadeou medidas de isolamento social para evitar o avanço da pandemia. No entanto, essa forma de trabalhar requer alguns cuidados para que o andamento das tarefas não seja afetado e para que não haja estresse desnecessário."
+    ],
+    "teacher": {
+      "id": 344181,
+      "name": "DANIEL VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/45030f7c2a9515a9891daffb3ab8f8141545407457.jpg"
+    },
+    "duration": 3427,
+    "keywords": "Home;Office;casa;trabalho;teletrabalho",
+    "certificationThreshold": 80,
+    "isEditing": false,
+    "lessonCount": 17,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      6
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2605,
+    "averageRating": 9.37,
+    "practiceAverage": 9.44,
+    "trailer": {
+      "id": "678a0e12-d66d-4633-84ca-886ba91f8263",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/678a0e12-d66d-4633-84ca-886ba91f8263/360.mp4",
+          "height": 360
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:39.000Z",
+      "updatedAt": "2021-01-06T09:45:39.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-03-30T01:38:51.000Z",
+    "recordedAt": "2020-03-25T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

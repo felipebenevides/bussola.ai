@@ -1,0 +1,27 @@
+{
+  "id": 447392,
+  "title": "Conceito de  Produtividade",
+  "position": 4,
+  "duration": 135,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/366170793/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/d245b9d5-04b3-483e-a10f-bf753f7a9170/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/d245b9d5-04b3-483e-a10f-bf753f7a9170/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/d245b9d5-04b3-483e-a10f-bf753f7a9170/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

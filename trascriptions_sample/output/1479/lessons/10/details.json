@@ -1,0 +1,33 @@
+{
+  "id": 451633,
+  "title": "Direito Objetivo e Subjetivo; Sistemas Civil Law e Common Law",
+  "position": 10,
+  "duration": 303,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/84c10bb0-cba3-4b02-96fe-29dcaee8cc33/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84c10bb0-cba3-4b02-96fe-29dcaee8cc33/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84c10bb0-cba3-4b02-96fe-29dcaee8cc33/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84c10bb0-cba3-4b02-96fe-29dcaee8cc33/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/84c10bb0-cba3-4b02-96fe-29dcaee8cc33/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

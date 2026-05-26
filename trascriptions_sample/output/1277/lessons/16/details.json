@@ -1,0 +1,27 @@
+{
+  "id": 448403,
+  "title": "Tipos de valores",
+  "position": 17,
+  "duration": 243,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/401573535/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4cc9129f-bd86-4c23-a74d-5211e3622ebd/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4cc9129f-bd86-4c23-a74d-5211e3622ebd/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4cc9129f-bd86-4c23-a74d-5211e3622ebd/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

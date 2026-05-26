@@ -1,0 +1,27 @@
+{
+  "id": 451274,
+  "title": "Objetivo econômico",
+  "position": 18,
+  "duration": 338,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489943865/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/093ef08f-41e7-49c1-85e9-6a38c3d8d636/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/093ef08f-41e7-49c1-85e9-6a38c3d8d636/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/093ef08f-41e7-49c1-85e9-6a38c3d8d636/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

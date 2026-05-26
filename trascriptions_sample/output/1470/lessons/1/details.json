@@ -1,0 +1,27 @@
+{
+  "id": 451286,
+  "title": "Introdução á Governança Corporativa",
+  "position": 1,
+  "duration": 318,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489988065/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4b6cc29c-79ce-4dea-b1a6-4029ebfdba38/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4b6cc29c-79ce-4dea-b1a6-4029ebfdba38/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4b6cc29c-79ce-4dea-b1a6-4029ebfdba38/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

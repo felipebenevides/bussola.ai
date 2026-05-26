@@ -1,0 +1,64 @@
+{
+  "data": {
+    "id": 1132,
+    "title": "Negociação e Gestão de Conflitos",
+    "subtitle": "Metodologia Harvard de Negociação",
+    "summary": "Com este curso de negociação e gestão de conflitos, você irá conhecer e aplicar o método de negociação da escola de Harvard. Aprenderá como mapear as melhores estratégias e também as técnicas mais eficazes que vão te ajudar a negociar, e, consequentemente, a se comunicar e a se defender na prática gerencial. Com os conhecimentos obtidos, você estará capacitado a  escolher as táticas mais adequadas para cada tipo de negociação, seja no contexto pessoal ou profissional, e terá cada vez mais sucesso nessa habilidade que é utilizada a todo o momento.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/b2d4454fe76f5537056cd5ed05795aff1728428625.jpg",
+    "goals": [
+      "Conhecer e aplicar o método de negociação da Escola de Harvard. Apresentar, analisar e aplicar os estilos de negociação;\nConhecer como aplicar na prática as principais estratégias e táticas para uma negociação eficiente e eficaz. Você irá Adquirir maior sensibilidade na escolha das táticas mais adequadas a cada situação de negociação. E aprenderá a Identificar as competências e habilidades necessárias ao sucesso de uma negociação."
+    ],
+    "teacher": {
+      "id": 337338,
+      "name": "LUCAS MARQUES VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/uploads-v3/2d3ef0eb-9145-4630-b9f9-bdfc4f4e80bb-croppedImage.jpeg"
+    },
+    "duration": 4752,
+    "keywords": "negociar;conflitos;harvard",
+    "certificationThreshold": 80,
+    "isEditing": false,
+    "lessonCount": 23,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      5
+    ],
+    "watchLater": false,
+    "ratingQuantity": 3459,
+    "averageRating": 9.15,
+    "practiceAverage": 9.15,
+    "trailer": {
+      "id": "4665f035-fb72-4ae1-86ad-6374c05a3738",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4665f035-fb72-4ae1-86ad-6374c05a3738/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4665f035-fb72-4ae1-86ad-6374c05a3738/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4665f035-fb72-4ae1-86ad-6374c05a3738/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:33.000Z",
+      "updatedAt": "2021-01-06T09:45:33.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2019-10-22T13:38:17.000Z",
+    "recordedAt": "2019-10-17T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "data": {
+    "id": 829,
+    "title": "Direito Tributário Fácil para Contadores",
+    "subtitle": "Direito Tributário Fácil para Contadores",
+    "summary": "Neste curso prático de direito tributário para contadores, você aprenderá a aplicação legal que rege a administração tributária. Por meio de vários exemplos, você entenderá a aplicação legal de aspectos relacionados às espécies tributárias, funções, impostos, taxas, contribuições, obrigatoriedade, empréstimos, vigência, dentre muitos outros tópicos importantes que orientarão  sua atuação profissional, e te ajudarão a conduzir suas atividades de forma mais segura, organizada e confiante.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/c8b027174ecda1416795764d3e25b7a11728427984.jpg",
+    "goals": [
+      "Tem como meta abordar a disciplina com enfoque nos temas mais exigidos para a atuação profissional e atualização dos contadores."
+    ],
+    "teacher": {
+      "id": 219252,
+      "name": "MURILO LUCIANO SOUZA BARBOSA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/e95312dc51a9076b8934e694350ba05c1482261110.jpg"
+    },
+    "duration": 5458,
+    "keywords": "Direito Tributário",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 30,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      1
+    ],
+    "watchLater": false,
+    "ratingQuantity": 1786,
+    "averageRating": 9,
+    "practiceAverage": 9.1,
+    "trailer": {
+      "id": "f9da2830-cdb6-485b-8a78-1fe36796f8f5",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/f9da2830-cdb6-485b-8a78-1fe36796f8f5/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/f9da2830-cdb6-485b-8a78-1fe36796f8f5/720.mp4",
+          "height": 720
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:18.000Z",
+      "updatedAt": "2021-01-06T09:45:18.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2021-05-11T18:06:30.000Z",
+    "recordedAt": "2018-02-14T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

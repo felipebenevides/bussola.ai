@@ -1,0 +1,33 @@
+{
+  "id": 451627,
+  "title": "Características do RGPS",
+  "position": 4,
+  "duration": 125,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/032f958c-8563-4cc9-99c4-72a92a1fec27/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/032f958c-8563-4cc9-99c4-72a92a1fec27/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/032f958c-8563-4cc9-99c4-72a92a1fec27/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/032f958c-8563-4cc9-99c4-72a92a1fec27/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/032f958c-8563-4cc9-99c4-72a92a1fec27/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

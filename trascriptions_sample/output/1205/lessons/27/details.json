@@ -1,0 +1,27 @@
+{
+  "id": 447450,
+  "title": "Os 5s | Seiton",
+  "position": 27,
+  "duration": 158,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367837474/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/55bb5375-9f76-4a3f-84c6-fa530461300c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/55bb5375-9f76-4a3f-84c6-fa530461300c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/55bb5375-9f76-4a3f-84c6-fa530461300c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

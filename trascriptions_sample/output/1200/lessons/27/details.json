@@ -1,0 +1,27 @@
+{
+  "id": 447418,
+  "title": "Exercício 4",
+  "position": 27,
+  "duration": 356,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367272634/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/93849ddd-d6d1-472a-ab21-1c9d0ea65703/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/93849ddd-d6d1-472a-ab21-1c9d0ea65703/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/93849ddd-d6d1-472a-ab21-1c9d0ea65703/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

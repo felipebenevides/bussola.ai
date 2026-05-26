@@ -1,0 +1,27 @@
+{
+  "id": 450454,
+  "title": "ICMS III",
+  "position": 18,
+  "duration": 70,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/464525327/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f14c999c-0a61-46a3-a747-62c4a5207c5f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f14c999c-0a61-46a3-a747-62c4a5207c5f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f14c999c-0a61-46a3-a747-62c4a5207c5f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

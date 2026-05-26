@@ -1,0 +1,27 @@
+{
+  "id": 451585,
+  "title": "Modelos de gestão diferenciados | parte 2",
+  "position": 31,
+  "duration": 204,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/494171342/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/778cd60d-267f-4470-ae38-21248c9c0c96/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/778cd60d-267f-4470-ae38-21248c9c0c96/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/778cd60d-267f-4470-ae38-21248c9c0c96/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

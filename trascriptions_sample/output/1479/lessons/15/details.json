@@ -1,0 +1,33 @@
+{
+  "id": 451638,
+  "title": "Pessoa natural | parte 1",
+  "position": 15,
+  "duration": 312,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/04bc52d7-885d-4c0a-8dc2-e3d7834bdbe9/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/04bc52d7-885d-4c0a-8dc2-e3d7834bdbe9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/04bc52d7-885d-4c0a-8dc2-e3d7834bdbe9/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/04bc52d7-885d-4c0a-8dc2-e3d7834bdbe9/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/04bc52d7-885d-4c0a-8dc2-e3d7834bdbe9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

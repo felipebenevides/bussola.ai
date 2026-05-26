@@ -1,0 +1,27 @@
+{
+  "id": 450328,
+  "title": "Avaliação do ativo imobilizado | parte 2",
+  "position": 10,
+  "duration": 239,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460654195/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/74dc2448-915d-48e0-9ccb-4ed0774fa14e/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/74dc2448-915d-48e0-9ccb-4ed0774fa14e/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/74dc2448-915d-48e0-9ccb-4ed0774fa14e/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

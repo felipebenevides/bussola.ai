@@ -1,0 +1,27 @@
+{
+  "id": 450675,
+  "title": "EBITDA",
+  "position": 64,
+  "duration": 234,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/472065240/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b37e8374-1aea-4246-9c08-a5f4fee11461/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b37e8374-1aea-4246-9c08-a5f4fee11461/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b37e8374-1aea-4246-9c08-a5f4fee11461/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

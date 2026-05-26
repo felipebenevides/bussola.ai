@@ -1,0 +1,27 @@
+{
+  "id": 446255,
+  "title": "PDCA e DMAIC",
+  "position": 4,
+  "duration": 406,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/181648151/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5d26cacd-8d35-4612-b553-0b00ae1ebd3b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5d26cacd-8d35-4612-b553-0b00ae1ebd3b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5d26cacd-8d35-4612-b553-0b00ae1ebd3b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

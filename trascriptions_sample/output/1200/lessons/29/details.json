@@ -1,0 +1,27 @@
+{
+  "id": 447420,
+  "title": "Exercício 6",
+  "position": 29,
+  "duration": 267,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367274287/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/29683fbf-ac44-4bd1-a781-a5bc0b182dbb/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/29683fbf-ac44-4bd1-a781-a5bc0b182dbb/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/29683fbf-ac44-4bd1-a781-a5bc0b182dbb/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

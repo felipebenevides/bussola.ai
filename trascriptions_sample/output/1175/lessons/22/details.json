@@ -1,0 +1,27 @@
+{
+  "id": 446861,
+  "title": "Cálculo de Case 3",
+  "position": 22,
+  "duration": 379,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/329411826/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0fadc98e-2fbe-470d-a329-f2b23f9551bf/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0fadc98e-2fbe-470d-a329-f2b23f9551bf/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0fadc98e-2fbe-470d-a329-f2b23f9551bf/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

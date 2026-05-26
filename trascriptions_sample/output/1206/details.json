@@ -1,0 +1,64 @@
+{
+  "data": {
+    "id": 1206,
+    "title": "Gestão do Tempo e Produtividade",
+    "subtitle": "Gestão do Tempo e Produtividade",
+    "summary": "O curso oferece técnicas comprovadas de organização, controle e definição de prioridades que multiplicarão sua produtividade e seu tempo livre, fazendo com que tenha mais tempo para aproveitar melhor a vida. Além disso, ao se perceber mais eficiente e eficaz, seu nível de estresse irá se reduzir, aumentando assim sua qualidade e expectativa de vida.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/fd115203a90e36de6f6c5c40b501361b1728428019.jpg",
+    "goals": [
+      "Capacita o aluno para delegar com mais eficiência as tarefas, realizar reuniões produtivas, organizar agendas físicas ou virtuais (no outlook e outras ferramentas), identificar os roubadores de tempo e ter atitudes assertivas, a partir de técnicas de gerenciamento do tempo."
+    ],
+    "teacher": {
+      "id": 344181,
+      "name": "DANIEL VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/45030f7c2a9515a9891daffb3ab8f8141545407457.jpg"
+    },
+    "duration": 3082,
+    "keywords": "gestao;gerenciamento",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 14,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      5
+    ],
+    "watchLater": false,
+    "ratingQuantity": 9208,
+    "averageRating": 9.39,
+    "practiceAverage": 9.39,
+    "trailer": {
+      "id": "c3f6418c-b463-4aed-bd08-57581976bc90",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/c3f6418c-b463-4aed-bd08-57581976bc90/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/c3f6418c-b463-4aed-bd08-57581976bc90/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/c3f6418c-b463-4aed-bd08-57581976bc90/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:37.000Z",
+      "updatedAt": "2021-01-06T09:45:37.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2019-10-04T05:12:26.000Z",
+    "recordedAt": "2019-10-10T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

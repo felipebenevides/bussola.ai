@@ -1,0 +1,21 @@
+{
+  "id": 441594,
+  "title": "Obrigação tributária",
+  "position": 19,
+  "duration": 163,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207598415/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5e533e00-63a2-4ad0-b507-e18d6d50ad0d/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5e533e00-63a2-4ad0-b507-e18d6d50ad0d/480.mp4",
+      "height": 480
+    }
+  ]
+}

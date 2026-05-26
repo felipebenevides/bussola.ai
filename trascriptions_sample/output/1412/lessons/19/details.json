@@ -1,0 +1,27 @@
+{
+  "id": 450337,
+  "title": "Definições da depreciação",
+  "position": 19,
+  "duration": 167,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460672493/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/165a6f46-2f19-4d1a-9898-1fc3a4da4de7/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/165a6f46-2f19-4d1a-9898-1fc3a4da4de7/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/165a6f46-2f19-4d1a-9898-1fc3a4da4de7/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

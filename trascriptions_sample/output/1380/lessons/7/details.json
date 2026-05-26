@@ -1,0 +1,27 @@
+{
+  "id": 449966,
+  "title": "Importância",
+  "position": 7,
+  "duration": 342,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440751407/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b522fc0c-e533-4e9b-b407-3f470bc90a0a/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b522fc0c-e533-4e9b-b407-3f470bc90a0a/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b522fc0c-e533-4e9b-b407-3f470bc90a0a/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

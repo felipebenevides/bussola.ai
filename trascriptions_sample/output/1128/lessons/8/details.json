@@ -1,0 +1,27 @@
+{
+  "id": 447520,
+  "title": "Fase 2 | A proposta 2/2",
+  "position": 8,
+  "duration": 171,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/372094045/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a021d057-84ff-4b6f-9745-726e958fe160/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a021d057-84ff-4b6f-9745-726e958fe160/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a021d057-84ff-4b6f-9745-726e958fe160/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

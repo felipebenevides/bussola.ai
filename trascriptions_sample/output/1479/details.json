@@ -1,0 +1,69 @@
+{
+  "data": {
+    "id": 1479,
+    "title": "Direito Previdenciário e Civil | Noções Gerais e Exame CFC",
+    "subtitle": "Noções Gerais",
+    "summary": "Neste curso prático de noções gerais de Direito Previdenciário e Direito Civil (também com enfoque para a prova do Exame CFC), você aprenderá o conteúdo exigido para a aprovação nesta matéria do edital.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/f6844d3521c21b151da768bd76a08e5a1728427983.jpg",
+    "goals": [
+      "O objetivo é capacitar o aluno para a prova do exame de suficiência do CFC ( conselho federal de contabilidade ) dando-lhe material e conhecimento suficiente para aprovação em sua prova."
+    ],
+    "teacher": {
+      "id": 431352,
+      "name": "FÁBIO CARDOSO",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/profile-images/ee26908bf9629eeb4b37dac350f4754a1661660748.jpeg"
+    },
+    "duration": 6863,
+    "keywords": "previdencia;Direito do Trabalho e Previdenciário;direito previdenciário;inss;civil",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 30,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      3
+    ],
+    "watchLater": false,
+    "ratingQuantity": 163,
+    "averageRating": 9.1,
+    "practiceAverage": 9.16,
+    "trailer": {
+      "id": "4fea1c30-2df9-4dfe-b992-b8a79b04f439",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4fea1c30-2df9-4dfe-b992-b8a79b04f439/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4fea1c30-2df9-4dfe-b992-b8a79b04f439/480.mp4",
+          "height": 480
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4fea1c30-2df9-4dfe-b992-b8a79b04f439/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/4fea1c30-2df9-4dfe-b992-b8a79b04f439/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-08T02:28:54.000Z",
+      "updatedAt": "2021-01-08T03:28:53.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2021-01-05T16:02:31.000Z",
+    "recordedAt": "2020-12-29T00:00:00.000Z",
+    "createdAt": "2021-01-05T15:49:47.000Z"
+  }
+}

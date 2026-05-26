@@ -1,0 +1,27 @@
+{
+  "id": 450452,
+  "title": "ICMS",
+  "position": 16,
+  "duration": 206,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/464525229/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3c9a3a5d-d63f-4534-bceb-bdeecb0bd120/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3c9a3a5d-d63f-4534-bceb-bdeecb0bd120/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3c9a3a5d-d63f-4534-bceb-bdeecb0bd120/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

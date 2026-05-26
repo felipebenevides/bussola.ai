@@ -1,0 +1,33 @@
+{
+  "id": 451610,
+  "title": "Artigo 980-A Código Civil",
+  "position": 13,
+  "duration": 326,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/cdd3e4c7-e58f-4052-9666-8149b53e8bb4/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/cdd3e4c7-e58f-4052-9666-8149b53e8bb4/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/cdd3e4c7-e58f-4052-9666-8149b53e8bb4/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/cdd3e4c7-e58f-4052-9666-8149b53e8bb4/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/cdd3e4c7-e58f-4052-9666-8149b53e8bb4/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

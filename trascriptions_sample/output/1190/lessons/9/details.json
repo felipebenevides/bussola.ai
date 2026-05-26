@@ -1,0 +1,27 @@
+{
+  "id": 446956,
+  "title": "Doações das cotas para herdeiros",
+  "position": 10,
+  "duration": 271,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331224701/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/21cadc0d-c27f-4506-8a7d-5fec2785693f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/21cadc0d-c27f-4506-8a7d-5fec2785693f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/21cadc0d-c27f-4506-8a7d-5fec2785693f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

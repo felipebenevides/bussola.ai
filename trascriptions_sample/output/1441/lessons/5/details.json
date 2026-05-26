@@ -1,0 +1,27 @@
+{
+  "id": 450611,
+  "title": "Estrutura de Balanço",
+  "position": 5,
+  "duration": 61,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471031699/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ce792b9a-1001-4bef-8a3d-ae69fb835026/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ce792b9a-1001-4bef-8a3d-ae69fb835026/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ce792b9a-1001-4bef-8a3d-ae69fb835026/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

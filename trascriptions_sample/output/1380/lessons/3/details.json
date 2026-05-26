@@ -1,0 +1,27 @@
+{
+  "id": 449962,
+  "title": "Cenário",
+  "position": 3,
+  "duration": 367,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440744988/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a1b363fa-710d-4024-90ab-cf200fa6fda6/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a1b363fa-710d-4024-90ab-cf200fa6fda6/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a1b363fa-710d-4024-90ab-cf200fa6fda6/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

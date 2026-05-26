@@ -1,0 +1,27 @@
+{
+  "id": 450608,
+  "title": "Objetivos da Análise das Demonstrações",
+  "position": 2,
+  "duration": 89,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471025835/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4938738b-6a8e-48c8-9e66-4ccff9c8cceb/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4938738b-6a8e-48c8-9e66-4ccff9c8cceb/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4938738b-6a8e-48c8-9e66-4ccff9c8cceb/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

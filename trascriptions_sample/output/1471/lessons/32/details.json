@@ -1,0 +1,27 @@
+{
+  "id": 451587,
+  "title": "Estrutura Organizacional",
+  "position": 32,
+  "duration": 348,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/494172326/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4ea9fd94-0c7a-4557-b2c8-ae3809385fe9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4ea9fd94-0c7a-4557-b2c8-ae3809385fe9/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4ea9fd94-0c7a-4557-b2c8-ae3809385fe9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

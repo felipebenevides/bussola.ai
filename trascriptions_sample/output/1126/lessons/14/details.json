@@ -1,0 +1,27 @@
+{
+  "id": 446265,
+  "title": "Gráfico Sequencial",
+  "position": 14,
+  "duration": 115,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/181648151/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/389ea279-be42-48c0-815f-498d5908a91f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/389ea279-be42-48c0-815f-498d5908a91f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/389ea279-be42-48c0-815f-498d5908a91f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

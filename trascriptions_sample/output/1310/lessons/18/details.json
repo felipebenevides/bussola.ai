@@ -1,0 +1,27 @@
+{
+  "id": 448558,
+  "title": "Táticas para gestão de equipes | 7ª",
+  "position": 18,
+  "duration": 188,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/409270351/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/78d7b944-621f-41ae-bcfe-55a2f20f107b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/78d7b944-621f-41ae-bcfe-55a2f20f107b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/78d7b944-621f-41ae-bcfe-55a2f20f107b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

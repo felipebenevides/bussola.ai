@@ -1,0 +1,27 @@
+{
+  "id": 450623,
+  "title": "Leitura interpretativa | parte 2",
+  "position": 17,
+  "duration": 96,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471046030/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/97523269-6772-4349-8c01-769a07e7f098/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/97523269-6772-4349-8c01-769a07e7f098/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/97523269-6772-4349-8c01-769a07e7f098/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

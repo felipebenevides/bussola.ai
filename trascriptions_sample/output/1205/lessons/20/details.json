@@ -1,0 +1,27 @@
+{
+  "id": 447443,
+  "title": "Poka-Yoke",
+  "position": 20,
+  "duration": 234,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367839761/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ceda453a-8dc4-4382-841d-dd44f6fa0b0f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ceda453a-8dc4-4382-841d-dd44f6fa0b0f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ceda453a-8dc4-4382-841d-dd44f6fa0b0f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

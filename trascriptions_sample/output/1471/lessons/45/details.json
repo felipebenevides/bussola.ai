@@ -1,0 +1,27 @@
+{
+  "id": 451310,
+  "title": "Relato Integrado",
+  "position": 45,
+  "duration": 161,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/490190696/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eb6cf679-5d25-4f42-bfde-f99d1b3d8918/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eb6cf679-5d25-4f42-bfde-f99d1b3d8918/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eb6cf679-5d25-4f42-bfde-f99d1b3d8918/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

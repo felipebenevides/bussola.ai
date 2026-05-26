@@ -1,0 +1,27 @@
+{
+  "id": 450340,
+  "title": "Considerações",
+  "position": 22,
+  "duration": 135,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460677963/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/12d32746-9384-4996-9b46-2bfa38f16248/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/12d32746-9384-4996-9b46-2bfa38f16248/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/12d32746-9384-4996-9b46-2bfa38f16248/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

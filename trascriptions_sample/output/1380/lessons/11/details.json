@@ -1,0 +1,27 @@
+{
+  "id": 449967,
+  "title": "Penalidades",
+  "position": 11,
+  "duration": 337,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440754231/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/11981df3-124b-48d8-9d7a-4a254def5a53/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/11981df3-124b-48d8-9d7a-4a254def5a53/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/11981df3-124b-48d8-9d7a-4a254def5a53/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 450665,
+  "title": "Ciclo operacional",
+  "position": 55,
+  "duration": 93,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471417672/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1ffcf481-ba7a-451b-837e-21cf75ff0d97/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1ffcf481-ba7a-451b-837e-21cf75ff0d97/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1ffcf481-ba7a-451b-837e-21cf75ff0d97/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

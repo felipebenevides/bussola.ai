@@ -1,0 +1,27 @@
+{
+  "id": 451256,
+  "title": "Tool Box",
+  "position": 3,
+  "duration": 377,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489225194/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/17d3908d-be7a-41c0-8acf-3e194c2c4e7b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/17d3908d-be7a-41c0-8acf-3e194c2c4e7b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/17d3908d-be7a-41c0-8acf-3e194c2c4e7b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

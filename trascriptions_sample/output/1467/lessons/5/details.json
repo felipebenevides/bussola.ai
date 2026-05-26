@@ -1,0 +1,27 @@
+{
+  "id": 451184,
+  "title": "Princípio da proteção",
+  "position": 6,
+  "duration": 285,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/488196140/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9f96e319-321d-4c86-ac23-aaa526701b71/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9f96e319-321d-4c86-ac23-aaa526701b71/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9f96e319-321d-4c86-ac23-aaa526701b71/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

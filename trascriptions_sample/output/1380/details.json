@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1380,
+    "title": "NCM - CLASSIFICAÇÃO DE MERCADORIAS",
+    "subtitle": "curso prático",
+    "summary": "A Nomenclatura Comum do Mercosul (NCM) é um sistema que determina um único código numérico para uma mercadoria.\nCom este curso de NCM você irá aprender na prática como classificar mercadorias, entender do que trata e como utilizar esta classificação para a configuração de notas fiscais no dia-a-dia da empresa.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/82fcd0be0405c396eba23329b9e0955f1728428623.jpg",
+    "goals": [
+      "Analisar as regras gerais para classificar as mercadorias e a relevância de classificar corretamente em função do impacto na tributação do Imposto de Importação, IPI, PIS, COFINS, ICMS e ICMS-ST. Abordar os impactos de erros e os procedimentos para evitar autuações fiscais."
+    ],
+    "teacher": {
+      "id": 10,
+      "name": "Antônio Carlos Godoi",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/264553ceec5f2c836d4e8bfebcfe5f7d1532026260.jpg"
+    },
+    "duration": 4275,
+    "keywords": "ncm;classificação;mercadoria",
+    "certificationThreshold": 80,
+    "isEditing": false,
+    "lessonCount": 18,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      1
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2267,
+    "averageRating": 9.04,
+    "practiceAverage": 9.02,
+    "trailer": {
+      "id": "335b31da-1300-45c7-82b3-2e6b49bd00b5",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/335b31da-1300-45c7-82b3-2e6b49bd00b5/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/335b31da-1300-45c7-82b3-2e6b49bd00b5/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/335b31da-1300-45c7-82b3-2e6b49bd00b5/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:41.000Z",
+      "updatedAt": "2021-01-06T09:45:41.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 3,
+    "launchDate": "2020-07-22T19:02:07.000Z",
+    "recordedAt": "2020-07-17T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

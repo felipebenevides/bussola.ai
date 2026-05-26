@@ -1,0 +1,27 @@
+{
+  "id": 446033,
+  "title": "O Cérebro",
+  "position": 6,
+  "duration": 355,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/308199948/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0e736a43-b769-4cec-b57c-15e267304a92/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0e736a43-b769-4cec-b57c-15e267304a92/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0e736a43-b769-4cec-b57c-15e267304a92/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

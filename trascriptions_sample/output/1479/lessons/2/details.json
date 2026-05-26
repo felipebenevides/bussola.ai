@@ -1,0 +1,33 @@
+{
+  "id": 451625,
+  "title": "Classificação previdenciária | parte 1",
+  "position": 2,
+  "duration": 132,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/fd2ca171-bd6e-4ab2-a95b-9ca249517bdd/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd2ca171-bd6e-4ab2-a95b-9ca249517bdd/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd2ca171-bd6e-4ab2-a95b-9ca249517bdd/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd2ca171-bd6e-4ab2-a95b-9ca249517bdd/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd2ca171-bd6e-4ab2-a95b-9ca249517bdd/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

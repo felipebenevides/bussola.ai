@@ -1,0 +1,33 @@
+{
+  "id": 451616,
+  "title": "Sociedade Anônima",
+  "position": 19,
+  "duration": 399,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/a91df06d-b992-45d4-9135-bf29ad7c6f3d/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a91df06d-b992-45d4-9135-bf29ad7c6f3d/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a91df06d-b992-45d4-9135-bf29ad7c6f3d/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a91df06d-b992-45d4-9135-bf29ad7c6f3d/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a91df06d-b992-45d4-9135-bf29ad7c6f3d/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

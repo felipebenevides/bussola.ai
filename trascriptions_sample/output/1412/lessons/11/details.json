@@ -1,0 +1,27 @@
+{
+  "id": 450329,
+  "title": "Mensuração do ativo",
+  "position": 11,
+  "duration": 183,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460656172/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f488150b-64ec-483c-8da1-db030ca9c2e8/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f488150b-64ec-483c-8da1-db030ca9c2e8/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/f488150b-64ec-483c-8da1-db030ca9c2e8/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

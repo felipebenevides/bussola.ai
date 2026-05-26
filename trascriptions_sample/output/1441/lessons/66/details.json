@@ -1,0 +1,27 @@
+{
+  "id": 450677,
+  "title": "Fluxos financeiros- operacionais, investimento e financiamento",
+  "position": 66,
+  "duration": 85,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/472066203/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e79ed6b3-f508-40e6-af7b-c60ccef65fb0/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e79ed6b3-f508-40e6-af7b-c60ccef65fb0/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e79ed6b3-f508-40e6-af7b-c60ccef65fb0/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

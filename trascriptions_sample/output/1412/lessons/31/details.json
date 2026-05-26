@@ -1,0 +1,27 @@
+{
+  "id": 450349,
+  "title": "Exercícios | PARTE 6",
+  "position": 31,
+  "duration": 207,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460771066/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/09560639-a033-4c1c-bfda-db50a95c527b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/09560639-a033-4c1c-bfda-db50a95c527b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/09560639-a033-4c1c-bfda-db50a95c527b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

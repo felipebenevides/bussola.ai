@@ -1,0 +1,27 @@
+{
+  "id": 451369,
+  "title": "O que isso gera?",
+  "position": 4,
+  "duration": 209,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/491727809/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/df2b03cf-1b69-46b7-b3dc-b30f366274fc/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/df2b03cf-1b69-46b7-b3dc-b30f366274fc/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/df2b03cf-1b69-46b7-b3dc-b30f366274fc/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

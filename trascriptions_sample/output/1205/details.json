@@ -1,0 +1,70 @@
+{
+  "data": {
+    "id": 1205,
+    "title": "Six Sigma",
+    "subtitle": "Melhoria contínua de processos",
+    "summary": "Neste curso de Six Sigma White Belt você aprenderá a utilizar a metodologia deste sistema de gestão da qualidade, que é um dos mais robustos do mundo. Conhecerá desde o conceito, questões acerca do valor agregado, dimensões da qualidade, táticas como SIPOC, VOC & BOV, SMED, Brainstorm, mapa de fluxo de valor e muitas outras ferramentas importantes, para coordenação e execução de projetos de melhorias que impactam diretamente nos indicadores de desempenho, como crescimento da produtividade, redução de custos, melhora da qualidade e, consequentemente, aumento da atratividade de produtos e serviços.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/6eb6a33e150eee7c8c81fd458dd3fedc1727451491.jpg",
+    "goals": [
+      "O objetivo desse curso é capacitar os participantes na metodologia Lean Six Sigma e suas ferramentas, de tal maneira que consigam aplicar os conhecimentos adquiridos no desenvolvimento de projetos: tanto o de certificação, quanto os projetos subsequentes a serem desenvolvidos nas respectivas organizações."
+    ],
+    "teacher": {
+      "id": 337338,
+      "name": "LUCAS MARQUES VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/uploads-v3/2d3ef0eb-9145-4630-b9f9-bdfc4f4e80bb-croppedImage.jpeg"
+    },
+    "duration": 7679,
+    "keywords": "gestao;processos;sixsigma;PDCA;gerenciamento",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 31,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      5
+    ],
+    "watchLater": false,
+    "ratingQuantity": 496,
+    "averageRating": 8.93,
+    "practiceAverage": 8.71,
+    "trailer": {
+      "id": "8f7d5044-4a42-4c0c-b25a-c92dbd1bce29",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/8f7d5044-4a42-4c0c-b25a-c92dbd1bce29/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/8f7d5044-4a42-4c0c-b25a-c92dbd1bce29/480.mp4",
+          "height": 480
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/8f7d5044-4a42-4c0c-b25a-c92dbd1bce29/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/8f7d5044-4a42-4c0c-b25a-c92dbd1bce29/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-08-25T00:34:50.000Z",
+      "updatedAt": "2021-08-25T00:34:49.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2019-10-04T04:56:36.000Z",
+    "recordedAt": "2019-10-17T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

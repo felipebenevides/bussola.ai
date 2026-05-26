@@ -1,0 +1,27 @@
+{
+  "id": 450356,
+  "title": "A divisão digital",
+  "position": 6,
+  "duration": 194,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/460808167/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a785c396-f684-49c2-89c1-40ef9c5c9681/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a785c396-f684-49c2-89c1-40ef9c5c9681/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a785c396-f684-49c2-89c1-40ef9c5c9681/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 450297,
+  "title": "Exercícios | parte 5",
+  "position": 17,
+  "duration": 195,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/123f639d-63db-40ca-8c44-4d80e5330750/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/123f639d-63db-40ca-8c44-4d80e5330750/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/123f639d-63db-40ca-8c44-4d80e5330750/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/123f639d-63db-40ca-8c44-4d80e5330750/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

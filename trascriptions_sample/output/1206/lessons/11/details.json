@@ -1,0 +1,27 @@
+{
+  "id": 447399,
+  "title": "Regras dos 4Ds",
+  "position": 11,
+  "duration": 148,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/366174371/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9291041d-b1b6-49af-9113-cad264cee14f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9291041d-b1b6-49af-9113-cad264cee14f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9291041d-b1b6-49af-9113-cad264cee14f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

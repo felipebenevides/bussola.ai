@@ -1,0 +1,27 @@
+{
+  "id": 450316,
+  "title": "Exercícios testes | parte 4",
+  "position": 35,
+  "duration": 322,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/1f5d8d82-88bb-46e9-9acc-477c59a3ad22/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1f5d8d82-88bb-46e9-9acc-477c59a3ad22/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1f5d8d82-88bb-46e9-9acc-477c59a3ad22/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/1f5d8d82-88bb-46e9-9acc-477c59a3ad22/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

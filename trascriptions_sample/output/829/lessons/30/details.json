@@ -1,0 +1,27 @@
+{
+  "id": 441605,
+  "title": "Certidões Negativas e Positivas",
+  "position": 30,
+  "duration": 181,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207517401/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3e65fdae-2df9-4660-9716-d42c52800cac/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3e65fdae-2df9-4660-9716-d42c52800cac/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3e65fdae-2df9-4660-9716-d42c52800cac/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 446257,
+  "title": "Manutenção de Resultados",
+  "position": 6,
+  "duration": 305,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/181648151/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3b456bbb-9810-4f4f-9b38-64f6963b9e49/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3b456bbb-9810-4f4f-9b38-64f6963b9e49/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3b456bbb-9810-4f4f-9b38-64f6963b9e49/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

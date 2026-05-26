@@ -1,0 +1,27 @@
+{
+  "id": 451323,
+  "title": "Mapa estratégico",
+  "position": 49,
+  "duration": 209,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/490217417/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c8636181-f504-4489-b1c1-b35d9a6ae697/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c8636181-f504-4489-b1c1-b35d9a6ae697/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c8636181-f504-4489-b1c1-b35d9a6ae697/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

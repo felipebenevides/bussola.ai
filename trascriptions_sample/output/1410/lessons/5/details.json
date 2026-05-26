@@ -1,0 +1,21 @@
+{
+  "id": 450285,
+  "title": "Definições",
+  "position": 5,
+  "duration": 182,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/bcb03406-dfaa-42d0-90f2-8f1ae15a20d9/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bcb03406-dfaa-42d0-90f2-8f1ae15a20d9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bcb03406-dfaa-42d0-90f2-8f1ae15a20d9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

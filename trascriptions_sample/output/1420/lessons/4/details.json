@@ -1,0 +1,27 @@
+{
+  "id": 450403,
+  "title": "Exemplo de empresas que utilizam os ativos biológicos",
+  "position": 4,
+  "duration": 206,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/463031196/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/431cee7a-1c04-488a-af7b-8c1df54f693f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/431cee7a-1c04-488a-af7b-8c1df54f693f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/431cee7a-1c04-488a-af7b-8c1df54f693f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

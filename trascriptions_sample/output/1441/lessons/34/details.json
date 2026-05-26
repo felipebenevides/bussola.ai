@@ -1,0 +1,27 @@
+{
+  "id": 450642,
+  "title": "Endividamento - Passivos de funcionamento e passivos onerosos",
+  "position": 34,
+  "duration": 135,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471066553/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ba33f4d7-bc67-4ae8-96c6-3b8db5ef847e/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ba33f4d7-bc67-4ae8-96c6-3b8db5ef847e/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/ba33f4d7-bc67-4ae8-96c6-3b8db5ef847e/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

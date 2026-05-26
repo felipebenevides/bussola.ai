@@ -1,0 +1,27 @@
+{
+  "id": 450442,
+  "title": "Retorno e Devolução",
+  "position": 6,
+  "duration": 275,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/464524436/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8e7ee767-e825-45c6-b7c0-fbcbc84c9182/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8e7ee767-e825-45c6-b7c0-fbcbc84c9182/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/8e7ee767-e825-45c6-b7c0-fbcbc84c9182/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

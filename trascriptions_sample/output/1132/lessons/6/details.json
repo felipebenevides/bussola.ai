@@ -1,0 +1,33 @@
+{
+  "id": 481240,
+  "title": "Negociação Cooperativa",
+  "position": 6,
+  "duration": 96,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/201d5d74-2ee4-44ad-ba8b-79184176fc17/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/201d5d74-2ee4-44ad-ba8b-79184176fc17/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/201d5d74-2ee4-44ad-ba8b-79184176fc17/480.mp4",
+      "height": 480
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/201d5d74-2ee4-44ad-ba8b-79184176fc17/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/201d5d74-2ee4-44ad-ba8b-79184176fc17/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

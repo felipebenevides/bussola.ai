@@ -1,0 +1,27 @@
+{
+  "id": 446841,
+  "title": "Direito de Direcionar uso",
+  "position": 9,
+  "duration": 32,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/329198976/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a60938af-e745-4da9-a01a-dfd468560662/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a60938af-e745-4da9-a01a-dfd468560662/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a60938af-e745-4da9-a01a-dfd468560662/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

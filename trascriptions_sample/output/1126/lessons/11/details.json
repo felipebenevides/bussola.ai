@@ -1,0 +1,27 @@
+{
+  "id": 446262,
+  "title": "Diagnóstico do Trabalho",
+  "position": 11,
+  "duration": 229,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/181648151/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/60aac41d-ed5f-4d9a-880a-84e8f3a41d98/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/60aac41d-ed5f-4d9a-880a-84e8f3a41d98/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/60aac41d-ed5f-4d9a-880a-84e8f3a41d98/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 448411,
+  "title": "Fatores que interferem na produtividade",
+  "position": 11,
+  "duration": 359,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/401562802/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5ab84e0c-0d5b-423e-a5e0-6f287a142967/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5ab84e0c-0d5b-423e-a5e0-6f287a142967/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5ab84e0c-0d5b-423e-a5e0-6f287a142967/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "data": {
+    "id": 1460,
+    "title": "Storytelling Corporativo",
+    "subtitle": "Storytelling para Resultados",
+    "summary": "Neste curso prático de storytelling corporativo você aprenderá a utilizar esta técnica poderosa no contexto empresarial. Por meio de vários exemplos, você vai entender desde a definição desta prática até pontos referentes ao vínculo emocional, metáforas, tipos de audiência, premissa, pitch, forças antagônicas, técnicas para enviar mensagens engajadoras e muitos outros métodos que irão garantir a eficiência da comunicação organizacional, para que você aplique na prática os conhecimentos adquiridos e saiba como alinhar as expectativas entre empregadores e colaboradores.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/7215263cfd82feca169639307b36988b1728385970.jpg",
+    "goals": [
+      "Capacitar profissionais com as habilidades e ferramentas engajadoras do Storytelling."
+    ],
+    "teacher": {
+      "id": 344181,
+      "name": "DANIEL VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/45030f7c2a9515a9891daffb3ab8f8141545407457.jpg"
+    },
+    "duration": 4903,
+    "keywords": "story;comunicação;Gestão;estórias;histórias",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 23,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      6
+    ],
+    "watchLater": false,
+    "ratingQuantity": 956,
+    "averageRating": 9.35,
+    "practiceAverage": 9.32,
+    "trailer": {
+      "id": "622f43e3-1212-49c3-8476-47535caf252a",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/622f43e3-1212-49c3-8476-47535caf252a/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/622f43e3-1212-49c3-8476-47535caf252a/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/622f43e3-1212-49c3-8476-47535caf252a/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:44.000Z",
+      "updatedAt": "2021-01-06T09:45:44.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-11-30T14:32:59.000Z",
+    "recordedAt": "2020-11-26T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

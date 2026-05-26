@@ -1,0 +1,27 @@
+{
+  "id": 447469,
+  "title": "Usando critérios objetivos",
+  "position": 15,
+  "duration": 210,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/368394660/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4b6b3dc8-699b-4647-8830-d81800a2bd6c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4b6b3dc8-699b-4647-8830-d81800a2bd6c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4b6b3dc8-699b-4647-8830-d81800a2bd6c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

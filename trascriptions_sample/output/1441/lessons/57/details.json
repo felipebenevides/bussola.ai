@@ -1,0 +1,27 @@
+{
+  "id": 450667,
+  "title": "Momento de reflexão",
+  "position": 57,
+  "duration": 146,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471419451/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4a83009e-da35-4df7-820a-d2e26c44be7c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4a83009e-da35-4df7-820a-d2e26c44be7c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/4a83009e-da35-4df7-820a-d2e26c44be7c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

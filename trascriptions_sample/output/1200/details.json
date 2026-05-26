@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1200,
+    "title": "Matemática Financeira para Exame CFC",
+    "subtitle": "Conceito e Execução Prática",
+    "summary": "Neste curso prático para o exame do CFC - módulo Matemática Financeira, você vai aprender todo o conteúdo exigido para a sua aprovação no exame de suficiência do CRC. Você entenderá, por meio de exemplos, juros simples e compostos, porcentagem, descontos, taxa nominal, proporcional, efetiva e equivalente, dentre outros tópicos importantes. Além de dominar esta matéria exigida no edital, você descobrirá quais as principais questões que caem na maioria das provas de concursos, e aplicará os conceitos aprendidos através da resolução de exercícios dos exames anteriores do CFC.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/f914fb2bbdef6445836c4bf2c6f83c8a1728428604.jpg",
+    "goals": [
+      "Auxiliar na compreensão dos profissionais na Matemática Financeira para aplicação em seus trabalhos e recursos profissionais."
+    ],
+    "teacher": {
+      "id": 385110,
+      "name": "KLEBER  MEDRADO",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/cb9d37b5777bd7869709defce6ae2f4a1562850023.png"
+    },
+    "duration": 9772,
+    "keywords": "matematica;financeira;financeiro",
+    "certificationThreshold": 80,
+    "isEditing": false,
+    "lessonCount": 30,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4
+    ],
+    "watchLater": false,
+    "ratingQuantity": 337,
+    "averageRating": 8.49,
+    "practiceAverage": 8.7,
+    "trailer": {
+      "id": "f967ff34-704c-46bb-a283-4518cc2af612",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/f967ff34-704c-46bb-a283-4518cc2af612/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/f967ff34-704c-46bb-a283-4518cc2af612/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/f967ff34-704c-46bb-a283-4518cc2af612/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:37.000Z",
+      "updatedAt": "2021-01-06T09:45:37.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2019-07-27T10:33:43.000Z",
+    "recordedAt": "2019-06-11T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

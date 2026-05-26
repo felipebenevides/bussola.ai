@@ -1,0 +1,27 @@
+{
+  "id": 446256,
+  "title": "Problemas",
+  "position": 5,
+  "duration": 303,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/181648151/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e8e35a8e-8bb7-48f0-91ca-a46f45b69610/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e8e35a8e-8bb7-48f0-91ca-a46f45b69610/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e8e35a8e-8bb7-48f0-91ca-a46f45b69610/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

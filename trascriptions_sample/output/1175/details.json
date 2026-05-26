@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1175,
+    "title": "IFRS 16",
+    "subtitle": "IFRS 16 | CPC 06 (R2) - OPERAÇÕES DE ARRENDAMENTO MERCANTIL",
+    "summary": "Neste curso prático de IFRS 16 você aprenderá sobre esta norma correlata ao CPC 06 (R2). Por meio de vários exercícios, você vai aprender os princípios para realizar a identificação de arrendamento, a separação de componentes do contrato entre arrendatário e arrendador, cálculos de passivo, leasing, cuidado com o EBITDA, prazo do arrendamento,  mensuração inicial e subsequente, apresentação e divulgação para o arrendatário, bem como a classificar o arrendamento financeiro ou operacional e divulgar para o arrendador, dentre muitos outros pontos importantes para que você aplique no cotidiano os conhecimentos adquiridos, e domine todos os procedimentos adequados no fornecimento de informações que possuem efeitos sobre a posição financeira de uma entidade.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/92e2e2e318fe91472e5da0f7014e5cca1727451434.jpg",
+    "goals": [
+      "O objetivo principal deste curso é proporcionar o conhecimento do IFRS 16, correlato ao CPC 06 (R2). Estabelecer os princípios para o reconhecimento, mensuração, apresentação e divulgação de arrendamentos, visando garantir que arrendatários e arrendadores forneçam informações relevantes, de modo que representem fielmente essas transações. Essas informações fornecem a base para que usuários de demonstrações contábeis avaliem o efeito que os arrendamentos têm sobre a posição financeira, o desempenho financeiro e os fluxos de caixa da entidade.\nO aluno será capaz de:\nIdentificar o arrendamento, a separar os componentes do contrato entre arrendatário e arrendador, o prazo do arrendamento, a mensuração inicial e subsequente , a apresentar e divulgar as operações de arrendamento do arrendatário; e classificar o arrendamento financeiro ou operacional e divulgar as operações de arrendamento para o arrendador."
+    ],
+    "teacher": {
+      "id": 355295,
+      "name": "TIAGO DE VASCONCELOS",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/869486d17f542c6dcf05d8d289ab9ed11550593587.jpg"
+    },
+    "duration": 4966,
+    "keywords": "IFRS;IFRS 16;Tiago",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 23,
+    "materialCount": 5,
+    "hasMaterials": true,
+    "categories": [
+      2
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2664,
+    "averageRating": 9.3,
+    "practiceAverage": 9.33,
+    "trailer": {
+      "id": "40918c83-b414-4a10-87d9-6ff271476c0d",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/40918c83-b414-4a10-87d9-6ff271476c0d/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/40918c83-b414-4a10-87d9-6ff271476c0d/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/40918c83-b414-4a10-87d9-6ff271476c0d/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:35.000Z",
+      "updatedAt": "2021-01-06T09:45:35.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 5,
+    "launchDate": "2019-04-09T15:43:05.000Z",
+    "recordedAt": "2019-03-25T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

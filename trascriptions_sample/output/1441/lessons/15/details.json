@@ -1,0 +1,27 @@
+{
+  "id": 450621,
+  "title": "Leitura interpretativa - Decisões de investimento",
+  "position": 15,
+  "duration": 141,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471044550/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/d4321262-dd6a-4300-b089-5056747b5957/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/d4321262-dd6a-4300-b089-5056747b5957/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/d4321262-dd6a-4300-b089-5056747b5957/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

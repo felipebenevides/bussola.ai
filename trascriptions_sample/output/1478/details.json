@@ -1,0 +1,69 @@
+{
+  "data": {
+    "id": 1478,
+    "title": "Direito Empresarial | Noções Gerais e Exame CFC",
+    "subtitle": "Noções Gerais",
+    "summary": "Neste curso de Direito Empresarial (voltado não somente para a prova do exame do Conselho Federal de Contabilidade), você aprenderá, além de noções gerais deste importante ramo jurídico para o seu dia-a-dia, todo o conteúdo exigido para a sua aprovação no exame de suficiência do CRC relacionado ao Direito Empresarial. \nAlém de dominar esta matéria exigida no edital, você conhecerá, por meio de vários exemplos práticos, aspectos como fases do direito empresarial, administração empresarial, sociedade limitada, princípios da livre iniciativa e da livre concorrência, função social da empresa, lei das Sociedades Anônimas e responsabilidade social, Decreto nº 9.571/2018, convenção americana de direitos humanos, transformação, fusão, incorporação, cisão, lei falimentar, recuperação extrajudicial e muitos outros pontos importantes para que você aplique os conhecimentos adquiridos, por meio da resolução de exercícios dos exames anteriores do CFC.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/e4e6f66a50c5b430715b359ca24424cb1728427980.jpg",
+    "goals": [
+      "Preparar o estudante para a prova de Direito Empresarial, também conhecido como Direito Comercial, do exame de suficiência do conselho de contabilidade. Mas não se restringe apenas à preparação para a prova, mas vai além e busca capacitar os interessados nas questões do universo jurídico empresarial."
+    ],
+    "teacher": {
+      "id": 431352,
+      "name": "FÁBIO CARDOSO",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/profile-images/ee26908bf9629eeb4b37dac350f4754a1661660748.jpeg"
+    },
+    "duration": 7222,
+    "keywords": "direito comercial;Exame Suficiencia;exame CFC;empresa;empresarial",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 23,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4
+    ],
+    "watchLater": false,
+    "ratingQuantity": 458,
+    "averageRating": 9,
+    "practiceAverage": 8.92,
+    "trailer": {
+      "id": "7fe5928c-14f7-4fb7-8a26-72375fce8449",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/7fe5928c-14f7-4fb7-8a26-72375fce8449/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/7fe5928c-14f7-4fb7-8a26-72375fce8449/480.mp4",
+          "height": 480
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/7fe5928c-14f7-4fb7-8a26-72375fce8449/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/7fe5928c-14f7-4fb7-8a26-72375fce8449/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-07T12:35:23.000Z",
+      "updatedAt": "2021-01-07T13:35:23.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-12-24T11:32:57.000Z",
+    "recordedAt": "2020-12-15T00:00:00.000Z",
+    "createdAt": "2020-12-24T12:01:44.000Z"
+  }
+}

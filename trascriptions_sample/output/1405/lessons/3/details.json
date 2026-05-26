@@ -1,0 +1,27 @@
+{
+  "id": 450113,
+  "title": "Realizando ideias",
+  "position": 3,
+  "duration": 145,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/453513345/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eca074f9-ea2f-4e49-9c6a-01d95a1d43bc/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eca074f9-ea2f-4e49-9c6a-01d95a1d43bc/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/eca074f9-ea2f-4e49-9c6a-01d95a1d43bc/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

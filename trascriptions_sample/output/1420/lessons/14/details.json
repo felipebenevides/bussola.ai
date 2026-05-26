@@ -1,0 +1,27 @@
+{
+  "id": 450413,
+  "title": "Divulgação geral | parte 1",
+  "position": 14,
+  "duration": 247,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/463053171/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b8e73541-8587-4193-b181-6a4fb5623609/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b8e73541-8587-4193-b181-6a4fb5623609/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/b8e73541-8587-4193-b181-6a4fb5623609/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

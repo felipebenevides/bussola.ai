@@ -1,0 +1,21 @@
+{
+  "id": 450127,
+  "title": "Brand moderno",
+  "position": 18,
+  "duration": 791,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/453518531/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bb73d636-c097-4176-8410-dd50ad21e591/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/bb73d636-c097-4176-8410-dd50ad21e591/720.mp4",
+      "height": 720
+    }
+  ]
+}

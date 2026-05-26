@@ -1,0 +1,27 @@
+{
+  "id": 446838,
+  "title": "Contextualização IFRS 16",
+  "position": 6,
+  "duration": 406,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/329410146/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/71db2bdf-6ba0-49d3-88a1-d952080c0471/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/71db2bdf-6ba0-49d3-88a1-d952080c0471/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/71db2bdf-6ba0-49d3-88a1-d952080c0471/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

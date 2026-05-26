@@ -1,0 +1,27 @@
+{
+  "id": 447445,
+  "title": "Andon",
+  "position": 22,
+  "duration": 197,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367857619/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a95ccb50-98f2-48a1-81ac-75d2eeb20141/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a95ccb50-98f2-48a1-81ac-75d2eeb20141/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/a95ccb50-98f2-48a1-81ac-75d2eeb20141/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

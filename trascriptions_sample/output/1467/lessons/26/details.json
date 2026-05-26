@@ -1,0 +1,27 @@
+{
+  "id": 451210,
+  "title": "CTPS e duração do trabalho",
+  "position": 25,
+  "duration": 380,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489012640/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/87cc6534-84a3-46bd-bd71-f6125b391d7f/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/87cc6534-84a3-46bd-bd71-f6125b391d7f/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/87cc6534-84a3-46bd-bd71-f6125b391d7f/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

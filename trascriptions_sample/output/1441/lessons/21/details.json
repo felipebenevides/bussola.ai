@@ -1,0 +1,27 @@
+{
+  "id": 450627,
+  "title": "Análise das demonstrações financeiras",
+  "position": 21,
+  "duration": 53,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/471049172/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/50c6dbb6-7baf-4fce-8a6b-c8485f93edd1/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/50c6dbb6-7baf-4fce-8a6b-c8485f93edd1/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/50c6dbb6-7baf-4fce-8a6b-c8485f93edd1/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

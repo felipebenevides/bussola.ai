@@ -1,0 +1,27 @@
+{
+  "id": 447307,
+  "title": "Como calcular juros compostos",
+  "position": 6,
+  "duration": 241,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/350475509/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/db9eaa4e-b368-412d-80b1-13bb8ef08986/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/db9eaa4e-b368-412d-80b1-13bb8ef08986/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/db9eaa4e-b368-412d-80b1-13bb8ef08986/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

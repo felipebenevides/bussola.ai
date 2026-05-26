@@ -1,0 +1,27 @@
+{
+  "id": 447416,
+  "title": "Exercício 2 | parte 1/2",
+  "position": 24,
+  "duration": 298,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367271171/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/58aafb05-3619-4b26-bd58-d8dd7c42db20/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/58aafb05-3619-4b26-bd58-d8dd7c42db20/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/58aafb05-3619-4b26-bd58-d8dd7c42db20/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

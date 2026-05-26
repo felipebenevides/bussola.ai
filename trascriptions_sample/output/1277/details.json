@@ -1,0 +1,52 @@
+{
+  "data": {
+    "id": 1277,
+    "title": "Gestão de Pessoas",
+    "subtitle": "Estratégias e insights",
+    "summary": "Neste este curso prático de gestão de pessoas, você vai aprender a utilizar essa estratégia eficaz que pode ser implementada em qualquer empresa. A partir de vários exemplos e táticas apresentadas, você conhecerá as habilidades de um gestor, as técnicas para avaliar desempenho, os tipos de gestão, valores organizacionais, questões que orientam o comportamento humano, fatores que interferem na produtividade, administração dentre outros pontos importantes, que te permitirão alinhar valores e desenvolver várias competências para melhorar os resultados do seu negócio.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/b8495187decdd19e12b65ceb3b72252d1728383375.jpg",
+    "goals": [
+      "Ensinar através de conceitos e ferramentas como realizar a gestão de pessoas, mostrando que com estratégias é possível de ser implantada em qualquer empresa. Neste curso, você terá condições de desenvolver uma série de competências para melhorar os resultados do seu negócio, alinhar os valores da sua empresa com seus funcionários e criar confiança e relacionamento com eles além de aprender á fundo a importância disso."
+    ],
+    "teacher": {
+      "id": 344181,
+      "name": "DANIEL VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/45030f7c2a9515a9891daffb3ab8f8141545407457.jpg"
+    },
+    "duration": 6078,
+    "keywords": "gestao de pessoas;gestao;pessoas;rh;valores",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 21,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      3,
+      4
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2457,
+    "averageRating": 9.27,
+    "practiceAverage": 9.26,
+    "trailer": {
+      "id": "805a95c2-4824-4ba9-8450-d5f3f69f69b3",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/805a95c2-4824-4ba9-8450-d5f3f69f69b3/360.mp4",
+          "height": 360
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:39.000Z",
+      "updatedAt": "2021-01-06T09:45:39.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2020-03-26T14:28:52.000Z",
+    "recordedAt": "2020-03-18T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

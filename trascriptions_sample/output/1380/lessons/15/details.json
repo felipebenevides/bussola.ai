@@ -1,0 +1,27 @@
+{
+  "id": 449974,
+  "title": "Tabelas de consulta parte 3",
+  "position": 15,
+  "duration": 159,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440795171/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/6e91aa27-d9a2-4526-8b02-f8e90c7c25e9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/6e91aa27-d9a2-4526-8b02-f8e90c7c25e9/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/6e91aa27-d9a2-4526-8b02-f8e90c7c25e9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

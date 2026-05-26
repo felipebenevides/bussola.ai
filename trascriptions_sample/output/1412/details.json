@@ -1,0 +1,63 @@
+{
+  "data": {
+    "id": 1412,
+    "title": "Ativo Imobilizado",
+    "subtitle": "CPC 27",
+    "summary": "Neste curso prático de ativo imobilizado, você aprenderá a determinar o tratamento contábil mais adequado para os ativos imobilizados, considerando o pronunciamento técnico 27 (CPC 27/ IAS 16). Por meio de vários exercícios, você entenderá sobre reconhecimento, depreciação, custos, mensuração, avaliação do ativo imobilizado, bem como outras definições e técnicas importantes para que você saiba utilizar os ativos imobilizados a partir das demonstrações contábeis, e entenda a forma correta de prestar informações e cumprir exigências fiscais.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/ffa6a4cdedc4350b6acbca661702550a1728384302.jpg",
+    "goals": [
+      "Hoje em dia, entender o que é ativo imobilizado vai além de cumprir uma exigência fiscal. É importante que uma empresa tenha conhecimento sobre o domínio do seu patrimônio para determinar o tratamento contábil para os ativos imobilizados e facilitar os questionamentos de auditorias internas e independentes, bancos, exigências licitatórias, entre outros."
+    ],
+    "teacher": {
+      "id": 355295,
+      "name": "TIAGO DE VASCONCELOS",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/869486d17f542c6dcf05d8d289ab9ed11550593587.jpg"
+    },
+    "duration": 6629,
+    "keywords": "CPC;27;ativo;imobilizado",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 32,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      2
+    ],
+    "watchLater": false,
+    "ratingQuantity": 2039,
+    "averageRating": 9.29,
+    "practiceAverage": 9.31,
+    "trailer": {
+      "id": "88d5c1de-31fb-4c5c-afe4-9f10793b0390",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/88d5c1de-31fb-4c5c-afe4-9f10793b0390/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/88d5c1de-31fb-4c5c-afe4-9f10793b0390/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/88d5c1de-31fb-4c5c-afe4-9f10793b0390/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2021-01-06T09:45:42.000Z",
+      "updatedAt": "2021-01-06T09:45:42.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 5,
+    "launchDate": "2020-09-22T17:56:11.000Z",
+    "recordedAt": "2020-09-18T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

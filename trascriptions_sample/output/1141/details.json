@@ -1,0 +1,70 @@
+{
+  "data": {
+    "id": 1141,
+    "title": "Inteligência Emocional",
+    "subtitle": "Aplicada às organizações",
+    "summary": "Neste curso prático de Inteligência Emocional (IE), você vai aprender técnicas para aprimorar essa habilidade que resulta em melhores resultados dentro das organizações. Entenderá como educar as emoções e se tornar mais assertivo no gerenciamento de conflitos. Aprenderá a mapear os acionadores das emoções, bem como a desenvolver seu potencial e construir lastro nas cinco competências da IE. Conhecerá formas de pensar e agir racionalmente e também dominará técnicas para aumentar a capacidade de influenciar pessoas e obter a colaboração em direção aos resultados, tornando-se mais produtivo.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/a7d514ea5c3edf1b3eb73c66a058866f1728385857.jpg",
+    "goals": [
+      "Ensinar técnicas práticas para ajudar os profissionais a pensar e agir racionalmente, facilitando a prática da gestão emocional."
+    ],
+    "teacher": {
+      "id": 344181,
+      "name": "DANIEL VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/media/45030f7c2a9515a9891daffb3ab8f8141545407457.jpg"
+    },
+    "duration": 2616,
+    "keywords": "emoções;emocional;inteligência",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 10,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      6
+    ],
+    "watchLater": false,
+    "ratingQuantity": 11934,
+    "averageRating": 9.38,
+    "practiceAverage": 9.37,
+    "trailer": {
+      "id": "55bd925d-a37c-42df-9e36-2d3c2e76619a",
+      "thumbnails": null,
+      "status": "ready",
+      "streamSources": [
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/55bd925d-a37c-42df-9e36-2d3c2e76619a/360.mp4",
+          "height": 360
+        },
+        {
+          "quality": "sd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/55bd925d-a37c-42df-9e36-2d3c2e76619a/480.mp4",
+          "height": 480
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/55bd925d-a37c-42df-9e36-2d3c2e76619a/720.mp4",
+          "height": 720
+        },
+        {
+          "quality": "hd",
+          "type": "video/mp4",
+          "link_secure": "https://cdn2.cefis.com.br/vod/55bd925d-a37c-42df-9e36-2d3c2e76619a/1080.mp4",
+          "height": 1080
+        }
+      ],
+      "createdAt": "2022-05-24T01:00:53.000Z",
+      "updatedAt": "2022-05-24T01:00:53.000Z"
+    },
+    "crcActive": false,
+    "crcCreditHours": 2,
+    "launchDate": "2018-12-25T14:38:33.000Z",
+    "recordedAt": "2018-12-12T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

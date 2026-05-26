@@ -1,0 +1,27 @@
+{
+  "id": 450404,
+  "title": "Valor justo | Hierarquia",
+  "position": 6,
+  "duration": 294,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/463038466/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3fd244c6-b378-4af9-a377-4b1a87a3720c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3fd244c6-b378-4af9-a377-4b1a87a3720c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3fd244c6-b378-4af9-a377-4b1a87a3720c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

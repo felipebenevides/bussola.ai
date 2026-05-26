@@ -1,0 +1,27 @@
+{
+  "id": 446034,
+  "title": "Habilidades na Inteligência Emocional",
+  "position": 7,
+  "duration": 284,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/308200083/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/01acf115-5440-47cc-8df8-74cf70e2bf2e/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/01acf115-5440-47cc-8df8-74cf70e2bf2e/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/01acf115-5440-47cc-8df8-74cf70e2bf2e/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

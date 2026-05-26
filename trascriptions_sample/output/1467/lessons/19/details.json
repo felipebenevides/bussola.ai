@@ -1,0 +1,27 @@
+{
+  "id": 451197,
+  "title": "Princípio | interveniência sindical na normatização coletiva",
+  "position": 20,
+  "duration": 319,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/488220783/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/735962bf-1764-44bd-8ee7-d3fd300c1a24/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/735962bf-1764-44bd-8ee7-d3fd300c1a24/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/735962bf-1764-44bd-8ee7-d3fd300c1a24/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

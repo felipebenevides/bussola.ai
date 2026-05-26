@@ -1,0 +1,27 @@
+{
+  "id": 446953,
+  "title": "Cronograma de trabalho",
+  "position": 7,
+  "duration": 311,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331221189/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3492b0f7-be5c-4b57-9adf-bdb824d43f13/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3492b0f7-be5c-4b57-9adf-bdb824d43f13/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/3492b0f7-be5c-4b57-9adf-bdb824d43f13/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

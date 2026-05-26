@@ -1,0 +1,27 @@
+{
+  "id": 446968,
+  "title": "DIMOB",
+  "position": 22,
+  "duration": 322,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/331469832/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c4c24574-1676-45b2-b63c-ab3ae9c31538/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c4c24574-1676-45b2-b63c-ab3ae9c31538/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c4c24574-1676-45b2-b63c-ab3ae9c31538/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

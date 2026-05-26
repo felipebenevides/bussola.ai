@@ -1,0 +1,27 @@
+{
+  "id": 451285,
+  "title": "Planejamento de Curto Prazo",
+  "position": 29,
+  "duration": 179,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489951390/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/43c0f6fe-ed28-4257-8f3a-a8fb69fccb8b/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/43c0f6fe-ed28-4257-8f3a-a8fb69fccb8b/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/43c0f6fe-ed28-4257-8f3a-a8fb69fccb8b/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

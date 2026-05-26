@@ -1,0 +1,37 @@
+{
+  "data": {
+    "id": 1128,
+    "title": "Business Model Canvas",
+    "subtitle": "Metodologia",
+    "summary": "Neste curso você Aprederá o consagrado método Project Model Canvas para gestão de Projetos. Conhecerá como colocar em Prática o PM Canvas para planejar projetos de maneira pragmática e inovadora. O PM CANVAS prega a simplicidade e agilidade para o gerenciamento de projetos, e pretende se adaptar melhor a realidade das empresas e ao funcionamento da mente humana.",
+    "banner": "https://cdn.cefis.cloud/cefiscdn/media/48cd493a750f284eda1ae89eee4c0eb91728384318.jpg",
+    "goals": [
+      "O Objetivo deste curso é que o participante domine os principais conceitos ligados ao consagrado método Project Model Canvas de José Finocchio Jr., Além de colocar a teoria em prática através de dinâmicas e exercícios para planejar projetos de maneira pragmática e inovadora."
+    ],
+    "teacher": {
+      "id": 337338,
+      "name": "LUCAS MARQUES VIEIRA",
+      "avatar": "https://cdn.cefis.cloud/cefiscdn/uploads-v3/2d3ef0eb-9145-4630-b9f9-bdfc4f4e80bb-croppedImage.jpeg"
+    },
+    "duration": 3594,
+    "keywords": "canvas",
+    "certificationThreshold": null,
+    "isEditing": false,
+    "lessonCount": 26,
+    "materialCount": 1,
+    "hasMaterials": true,
+    "categories": [
+      4,
+      5
+    ],
+    "watchLater": false,
+    "ratingQuantity": 391,
+    "averageRating": 9.17,
+    "practiceAverage": 9.14,
+    "crcActive": false,
+    "crcCreditHours": null,
+    "launchDate": "2019-11-09T16:14:27.000Z",
+    "recordedAt": "2019-10-31T00:00:00.000Z",
+    "createdAt": "2020-12-18T19:28:54.000Z"
+  }
+}

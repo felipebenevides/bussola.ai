@@ -1,0 +1,27 @@
+{
+  "id": 447451,
+  "title": "Os 5s | Seison",
+  "position": 28,
+  "duration": 93,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/367837060/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9242ac62-9568-47c5-aef3-44c5ce607780/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9242ac62-9568-47c5-aef3-44c5ce607780/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/9242ac62-9568-47c5-aef3-44c5ce607780/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

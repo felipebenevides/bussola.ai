@@ -1,0 +1,27 @@
+{
+  "id": 451212,
+  "title": "Menor de idade e trabalho da mulher",
+  "position": 26,
+  "duration": 373,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/489016379/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/21b9d998-2174-4797-962c-14657f6b1fe3/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/21b9d998-2174-4797-962c-14657f6b1fe3/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/21b9d998-2174-4797-962c-14657f6b1fe3/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": 450407,
+  "title": "O que é valor justo?",
+  "position": 5,
+  "duration": 364,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/463035430/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c21f03f1-319a-4008-b95e-e90dd8fd4909/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c21f03f1-319a-4008-b95e-e90dd8fd4909/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/c21f03f1-319a-4008-b95e-e90dd8fd4909/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

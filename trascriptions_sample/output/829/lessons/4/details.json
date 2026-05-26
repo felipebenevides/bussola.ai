@@ -1,0 +1,27 @@
+{
+  "id": 441176,
+  "title": "Quando nasce o tributo?",
+  "position": 4,
+  "duration": 119,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/207473264/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/7c508bff-4af6-4383-8cd6-5f73a0522785/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/7c508bff-4af6-4383-8cd6-5f73a0522785/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/7c508bff-4af6-4383-8cd6-5f73a0522785/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

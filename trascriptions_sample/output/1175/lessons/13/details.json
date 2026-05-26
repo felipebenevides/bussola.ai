@@ -1,0 +1,27 @@
+{
+  "id": 446845,
+  "title": "Cálculo de Leasing",
+  "position": 13,
+  "duration": 323,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/329411418/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/acb3a6a5-c799-49f8-bc62-e7794ca43c89/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/acb3a6a5-c799-49f8-bc62-e7794ca43c89/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/acb3a6a5-c799-49f8-bc62-e7794ca43c89/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

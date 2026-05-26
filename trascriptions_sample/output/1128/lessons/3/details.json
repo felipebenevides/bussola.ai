@@ -1,0 +1,27 @@
+{
+  "id": 447515,
+  "title": "O canvas",
+  "position": 3,
+  "duration": 31,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/372091581/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/51affe66-e074-4623-b7b6-f25418edd90d/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/51affe66-e074-4623-b7b6-f25418edd90d/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/51affe66-e074-4623-b7b6-f25418edd90d/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

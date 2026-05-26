@@ -1,0 +1,27 @@
+{
+  "id": 449969,
+  "title": "NCM e EFD",
+  "position": 8,
+  "duration": 130,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440755755/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/6c133e95-51ed-4a0f-909b-df20f8c8f381/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/6c133e95-51ed-4a0f-909b-df20f8c8f381/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/6c133e95-51ed-4a0f-909b-df20f8c8f381/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

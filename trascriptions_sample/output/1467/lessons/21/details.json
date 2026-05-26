@@ -1,0 +1,27 @@
+{
+  "id": 451199,
+  "title": "Princípio | lealdade e transparência",
+  "position": 22,
+  "duration": 71,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/488222247/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0d2e6c59-b2a0-4886-9c1d-93b6c4859b61/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0d2e6c59-b2a0-4886-9c1d-93b6c4859b61/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/0d2e6c59-b2a0-4886-9c1d-93b6c4859b61/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

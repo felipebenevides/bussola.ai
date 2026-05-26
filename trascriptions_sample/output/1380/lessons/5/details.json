@@ -1,0 +1,27 @@
+{
+  "id": 449964,
+  "title": "TEC e TIPI",
+  "position": 5,
+  "duration": 82,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/440746610/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd8485a0-25a8-477e-bf1a-a2ac7b0418c9/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd8485a0-25a8-477e-bf1a-a2ac7b0418c9/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/fd8485a0-25a8-477e-bf1a-a2ac7b0418c9/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

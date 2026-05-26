@@ -1,0 +1,27 @@
+{
+  "id": 450620,
+  "title": "Leitura interpretativa",
+  "position": 14,
+  "duration": 85,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/add6d86e-af7c-4da2-8928-16f2a45b01a8/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/add6d86e-af7c-4da2-8928-16f2a45b01a8/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/add6d86e-af7c-4da2-8928-16f2a45b01a8/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/add6d86e-af7c-4da2-8928-16f2a45b01a8/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

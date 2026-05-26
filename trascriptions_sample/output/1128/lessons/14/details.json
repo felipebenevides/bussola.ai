@@ -1,0 +1,27 @@
+{
+  "id": 447526,
+  "title": "Norteamento",
+  "position": 14,
+  "duration": 229,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/372096114/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2e7e0cb4-9e23-4ede-b19a-1e143ca3d8a3/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2e7e0cb4-9e23-4ede-b19a-1e143ca3d8a3/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/2e7e0cb4-9e23-4ede-b19a-1e143ca3d8a3/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

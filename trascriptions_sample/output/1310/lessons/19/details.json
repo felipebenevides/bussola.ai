@@ -1,0 +1,27 @@
+{
+  "id": 448564,
+  "title": "Táticas para gestão de equipes | 8ª",
+  "position": 19,
+  "duration": 227,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/409291993/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e199400c-4ef1-4a95-848a-d27f9a3a0549/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e199400c-4ef1-4a95-848a-d27f9a3a0549/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/e199400c-4ef1-4a95-848a-d27f9a3a0549/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

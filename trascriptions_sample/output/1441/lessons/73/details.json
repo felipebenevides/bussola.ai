@@ -1,0 +1,27 @@
+{
+  "id": 450684,
+  "title": "Estudo de caso | parte 4",
+  "position": 73,
+  "duration": 224,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/472069271/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5e3d10f8-abcd-4a6c-9989-4a6802b4d95c/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5e3d10f8-abcd-4a6c-9989-4a6802b4d95c/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/5e3d10f8-abcd-4a6c-9989-4a6802b4d95c/1080.mp4",
+      "height": 1080
+    }
+  ]
+}

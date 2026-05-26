@@ -1,0 +1,27 @@
+{
+  "id": 447309,
+  "title": "Período de capitalização da taxa",
+  "position": 8,
+  "duration": 226,
+  "preview_url": "https://cdn.cefis.cloud/cefiscdn/media/thumbnails/350475536/sprite.vtt",
+  "stream_sources": [
+    {
+      "quality": "sd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/dd5b0741-947d-45c3-a990-40512235793a/360.mp4",
+      "height": 360
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/dd5b0741-947d-45c3-a990-40512235793a/720.mp4",
+      "height": 720
+    },
+    {
+      "quality": "hd",
+      "type": "video/mp4",
+      "link_secure": "https://cdn2.cefis.com.br/vod/dd5b0741-947d-45c3-a990-40512235793a/1080.mp4",
+      "height": 1080
+    }
+  ]
+}
