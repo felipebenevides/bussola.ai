@@ -1,0 +1,12 @@
+# Força nixpacks a instalar Bun antes do build — sem isso ele cai
+# em Node.js por padrão e o buildCommand `bun install` quebra com
+# "/bin/bash: line 1: bun: command not found".
+
+[phases.setup]
+nixPkgs = ["bun"]
+
+[phases.install]
+cmds = ["bun install --frozen-lockfile || bun install"]
+
+[start]
+cmd = "bun run src/index.ts"
