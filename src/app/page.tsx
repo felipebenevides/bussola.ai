@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstallCta } from "@/components/install-cta";
 
 export default function Home() {
   return (
@@ -45,6 +46,13 @@ export default function Home() {
         >
           Ver tutor sem login
         </Link>
+      </div>
+
+      <div className="flex flex-col items-center gap-2">
+        <InstallCta />
+        <p className="text-[11px] text-zinc-400 dark:text-zinc-500">
+          Adicione à tela inicial — abre como app, sem perder espaço no celular.
+        </p>
       </div>
 
       <p className="max-w-md text-xs text-zinc-500">
