@@ -139,12 +139,22 @@ REGRAS DE RESPOSTA:
 5. NÃO escreva URLs nem links — a aplicação anexa cards de aula automaticamente a partir de used_chunk_indices.
 6. Não invente cursos/aulas fora do contexto. Se nada bate, admita.`;
 
+export interface PlanScope {
+  id: string;
+  title: string;
+  rationale: string | null;
+  skillSlugs: string[];
+  courseIds: number[];
+  itemTitles: string[];
+}
+
 export async function askTutor(opts: {
   query: string;
   userId?: string | null;
   channel?: "web" | "whatsapp";
   courseId?: number | null;
   courseTitle?: string | null;
+  planScope?: PlanScope | null;
 }): Promise<TutorAnswer> {
   const query = opts.query.trim();
   if (!query) {
@@ -154,7 +164,13 @@ export async function askTutor(opts: {
   let chunks: RagChunk[] = [];
   let courses: CourseMatch[] = [];
   try {
-    const r = await ragSearch(query, opts.courseId ?? null);
+    // Quando há plano selecionado, expandimos a query com keywords dos titles do
+    // plano pra biasar o RAG sem fechar o escopo completamente.
+    const expandedQuery =
+      opts.planScope && opts.planScope.itemTitles.length > 0
+        ? `${query} (contexto do plano "${opts.planScope.title}": ${opts.planScope.itemTitles.slice(0, 3).join("; ")})`
+        : query;
+    const r = await ragSearch(expandedQuery, opts.courseId ?? null);
     chunks = r.chunks;
     courses = r.courses;
   } catch {
@@ -181,9 +197,25 @@ export async function askTutor(opts: {
     });
   }
 
-  const scopeLine = opts.courseTitle
-    ? `O aluno está com foco específico no curso "${opts.courseTitle}". Priorize material desse curso e, se a pergunta fugir totalmente do escopo, avise gentilmente.\n\n`
-    : "";
+  const scopeBits: string[] = [];
+  if (opts.courseTitle) {
+    scopeBits.push(
+      `Foco específico no curso "${opts.courseTitle}". Priorize material desse curso.`
+    );
+  }
+  if (opts.planScope) {
+    const itemsLine = opts.planScope.itemTitles
+      .slice(0, 5)
+      .map((t) => `• ${t}`)
+      .join("\n");
+    scopeBits.push(
+      `O aluno está discutindo o PLANO "${opts.planScope.title}".\n${
+        opts.planScope.rationale ? `Lógica do plano: ${opts.planScope.rationale}\n` : ""
+      }Items do plano:\n${itemsLine}\n\nQuando a pergunta encostar nesses temas, conecte explicitamente com o item do plano. Se a pergunta fugir totalmente, responda mas sugira voltar pro plano.`
+    );
+  }
+
+  const scopeLine = scopeBits.length > 0 ? scopeBits.join("\n\n") + "\n\n" : "";
 
   const userPrompt = `${scopeLine}Pergunta do aluno: ${query}
 

@@ -7,6 +7,8 @@ export const dynamic = "force-dynamic";
 export default async function TutorPage() {
   let isLoggedIn = false;
   let firstName: string | null = null;
+  let fullName: string | null = null;
+  let avatar: string | null = null;
   try {
     const client = await getCefisClient();
     if (client) {
@@ -14,8 +16,10 @@ export default async function TutorPage() {
       try {
         const me = await client.me();
         firstName = me.first_name ?? null;
+        fullName = me.name ?? null;
+        avatar = me.avatar ?? null;
       } catch {
-        // sem nome, segue
+        // sem dados, segue
       }
     }
   } catch {
@@ -30,5 +34,13 @@ export default async function TutorPage() {
     // sem settings, sem telefone — modal mostra aviso
   }
 
-  return <TutorShell isLoggedIn={isLoggedIn} firstName={firstName} botPhone={botPhone} />;
+  return (
+    <TutorShell
+      isLoggedIn={isLoggedIn}
+      firstName={firstName}
+      fullName={fullName}
+      avatar={avatar}
+      botPhone={botPhone}
+    />
+  );
 }

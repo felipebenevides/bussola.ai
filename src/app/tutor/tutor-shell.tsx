@@ -84,13 +84,26 @@ function makeId() {
   return Math.random().toString(36).slice(2);
 }
 
+interface TutorPlanSummary {
+  id: string;
+  title: string;
+  total_weeks: number;
+  active: boolean;
+  item_count: number;
+  created_at: string;
+}
+
 export function TutorShell({
   isLoggedIn,
   firstName,
+  fullName = null,
+  avatar = null,
   botPhone,
 }: {
   isLoggedIn: boolean;
   firstName: string | null;
+  fullName?: string | null;
+  avatar?: string | null;
   botPhone: string | null;
 }) {
   const [waModalOpen, setWaModalOpen] = useState(false);
@@ -99,6 +112,9 @@ export function TutorShell({
   const [courses, setCourses] = useState<CoursesResponse>({ indexed: [], available: [] });
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [coursesError, setCoursesError] = useState<string | null>(null);
+
+  const [plans, setPlans] = useState<TutorPlanSummary[]>([]);
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
   const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
   const [search, setSearch] = useState("");
@@ -139,6 +155,52 @@ export function TutorShell({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void refreshCourses();
   }, []);
+
+  // Carrega planos quando logado
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    let cancelled = false;
+    fetch("/api/plan/list")
+      .then((r) => r.json())
+      .then((j: { plans?: TutorPlanSummary[] }) => {
+        if (cancelled) return;
+        const list = j.plans ?? [];
+        setPlans(list);
+        // Se URL trouxe ?planId, respeita. Senão seleciona o ativo.
+        const fromUrl =
+          typeof window !== "undefined"
+            ? new URLSearchParams(window.location.search).get("planId")
+            : null;
+        if (fromUrl && list.some((p) => p.id === fromUrl)) {
+          setSelectedPlanId(fromUrl);
+          return;
+        }
+        const active = list.find((p) => p.active);
+        if (active) setSelectedPlanId(active.id);
+      })
+      .catch(() => {
+        /* silencioso */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn]);
+
+  // Auto-submete query do querystring (?q=...) — usado pelos atalhos do /plano
+  const [autoSubmitDone, setAutoSubmitDone] = useState(false);
+  useEffect(() => {
+    if (autoSubmitDone) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (!q || q.trim().length < 3) return;
+    // Espera plans carregar se planId veio na URL
+    const wantsPlan = params.has("planId");
+    if (wantsPlan && plans.length === 0 && isLoggedIn) return;
+    setAutoSubmitDone(true);
+    // pequeno delay pra UI montar
+    setTimeout(() => void send(q), 200);
+  }, [autoSubmitDone, plans.length, isLoggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -192,6 +254,7 @@ export function TutorShell({
           message: text,
           courseId: selectedCourseId,
           courseTitle: selectedCourse?.title ?? null,
+          planId: selectedPlanId,
         }),
       });
       const json = await res.json();
@@ -420,9 +483,45 @@ export function TutorShell({
       >
         <SidebarHeader
           firstName={firstName}
+          fullName={fullName}
+          avatar={avatar}
           isLoggedIn={isLoggedIn}
           onClose={() => setMobileSidebarOpen(false)}
         />
+
+        {isLoggedIn && plans.length > 0 && (
+          <div
+            className="border-b px-3 py-2.5"
+            style={{ borderColor: "var(--wa-border)" }}
+          >
+            <div className="mb-1 flex items-center justify-between text-[10px] uppercase tracking-wider" style={{ color: "var(--wa-text-muted)" }}>
+              <span>Plano em discussão</span>
+              <Link
+                href="/plano"
+                className="text-emerald-600 hover:underline dark:text-emerald-400"
+              >
+                ver todos
+              </Link>
+            </div>
+            <select
+              value={selectedPlanId ?? ""}
+              onChange={(e) => setSelectedPlanId(e.target.value || null)}
+              className="h-9 w-full rounded-lg border border-zinc-300 bg-white px-2 text-xs font-medium text-zinc-800 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-300 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            >
+              <option value="">Sem contexto de plano</option>
+              {plans.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.title} {p.active ? "· ativo" : "· arquivado"} ({p.item_count})
+                </option>
+              ))}
+            </select>
+            {selectedPlanId && (
+              <p className="mt-1 text-[10px]" style={{ color: "var(--wa-text-muted)" }}>
+                Tutor vai conectar suas respostas com os items desse plano.
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="border-b px-3 py-3" style={{ borderColor: "var(--wa-border)" }}>
           <button
@@ -675,13 +774,20 @@ export function TutorShell({
 
 function SidebarHeader({
   firstName,
+  fullName,
+  avatar,
   isLoggedIn,
   onClose,
 }: {
   firstName: string | null;
+  fullName: string | null;
+  avatar: string | null;
   isLoggedIn: boolean;
   onClose: () => void;
 }) {
+  const displayName = fullName ?? firstName ?? "CEFIS";
+  const initials = (firstName ?? "?").slice(0, 1).toUpperCase();
+
   return (
     <header
       className="flex items-center justify-between border-b px-4 py-3"
@@ -690,35 +796,65 @@ function SidebarHeader({
         borderColor: "var(--wa-header-border)",
       }}
     >
-      <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-        <div className="relative">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 text-lg shadow-md">
-            🧭
+      {isLoggedIn ? (
+        <Link href="/" className="flex min-w-0 items-center gap-3 transition-opacity hover:opacity-80">
+          <div className="relative">
+            {avatar ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={avatar}
+                alt={displayName}
+                className="h-10 w-10 rounded-full object-cover shadow-md ring-2 ring-emerald-500/40"
+                onError={(e) => {
+                  // se falhar, esconde e mostra fallback de iniciais
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 text-base font-bold text-white shadow-md">
+                {initials}
+              </div>
+            )}
+            <span
+              className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 bg-emerald-500"
+              style={{ borderColor: "var(--wa-header)" }}
+            />
           </div>
-          <span
-            className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 bg-emerald-500"
-            style={{ borderColor: "var(--wa-header)" }}
-          />
+          <div className="min-w-0">
+            <div
+              className="truncate text-sm font-semibold leading-tight"
+              style={{ color: "var(--wa-text-primary)" }}
+            >
+              {displayName}
+            </div>
+            <div className="truncate text-[11px] leading-tight" style={{ color: "var(--wa-text-muted)" }}>
+              CEFIS · logado
+            </div>
+          </div>
+        </Link>
+      ) : (
+        <div className="flex min-w-0 items-center gap-3">
+          <Link href="/" className="shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 text-lg shadow-md">
+              🧭
+            </div>
+          </Link>
+          <div className="min-w-0">
+            <div
+              className="truncate text-sm font-semibold leading-tight"
+              style={{ color: "var(--wa-text-primary)" }}
+            >
+              Visitante
+            </div>
+            <Link
+              href="/login?next=/tutor"
+              className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm transition-colors hover:bg-emerald-500"
+            >
+              Entrar com CEFIS pra criar plano
+            </Link>
+          </div>
         </div>
-        <div>
-          <div
-            className="text-sm font-semibold leading-tight"
-            style={{ color: "var(--wa-text-primary)" }}
-          >
-            Bússola
-          </div>
-          <div
-            className="text-[11px] leading-tight"
-            style={{ color: "var(--wa-text-muted)" }}
-          >
-            {isLoggedIn
-              ? firstName
-                ? `online · ${firstName}`
-                : "online · CEFIS"
-              : "online · modo visitante"}
-          </div>
-        </div>
-      </Link>
+      )}
       <div className="flex items-center gap-1">
         <ThemeToggleButton variant="inline" />
         <button

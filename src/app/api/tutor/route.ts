@@ -3,6 +3,7 @@ import { z } from "zod";
 import { askTutor } from "@/lib/tutor-agent";
 import { getCurrentUserId } from "@/lib/cefis-server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { loadPlanContext } from "@/lib/plan";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,7 @@ const BodySchema = z.object({
   sessionId: z.string().uuid().optional(),
   courseId: z.number().int().positive().nullable().optional(),
   courseTitle: z.string().max(200).nullable().optional(),
+  planId: z.string().uuid().nullable().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -19,9 +21,12 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Mensagem inválida." }, { status: 400 });
   }
-  const { message, sessionId, courseId, courseTitle } = parsed.data;
+  const { message, sessionId, courseId, courseTitle, planId } = parsed.data;
 
   const userId = await getCurrentUserId();
+
+  // Plan scope só se logado E planId fornecido
+  const planScope = userId && planId ? await loadPlanContext(planId, userId) : null;
 
   let answer;
   try {
@@ -31,6 +36,7 @@ export async function POST(req: NextRequest) {
       channel: "web",
       courseId: courseId ?? null,
       courseTitle: courseTitle ?? null,
+      planScope,
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

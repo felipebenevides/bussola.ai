@@ -150,3 +150,97 @@ export async function getActivePlanForUser(userId: string): Promise<PlanView | n
   if (!data?.id) return null;
   return loadPlan(data.id, userId);
 }
+
+export interface PlanSummary {
+  id: string;
+  title: string;
+  total_weeks: number;
+  active: boolean;
+  item_count: number;
+  created_at: string;
+}
+
+/**
+ * Lista de todos os planos do usuário (ativo primeiro, depois por created_at desc).
+ */
+export async function listPlansForUser(userId: string): Promise<PlanSummary[]> {
+  const supabase = supabaseAdmin();
+  const { data } = await supabase
+    .from("study_plan")
+    .select("id, title, total_weeks, active, created_at")
+    .eq("user_id", userId)
+    .order("active", { ascending: false })
+    .order("created_at", { ascending: false });
+
+  if (!data || data.length === 0) return [];
+
+  const ids = data.map((p) => p.id);
+  const { data: items } = await supabase
+    .from("plan_items")
+    .select("plan_id")
+    .in("plan_id", ids);
+  const countByPlan = new Map<string, number>();
+  for (const it of items ?? []) {
+    countByPlan.set(it.plan_id, (countByPlan.get(it.plan_id) ?? 0) + 1);
+  }
+
+  return data.map((p) => ({
+    id: p.id,
+    title: p.title,
+    total_weeks: p.total_weeks,
+    active: p.active ?? false,
+    item_count: countByPlan.get(p.id) ?? 0,
+    created_at: p.created_at,
+  }));
+}
+
+/**
+ * Resumo curto: title + skill_slugs únicos + cefis_course_ids únicos.
+ * Usado pelo tutor pra biasar RAG quando o usuário está conversando "sobre"
+ * um plano específico.
+ */
+export interface PlanContext {
+  id: string;
+  title: string;
+  rationale: string | null;
+  skillSlugs: string[];
+  courseIds: number[];
+  itemTitles: string[];
+}
+
+export async function loadPlanContext(
+  planId: string,
+  userId: string
+): Promise<PlanContext | null> {
+  const supabase = supabaseAdmin();
+  const { data: plan } = await supabase
+    .from("study_plan")
+    .select("id, user_id, title, rationale")
+    .eq("id", planId)
+    .maybeSingle();
+  if (!plan || plan.user_id !== userId) return null;
+
+  const { data: items } = await supabase
+    .from("plan_items")
+    .select("title, skill_slug, cefis_course_id")
+    .eq("plan_id", planId);
+
+  const skillSlugs = Array.from(
+    new Set((items ?? []).map((i) => i.skill_slug).filter((v): v is string => !!v))
+  );
+  const courseIds = Array.from(
+    new Set(
+      (items ?? []).map((i) => i.cefis_course_id).filter((v): v is number => typeof v === "number")
+    )
+  );
+  const itemTitles = (items ?? []).map((i) => i.title);
+
+  return {
+    id: plan.id,
+    title: plan.title,
+    rationale: plan.rationale ?? null,
+    skillSlugs,
+    courseIds,
+    itemTitles,
+  };
+}

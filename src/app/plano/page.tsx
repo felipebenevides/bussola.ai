@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUserId } from "@/lib/cefis-server";
-import { getActivePlanForUser, type PlanItemView } from "@/lib/plan";
+import {
+  getActivePlanForUser,
+  listPlansForUser,
+  loadPlan,
+  type PlanItemView,
+  type PlanView,
+} from "@/lib/plan";
 import { Card, CardContent } from "@/components/ui/card";
 import { GeneratePlanButton } from "./generate-button";
 
@@ -43,23 +49,42 @@ const SOURCE_BADGES: Record<string, { label: string; emoji: string; classes: str
   },
 };
 
-export default async function PlanoPage() {
+export default async function PlanoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ id?: string }>;
+}) {
   const userId = await getCurrentUserId();
   if (!userId) {
     redirect("/login");
   }
 
-  const plan = await getActivePlanForUser(userId);
+  const params = await searchParams;
+  const allPlans = await listPlansForUser(userId);
+
+  let plan: PlanView | null = null;
+  if (params.id) {
+    plan = await loadPlan(params.id, userId);
+  }
+  if (!plan) {
+    plan = await getActivePlanForUser(userId);
+  }
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-4xl flex-col p-4 sm:p-6">
-      <header className="flex items-center justify-between border-b border-zinc-200 pb-4 dark:border-zinc-800">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 pb-4 dark:border-zinc-800">
         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
           <span aria-hidden>🧭</span>
           <span>Bússola · Plano</span>
         </Link>
-        <nav className="flex gap-3 text-sm">
-          <Link href="/tutor" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100">
+        <nav className="flex items-center gap-3 text-sm">
+          {allPlans.length > 1 && plan && (
+            <PlanSwitcher current={plan.id} plans={allPlans} />
+          )}
+          <Link
+            href={plan ? `/tutor?planId=${encodeURIComponent(plan.id)}` : "/tutor"}
+            className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+          >
             Tirar dúvida
           </Link>
         </nav>
@@ -97,14 +122,65 @@ export default async function PlanoPage() {
             <GeneratePlanButton label="Refazer plano" variant="outline" />
           </div>
 
-          <WeekView items={plan.items} />
+          <WeekView items={plan.items} planId={plan.id} />
         </section>
       )}
     </main>
   );
 }
 
-function WeekView({ items }: { items: PlanItemView[] }) {
+function PlanSwitcher({
+  current,
+  plans,
+}: {
+  current: string;
+  plans: Array<{ id: string; title: string; active: boolean; created_at: string }>;
+}) {
+  const currentPlan = plans.find((p) => p.id === current);
+  return (
+    <details className="relative">
+      <summary className="flex cursor-pointer list-none items-center gap-1.5 rounded-full border border-zinc-300 bg-white px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800">
+        <span className="max-w-[160px] truncate">
+          {currentPlan?.title ?? "Selecionar plano"}
+        </span>
+        <span aria-hidden>▾</span>
+      </summary>
+      <div className="absolute right-0 z-10 mt-1 w-72 overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
+        <ul className="max-h-72 overflow-y-auto py-1">
+          {plans.map((p) => {
+            const date = new Date(p.created_at).toLocaleDateString("pt-BR", {
+              day: "2-digit",
+              month: "short",
+            });
+            const isCurrent = p.id === current;
+            return (
+              <li key={p.id}>
+                <a
+                  href={`/plano?id=${encodeURIComponent(p.id)}`}
+                  className={`flex items-center gap-2 px-3 py-2 text-xs transition-colors ${
+                    isCurrent
+                      ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200"
+                      : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
+                >
+                  <span className="flex-1 truncate">
+                    <span className="block font-medium">{p.title}</span>
+                    <span className="block text-[10px] text-zinc-500">
+                      {date} · {p.active ? "ativo" : "arquivado"}
+                    </span>
+                  </span>
+                  {isCurrent && <span className="text-emerald-600">✓</span>}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </details>
+  );
+}
+
+function WeekView({ items, planId }: { items: PlanItemView[]; planId: string }) {
   const byDay = new Map<number, PlanItemView[]>();
   for (const it of items) {
     const arr = byDay.get(it.day_of_week) ?? [];
@@ -129,7 +205,7 @@ function WeekView({ items }: { items: PlanItemView[] }) {
             </p>
             <ul className="space-y-3">
               {(byDay.get(d) ?? []).map((it) => (
-                <PlanItemRow key={it.id} item={it} />
+                <PlanItemRow key={it.id} item={it} planId={planId} />
               ))}
             </ul>
           </CardContent>
@@ -139,12 +215,25 @@ function WeekView({ items }: { items: PlanItemView[] }) {
   );
 }
 
-function PlanItemRow({ item }: { item: PlanItemView }) {
+function PlanItemRow({ item, planId }: { item: PlanItemView; planId: string }) {
   const badge = SOURCE_BADGES[item.source] ?? {
     label: item.source,
     emoji: "•",
     classes: "bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300",
   };
+
+  // Prompt rico que pede a aula CEFIS + material complementar IA. O tutor vai
+  // responder com citações (vídeo no segundo certo) e o aluno pode pedir os
+  // próximos materiais (resumo/quiz) na conversa.
+  const studyPrompt =
+    `Monta pra mim o estudo COMPLETO desse item do meu plano: "${item.title}".\n\n` +
+    `Quero: (1) a aula da CEFIS apontando o momento exato; ` +
+    `(2) um resumo dos pontos-chave; ` +
+    `(3) 2-3 exemplos práticos pra aplicar; ` +
+    `(4) 1 mini-quiz pra fixar.`;
+  const studyHref = `/tutor?planId=${encodeURIComponent(planId)}&planItemId=${encodeURIComponent(
+    item.id
+  )}&q=${encodeURIComponent(studyPrompt)}`;
 
   return (
     <li className="space-y-2 border-l-2 border-zinc-200 pl-3 dark:border-zinc-800">
@@ -165,18 +254,24 @@ function PlanItemRow({ item }: { item: PlanItemView }) {
         </p>
       )}
       <div className="flex flex-wrap gap-2 text-xs">
+        <Link
+          href={studyHref}
+          className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2.5 py-1 font-semibold text-white hover:bg-emerald-700"
+        >
+          🧭 Estudar agora
+        </Link>
         {item.deep_link && (
           <a
             href={item.deep_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2.5 py-1 font-semibold text-white hover:bg-emerald-700"
+            className="inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2.5 py-1 font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/60"
           >
-            ▶ Abrir na CEFIS
+            ▶ Vídeo CEFIS
           </a>
         )}
         <Link
-          href={`/tutor`}
+          href={`/tutor?planId=${encodeURIComponent(planId)}`}
           className="inline-flex items-center gap-1 rounded-md border border-zinc-300 px-2.5 py-1 font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
         >
           Tirar dúvida
