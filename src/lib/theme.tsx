@@ -57,8 +57,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
       const supportsVT =
         typeof document !== "undefined" &&
-        // @ts-expect-error — startViewTransition é experimental, mas estável em browsers modernos
-        typeof document.startViewTransition === "function";
+        typeof (document as Document & { startViewTransition?: unknown })
+          .startViewTransition === "function";
 
       const prefersReducedMotion =
         typeof window !== "undefined" &&
@@ -78,8 +78,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         Math.max(y, h - y)
       );
 
-      // @ts-expect-error — ver acima
-      const transition = document.startViewTransition(() => {
+      const transition = (
+        document as Document & {
+          startViewTransition: (cb: () => void) => { ready: Promise<void> };
+        }
+      ).startViewTransition(() => {
         flushSync(() => applyTheme(next));
       });
 
