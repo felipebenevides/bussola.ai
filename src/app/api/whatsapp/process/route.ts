@@ -3,10 +3,10 @@ import { z } from "zod";
 import { verifySignature, HMAC_HEADER, getInternalSecret } from "@/lib/hmac";
 import { supabaseAdmin } from "@/lib/supabase";
 import { askTutor, formatTutorForWhatsApp } from "@/lib/tutor-agent";
-import { getOpenAIRaw } from "@/lib/ai";
-import { getSettings } from "@/lib/settings";
 import { normalizePhone } from "@/lib/phone";
 import { waSendText } from "@/lib/wa-client";
+import { getOpenAIRaw } from "@/lib/ai";
+import { getSettings } from "@/lib/settings";
 import { toFile } from "openai/uploads";
 
 export const runtime = "nodejs";
@@ -17,6 +17,7 @@ const PayloadSchema = z.object({
   event: z.enum(["messages.upsert", "connection.update", "other"]),
   phone: z.string().optional(),
   text: z.string().nullable().optional(),
+  messageType: z.string().nullable().optional(),
   audio: z
     .object({
       base64: z.string(),
@@ -31,9 +32,67 @@ const PayloadSchema = z.object({
 });
 
 const OTP_REGEX = /^[A-F0-9]{6}$/;
+const GREETING_REGEX =
+  /^\s*(oi+|ola+|ol[aá]+|hello+|hi+|hey+|menu|ajuda|help|start|começar|comecar|in[íi]cio|\/start|\/menu)\s*[!.?]*\s*$/i;
+
+const APP_URL = "https://bussola-ai.vercel.app";
+
+const TEXT_MESSAGE_TYPES = new Set(["conversation", "extendedTextMessage"]);
+const MEDIA_KIND_MAP: Record<string, "audio" | "image" | "video" | "document"> = {
+  audioMessage: "audio",
+  imageMessage: "image",
+  videoMessage: "video",
+  documentMessage: "document",
+  stickerMessage: "image",
+  pttMessage: "audio",
+};
+
+function welcomeMessage(name: string | null): string {
+  const hi = name ? `*Oi, ${name}!*` : "*Oi!*";
+  return [
+    `🧭 ${hi} Sou a *Bússola*, sua tutora baseada no catálogo CEFIS.`,
+    "",
+    "Como posso te ajudar agora?",
+    "",
+    "1️⃣  *Listar cursos* indexados",
+    "2️⃣  *Acessar o app* na web (plano + tutor visual + deep-link no vídeo)",
+    "3️⃣  *Estudar pelo WhatsApp* — me manda sua dúvida que eu respondo com a aula no segundo certo",
+    "",
+    "Digita *1*, *2* ou *3* — ou já manda sua pergunta direto.",
+  ].join("\n");
+}
+
+const APP_LINK_MESSAGE = [
+  `🌐 Abre a Bússola em ${APP_URL}`,
+  "",
+  "Lá você entra com CEFIS, vê o plano de estudos, conversa com o tutor e clica no vídeo direto no segundo certo da aula.",
+  "",
+  "Quando quiser estudar pelo zap de novo, é só me chamar aqui.",
+].join("\n");
+
+const STUDY_HINT_MESSAGE = [
+  "🎓 Bora! Manda sua dúvida em texto e eu busco no catálogo CEFIS.",
+  "",
+  "Exemplos:",
+  "•  _Como abrir uma negociação difícil?_",
+  "•  _O que é BATNA?_",
+  "•  _Diferença entre posição e interesse_",
+  "",
+  "Vou te responder com o trecho exato da aula (mm:ss) pra você abrir no app.",
+].join("\n");
+
+const MEDIA_NOTICE_MESSAGE = [
+  "🚧 *Em construção*",
+  "",
+  "Áudio, imagem, vídeo e documento ainda estão sendo implementados — em breve você vai poder mandar qualquer mídia que eu entendo.",
+  "",
+  "Por enquanto, manda sua dúvida em *texto* que eu respondo com a aula CEFIS no segundo certo.",
+].join("\n");
+
+const UNKNOWN_MESSAGE = "Não consegui entender essa mensagem. Manda *menu* pra ver as opções ou já joga sua dúvida em texto.";
 
 export async function POST(req: NextRequest) {
-  // 1. Validação HMAC do serviço Bun
+  // 1. HMAC
   let secret: string;
   try {
     secret = getInternalSecret();
@@ -60,14 +119,18 @@ export async function POST(req: NextRequest) {
   }
 
   const phone = parsed.phone ? normalizePhone(parsed.phone) : null;
-  if (!phone) {
-    return NextResponse.json({ ignored: "no phone" });
-  }
+  if (!phone) return NextResponse.json({ ignored: "no phone" });
 
-  // 2. Texto direto ou transcrição de áudio
-  let textInput: string | null = parsed.text ?? null;
+  const messageType = parsed.messageType ?? null;
+  const isTextMessage = !!messageType && TEXT_MESSAGE_TYPES.has(messageType);
+  const isAudioMessage =
+    messageType === "audioMessage" || messageType === "pttMessage";
+  const mediaKind = messageType ? MEDIA_KIND_MAP[messageType] ?? null : null;
+
+  // 2a. Áudio: tenta transcrever; se cota/erro qualquer, cai pra "em construção"
+  let textInput: string | null = null;
   let wasAudio = false;
-  if (!textInput && parsed.audio) {
+  if (isAudioMessage && parsed.audio?.base64) {
     wasAudio = true;
     try {
       textInput = await transcribeAudioBase64(
@@ -76,19 +139,47 @@ export async function POST(req: NextRequest) {
       );
     } catch (err) {
       logSafe("audio transcription failed", err);
+      await safeLog({
+        phone,
+        direction: "in",
+        kind: "audio",
+        content: null,
+        evolution_message_id: parsed.evolutionMessageId ?? null,
+      });
+      await sendAndLog(phone, null, MEDIA_NOTICE_MESSAGE);
+      return NextResponse.json({ handled: "audio-fallback", kind: "audio" });
     }
   }
 
-  if (!textInput) {
-    await safeLog({ phone, direction: "in", kind: "unknown", content: null });
-    await sendSafe(phone, "Por enquanto eu só leio texto e áudio. Pode mandar de novo?");
-    return NextResponse.json({ handled: "unknown-kind" });
+  // 2b. Outras mídias (imagem, vídeo, documento, sticker) → "em construção"
+  if (!isTextMessage && !wasAudio) {
+    await safeLog({
+      phone,
+      direction: "in",
+      kind: mediaKind ?? "unknown",
+      content: null,
+      evolution_message_id: parsed.evolutionMessageId ?? null,
+    });
+    await sendAndLog(phone, null, MEDIA_NOTICE_MESSAGE);
+    return NextResponse.json({ handled: "media-notice", kind: mediaKind ?? "unknown" });
   }
 
-  textInput = textInput.trim();
+  // 2c. Texto direto
+  if (!wasAudio) {
+    textInput = (parsed.text ?? "").trim();
+  } else {
+    textInput = (textInput ?? "").trim();
+  }
+  if (!textInput) {
+    await safeLog({ phone, direction: "in", kind: wasAudio ? "audio" : "text", content: null });
+    await sendAndLog(phone, null, UNKNOWN_MESSAGE);
+    return NextResponse.json({ handled: "empty-text" });
+  }
 
-  // 3. Log da mensagem in (a Bun já loga raw — aqui anotamos com user_id resolvido)
+  // 3. Lookup do usuário (opcional — não é mais obrigatório pra responder)
   const userMatch = await findUserByPhone(phone);
+  const firstName = (parsed.pushName ?? "").split(" ")[0] || null;
+
   await safeLog({
     user_id: userMatch?.user_id ?? null,
     phone,
@@ -98,14 +189,14 @@ export async function POST(req: NextRequest) {
     evolution_message_id: parsed.evolutionMessageId ?? null,
   });
 
-  // 4a. OTP de pareamento
+  // 4. OTP de pareamento (mantido pra quem já tem código gerado)
   if (OTP_REGEX.test(textInput.toUpperCase())) {
     const linked = await tryLinkCode(textInput.toUpperCase(), phone);
     if (linked.ok) {
       await sendAndLog(
         phone,
         linked.userId,
-        `🧭 Conectado! Agora você pode me mandar dúvidas e áudios sobre seus estudos. Tente: "Como começar uma negociação difícil?"`
+        "🧭 *Conectado!* Sua conta CEFIS foi pareada com esse WhatsApp. Já pode me mandar perguntas — ou digita *menu*."
       );
       return NextResponse.json({ handled: "linked" });
     }
@@ -113,47 +204,63 @@ export async function POST(req: NextRequest) {
       await sendAndLog(
         phone,
         null,
-        "Esse código já expirou. Gere um novo em bussola.app/conectar-whatsapp."
+        "Esse código já expirou. Manda *menu* pra ver as opções ou gera um novo no app."
       );
       return NextResponse.json({ handled: "expired-code" });
     }
   }
 
-  // 4b. Não pareado → instrução
-  if (!userMatch) {
-    await sendAndLog(
-      phone,
-      null,
-      "Oi! 👋 Sou a Bússola. Para conversar comigo, conecte sua conta em bussola.app/conectar-whatsapp e me envie o código que aparecer lá."
-    );
-    return NextResponse.json({ handled: "not-paired" });
+  // 5. Comandos do menu
+  const trimmed = textInput.toLowerCase();
+
+  if (GREETING_REGEX.test(textInput)) {
+    await sendAndLog(phone, userMatch?.user_id ?? null, welcomeMessage(firstName));
+    return NextResponse.json({ handled: "menu" });
   }
 
-  // 4c. Tutor agent
+  if (trimmed === "1" || trimmed.startsWith("1 ") || trimmed === "cursos") {
+    const list = await listCoursesMessage();
+    await sendAndLog(phone, userMatch?.user_id ?? null, list);
+    return NextResponse.json({ handled: "courses-list" });
+  }
+
+  if (trimmed === "2" || trimmed === "app" || trimmed === "web") {
+    await sendAndLog(phone, userMatch?.user_id ?? null, APP_LINK_MESSAGE);
+    return NextResponse.json({ handled: "app-link" });
+  }
+
+  if (trimmed === "3" || trimmed === "estudar") {
+    await sendAndLog(phone, userMatch?.user_id ?? null, STUDY_HINT_MESSAGE);
+    return NextResponse.json({ handled: "study-hint" });
+  }
+
+  // 6. Tutor (anônimo OK)
   try {
     const answer = await askTutor({
       query: textInput,
-      userId: userMatch.user_id,
+      userId: userMatch?.user_id ?? null,
       channel: "whatsapp",
     });
     const replyText = formatTutorForWhatsApp(answer);
-    await sendAndLog(phone, userMatch.user_id, replyText, answer.citations);
+    await sendAndLog(phone, userMatch?.user_id ?? null, replyText, answer.citations);
   } catch (err) {
     logSafe("tutor failed", err);
     await sendAndLog(
       phone,
-      userMatch.user_id,
-      "Tive um problema para consultar a IA agora. Tenta de novo em alguns segundos?"
+      userMatch?.user_id ?? null,
+      "Tive um problema pra consultar a IA agora. Tenta de novo em alguns segundos?"
     );
   }
 
-  try {
-    await supabaseAdmin()
-      .from("user_whatsapp")
-      .update({ last_seen_at: new Date().toISOString() })
-      .eq("phone", phone);
-  } catch {
-    /* não-crítico */
+  if (userMatch) {
+    try {
+      await supabaseAdmin()
+        .from("user_whatsapp")
+        .update({ last_seen_at: new Date().toISOString() })
+        .eq("phone", phone);
+    } catch {
+      /* não-crítico */
+    }
   }
 
   return NextResponse.json({ handled: "tutor" });
@@ -201,6 +308,32 @@ async function tryLinkCode(
   return { ok: true, userId: data.user_id };
 }
 
+async function listCoursesMessage(): Promise<string> {
+  try {
+    const { data } = await supabaseAdmin()
+      .from("cefis_courses")
+      .select("id, title, lesson_count")
+      .order("title")
+      .limit(15);
+    if (!data || data.length === 0) {
+      return "Ainda não tenho cursos indexados. Manda *2* pra abrir o app e configurar.";
+    }
+    const lines = data.map(
+      (c, i) => `${i + 1}. *${c.title}* — ${c.lesson_count ?? "?"} aulas (curso #${c.id})`
+    );
+    return [
+      "📚 *Cursos disponíveis no catálogo:*",
+      "",
+      ...lines,
+      "",
+      "Manda sua dúvida que eu acho a aula certa. Ou *2* pra abrir no app web.",
+    ].join("\n");
+  } catch (err) {
+    logSafe("listCourses failed", err);
+    return "Não consegui buscar a lista agora. Tenta de novo em alguns segundos.";
+  }
+}
+
 async function sendAndLog(
   phone: string,
   userId: string | null,
@@ -222,14 +355,6 @@ async function sendAndLog(
     evolution_message_id: messageId,
     citations: citations as object | undefined,
   });
-}
-
-async function sendSafe(phone: string, text: string) {
-  try {
-    await waSendText(phone, text);
-  } catch (err) {
-    logSafe("waSendText failed", err);
-  }
 }
 
 async function safeLog(payload: {

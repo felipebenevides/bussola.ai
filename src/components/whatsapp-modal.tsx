@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useEffect, useRef, useState } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { CheckCircle2, Loader2, MessageCircle, PhoneCall, X } from "lucide-react";
 
 interface WhatsappModalProps {
   open: boolean;
@@ -33,6 +33,12 @@ function formatUserPhoneDisplay(ddi: string, ddd: string, phone: string): string
   return `+${ddi} ${ddd} ${middle}`;
 }
 
+type InviteState =
+  | { status: "idle" }
+  | { status: "sending" }
+  | { status: "sent" }
+  | { status: "error"; message: string };
+
 export function WhatsappModal({
   open,
   onClose,
@@ -42,6 +48,7 @@ export function WhatsappModal({
   const [ddi, setDdi] = useState("55");
   const [ddd, setDdd] = useState("");
   const [phone, setPhone] = useState("");
+  const [invite, setInvite] = useState<InviteState>({ status: "idle" });
   const dddRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -71,6 +78,11 @@ export function WhatsappModal({
     };
   }, [open]);
 
+  // Reseta feedback do "Me chama" quando trocar de número
+  useEffect(() => {
+    setInvite({ status: "idle" });
+  }, [ddi, ddd, phone]);
+
   if (!open) return null;
 
   const dddDigits = digitsOnly(ddd);
@@ -88,6 +100,40 @@ export function WhatsappModal({
     const url = `https://wa.me/${digitsOnly(botPhone)}?text=${encodeURIComponent(greeting)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     onClose();
+  }
+
+  async function handleInvite() {
+    if (!valid) return;
+    setInvite({ status: "sending" });
+    const fullPhone = `${ddiDigits}${dddDigits}${phoneDigits}`;
+    try {
+      const res = await fetch("/api/whatsapp/invite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: fullPhone }),
+      });
+      if (res.status === 429) {
+        setInvite({
+          status: "error",
+          message: "Já enviei convites demais pra esse número. Tenta de novo em ~15 min.",
+        });
+        return;
+      }
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        setInvite({
+          status: "error",
+          message: data.error ?? `Não consegui enviar (status ${res.status}).`,
+        });
+        return;
+      }
+      setInvite({ status: "sent" });
+    } catch (err) {
+      setInvite({
+        status: "error",
+        message: err instanceof Error ? err.message : "Falha de rede.",
+      });
+    }
   }
 
   return (
@@ -185,21 +231,52 @@ export function WhatsappModal({
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={!valid}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-500 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Abrir conversa no WhatsApp
-          </button>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <button
+              type="submit"
+              disabled={!valid}
+              className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-500 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Eu chamo
+            </button>
 
-          {botPhone && (
+            <button
+              type="button"
+              onClick={handleInvite}
+              disabled={!valid || invite.status === "sending" || invite.status === "sent"}
+              className="flex items-center justify-center gap-2 rounded-xl border border-emerald-600 bg-white px-4 py-3 text-sm font-semibold text-emerald-700 shadow-sm transition-all hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-zinc-900 dark:text-emerald-300 dark:hover:bg-emerald-950/30"
+            >
+              {invite.status === "sending" ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : invite.status === "sent" ? (
+                <CheckCircle2 className="h-4 w-4" />
+              ) : (
+                <PhoneCall className="h-4 w-4" />
+              )}
+              {invite.status === "sent" ? "Te chamei!" : "Me chama"}
+            </button>
+          </div>
+
+          {invite.status === "sent" && (
+            <div className="rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-200">
+              ✅ Mensagem enviada — abre o WhatsApp em {userDisplay} pra continuar.
+            </div>
+          )}
+          {invite.status === "error" && (
+            <div className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-200">
+              {invite.message}
+            </div>
+          )}
+
+          {botPhone && invite.status === "idle" && (
             <p className="text-center text-[11px] text-zinc-500">
-              Vamos abrir a conversa com{" "}
+              <span className="font-medium">Eu chamo</span> abre a conversa com{" "}
               <span className="font-mono text-zinc-700 dark:text-zinc-300">
                 {formatBotPhoneDisplay(botPhone)}
               </span>
+              . <span className="font-medium">Me chama</span> faz a nossa instância te enviar
+              a primeira mensagem.
             </p>
           )}
         </form>
