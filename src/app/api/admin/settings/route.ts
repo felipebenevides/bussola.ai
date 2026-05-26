@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 
 const SENSITIVE_FIELDS = [
   "openai_api_key",
+  "openrouter_api_key",
   "cefis_demo_api_key",
   "evolution_api_key",
   "evolution_webhook_secret",
@@ -13,6 +14,7 @@ const SENSITIVE_FIELDS = [
 
 const ALLOWED_FIELDS = [
   "openai_api_key",
+  "openrouter_api_key",
   "cefis_demo_api_key",
   "chat_model",
   "embedding_model",
@@ -64,6 +66,7 @@ export async function GET(req: NextRequest) {
   }
   // Flags '_has*' booleanas para o cliente saber se há valor sem expor nada
   masked._hasOpenAI = !!settings.openai_api_key;
+  masked._hasOpenRouter = !!settings.openrouter_api_key;
   masked._hasCefisDemo = !!settings.cefis_demo_api_key;
   masked._hasEvolutionKey = !!settings.evolution_api_key;
   masked._hasEvolutionSecret = !!settings.evolution_webhook_secret;

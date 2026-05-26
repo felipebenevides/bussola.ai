@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { generateObject } from "ai";
-import { getChatModel } from "@/lib/ai";
+import { genObject } from "@/lib/ai";
 import { getCurrentUserId, getCefisClient } from "@/lib/cefis-server";
 import { supabaseAdmin } from "@/lib/supabase";
 
@@ -116,14 +115,11 @@ Decida a próxima fala da Bússola e (se já tiver os 4 dados) preencha profile 
 
   let turn: z.infer<typeof TurnSchema>;
   try {
-    const model = await getChatModel();
-    const result = await generateObject({
-      model,
+    turn = await genObject({
       schema: TurnSchema,
       system: SYSTEM_PROMPT + cefisHeader,
       prompt: userPrompt,
     });
-    turn = result.object;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ error: msg }, { status: 500 });

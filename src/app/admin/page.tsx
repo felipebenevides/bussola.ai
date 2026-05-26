@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 interface SettingsView {
   openai_api_key: string | null;
+  openrouter_api_key: string | null;
   cefis_demo_api_key: string | null;
   chat_model: string;
   embedding_model: string;
@@ -23,6 +24,7 @@ interface SettingsView {
   evolution_bot_phone: string | null;
   evolution_webhook_secret: string | null;
   _hasOpenAI: boolean;
+  _hasOpenRouter: boolean;
   _hasCefisDemo: boolean;
   _hasEvolutionKey: boolean;
   _hasEvolutionSecret: boolean;
@@ -35,6 +37,7 @@ export default function AdminPage() {
   const [settings, setSettings] = useState<SettingsView | null>(null);
   // Inputs em branco = manter o valor atual; preencher = substituir
   const [openaiInput, setOpenaiInput] = useState("");
+  const [openrouterInput, setOpenrouterInput] = useState("");
   const [cefisInput, setCefisInput] = useState("");
   const [chatModel, setChatModel] = useState("gpt-4o-mini");
   const [embeddingModel, setEmbeddingModel] = useState("text-embedding-3-small");
@@ -101,6 +104,7 @@ export default function AdminPage() {
       evolution_bot_phone: evoBotPhone || null,
     };
     if (openaiInput.trim()) body.openai_api_key = openaiInput.trim();
+    if (openrouterInput.trim()) body.openrouter_api_key = openrouterInput.trim();
     if (cefisInput.trim()) body.cefis_demo_api_key = cefisInput.trim();
     if (evoKeyInput.trim()) body.evolution_api_key = evoKeyInput.trim();
     if (evoSecretInput.trim()) body.evolution_webhook_secret = evoSecretInput.trim();
@@ -117,6 +121,7 @@ export default function AdminPage() {
     } else {
       setMessage("Configurações salvas.");
       setOpenaiInput("");
+      setOpenrouterInput("");
       setCefisInput("");
       setEvoKeyInput("");
       setEvoSecretInput("");
@@ -191,18 +196,40 @@ export default function AdminPage() {
       </div>
 
       <form onSubmit={handleSave} className="space-y-6">
-        {/* OpenAI + CEFIS */}
+        {/* Providers IA + CEFIS */}
         <Card>
           <CardHeader>
-            <CardTitle>OpenAI & CEFIS</CardTitle>
+            <CardTitle>Providers de IA & CEFIS</CardTitle>
             <CardDescription>
-              Chaves são armazenadas no banco e mascaradas. Deixe em branco para manter o valor
-              atual.
+              Chat usa <strong>OpenRouter</strong> primeiro; se falhar, cai pra OpenAI direto.
+              Embeddings e Whisper (áudio → texto) sempre vão direto na OpenAI — OpenRouter
+              não cobre esses endpoints. Chaves vivem no banco e são mascaradas; deixe em branco
+              para manter o valor atual.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="openai">OpenAI API Key</Label>
+              <Label htmlFor="openrouter">OpenRouter API Key (primário p/ chat)</Label>
+              <Input
+                id="openrouter"
+                type="password"
+                placeholder={
+                  settings?._hasOpenRouter
+                    ? `Atual: ${settings.openrouter_api_key}`
+                    : "sk-or-v1-..."
+                }
+                value={openrouterInput}
+                onChange={(e) => setOpenrouterInput(e.target.value)}
+                autoComplete="off"
+              />
+              <p className="text-xs text-zinc-500">
+                {settings?._hasOpenRouter ? "✓ configurada" : "✗ não configurada"} — fallback automático
+                via env <code>OPENROUTER_API_KEY</code> se vazia aqui.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="openai">OpenAI API Key (fallback de chat + embeddings/Whisper)</Label>
               <Input
                 id="openai"
                 type="password"
@@ -212,7 +239,8 @@ export default function AdminPage() {
                 autoComplete="off"
               />
               <p className="text-xs text-zinc-500">
-                {settings?._hasOpenAI ? "✓ configurada" : "✗ não configurada"}
+                {settings?._hasOpenAI ? "✓ configurada" : "✗ não configurada"} — obrigatória para
+                embeddings/Whisper mesmo com OpenRouter ativo.
               </p>
             </div>
 

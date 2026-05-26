@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { generateObject } from "ai";
-import { embed, getChatModel } from "@/lib/ai";
+import { embed, genObject } from "@/lib/ai";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getCurrentUserId } from "@/lib/cefis-server";
 import { getSettings } from "@/lib/settings";
@@ -174,14 +173,11 @@ Monte o plano de 1 semana agora.`;
   // 5. Gerar plano
   let plan: z.infer<typeof PlanSchema>;
   try {
-    const model = await getChatModel();
-    const result = await generateObject({
-      model,
+    plan = await genObject({
       schema: PlanSchema,
       system: SYSTEM_PROMPT,
       prompt: userPrompt,
     });
-    plan = result.object;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ error: `Falha ao gerar plano: ${msg}` }, { status: 500 });

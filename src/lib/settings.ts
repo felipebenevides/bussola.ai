@@ -3,6 +3,7 @@ import { supabaseAdmin } from "./supabase";
 
 export interface AppSettings {
   openai_api_key: string | null;
+  openrouter_api_key: string | null;
   cefis_demo_api_key: string | null;
   chat_model: string;
   embedding_model: string;
@@ -23,6 +24,7 @@ export interface AppSettings {
 
 const DEFAULTS: AppSettings = {
   openai_api_key: null,
+  openrouter_api_key: null,
   cefis_demo_api_key: null,
   chat_model: "gpt-4o-mini",
   embedding_model: "text-embedding-3-small",
@@ -60,6 +62,7 @@ export async function getSettings(forceRefresh = false): Promise<AppSettings> {
 
     if (!error && data) {
       merged.openai_api_key = data.openai_api_key ?? null;
+      merged.openrouter_api_key = data.openrouter_api_key ?? null;
       merged.cefis_demo_api_key = data.cefis_demo_api_key ?? null;
       merged.chat_model = data.chat_model ?? DEFAULTS.chat_model;
       merged.embedding_model = data.embedding_model ?? DEFAULTS.embedding_model;
@@ -83,6 +86,9 @@ export async function getSettings(forceRefresh = false): Promise<AppSettings> {
   // Fallback final: env vars
   if (!merged.openai_api_key && process.env.OPENAI_API_KEY) {
     merged.openai_api_key = process.env.OPENAI_API_KEY;
+  }
+  if (!merged.openrouter_api_key && process.env.OPENROUTER_API_KEY) {
+    merged.openrouter_api_key = process.env.OPENROUTER_API_KEY;
   }
   if (!merged.cefis_demo_api_key && process.env.CEFIS_DEMO_API_KEY) {
     merged.cefis_demo_api_key = process.env.CEFIS_DEMO_API_KEY;

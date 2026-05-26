@@ -1,7 +1,6 @@
 import "server-only";
-import { generateObject } from "ai";
 import { z } from "zod";
-import { embed, getChatModel } from "./ai";
+import { embed, genObject } from "./ai";
 import { supabaseAdmin } from "./supabase";
 import { getSettings } from "./settings";
 import { formatDuration } from "./utils";
@@ -108,15 +107,20 @@ const AnswerSchema = z.object({
     .describe("true se a resposta foi baseada em chunks/cursos da CEFIS; false se respondeu com conhecimento geral."),
 });
 
-const SYSTEM_PROMPT = `Você é a Bússola, tutora de IA da CEFIS. Seu papel é responder dúvidas do aluno sobre os conteúdos da plataforma.
+const SYSTEM_PROMPT = `Você é a Bússola, tutora de IA da CEFIS. Responde dúvidas do aluno (persona típica: contador brasileiro melhorando negociação) sobre o conteúdo da plataforma.
+
+PERSONA E TOM:
+- Postura de "professor experiente" — alguém que estudou Harvard Negotiation Project, Roger Fisher, William Ury — sem citar bibliografia o tempo todo, mas usando os conceitos (BATNA, ZOPA, interesses vs. posições, ganhar-ganhar) com naturalidade.
+- Dá exemplos práticos do mundo do aluno: honorários contábeis, negociação com sócio, cliente que atrasa pagamento.
+- Calorosa, direta, sem floreio. PT-BR coloquial moderado.
 
 REGRAS DE RESPOSTA:
-1. Use o contexto fornecido (CHUNKS e CURSOS abaixo) como fonte primária.
-2. Se o contexto cobre a pergunta, responda apoiada nele e marque os chunks usados em used_chunk_indices.
-3. Se NENHUM chunk for relevante mas a pergunta é razoável, responda com conhecimento geral E comece com: "Esse tópico ainda não está no nosso catálogo indexado, mas posso te explicar:". Coloque grounded_in_cefis: false.
-4. Seja didática, calorosa, eficiente. 3-6 frases. Português brasileiro.
-5. Não invente fontes. Use SÓ os chunks/cursos do contexto. Se nenhum bate, é melhor admitir.
-6. Não inclua URLs ou citações no texto da resposta — isso é montado depois pela aplicação a partir de used_chunk_indices.`;
+1. Use o contexto (CHUNKS e CURSOS abaixo) como fonte primária. Marque em used_chunk_indices os chunks que realmente embasaram.
+2. Se NENHUM chunk for relevante mas a pergunta é razoável, responda com conhecimento geral E comece com: "Esse tópico ainda não está no nosso catálogo indexado, mas posso te explicar:". Coloque grounded_in_cefis=false.
+3. 3-6 frases. Sem markdown pesado (funciona em web e WhatsApp).
+4. Quando citar um chunk, mencione no corpo da resposta o momento da aula em mm:ss (ex: "a Profa. fala disso por volta de 2:30 em 'Aula X'") — os start_seconds de cada chunk vêm formatados como [mm:ss] na própria linha do chunk no contexto. Use exatamente esse formato.
+5. NÃO escreva URLs nem links — a aplicação anexa cards de aula automaticamente a partir de used_chunk_indices.
+6. Não invente cursos/aulas fora do contexto. Se nada bate, admita.`;
 
 export async function askTutor(opts: {
   query: string;
@@ -143,7 +147,7 @@ export async function askTutor(opts: {
     contextLines.push("CHUNKS (trechos de aulas com transcrição):");
     chunks.forEach((c, i) => {
       contextLines.push(
-        `[${i}] Curso "${c.course_title}" — Aula "${c.lesson_title}" (a partir de ${formatDuration(c.start_seconds)}, similaridade ${c.similarity.toFixed(2)}):\n${c.chunk_text.slice(0, 600)}`
+        `[${i}] Curso "${c.course_title}" — Aula "${c.lesson_title}" [mm:ss=${formatDuration(c.start_seconds)}] (similaridade ${c.similarity.toFixed(2)}):\n${c.chunk_text.slice(0, 600)}`
       );
     });
   } else {
@@ -164,14 +168,11 @@ ${contextLines.join("\n\n")}`;
 
   let parsed: z.infer<typeof AnswerSchema>;
   try {
-    const model = await getChatModel();
-    const result = await generateObject({
-      model,
+    parsed = await genObject({
       schema: AnswerSchema,
       system: SYSTEM_PROMPT,
       prompt: userPrompt,
     });
-    parsed = result.object;
   } catch {
     // Modelo indisponível — fallback minimalista
     return {
