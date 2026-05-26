@@ -29,9 +29,10 @@
 - [x] `app/page.tsx` — copy de persona contador/negociação, 3 features destacando killer feature (cita segundo exato), CTA "Entrar com CEFIS".
 
 ### Polish (próxima rodada)
-- [ ] Loading skeletons reutilizáveis (`<MessageSkeleton />`, `<PlanSkeleton />`)
-- [ ] Toast de erro genérico
-- [ ] OG image em `app/opengraph-image.tsx`
+- [x] `app/plano/loading.tsx` — skeleton de cards animados para o Suspense do server component
+- [x] `app/onboarding/loading.tsx` — placeholder enquanto carrega perfil CEFIS
+- [~] Toast genérico — dispensado, erro inline já cobre os 3 fluxos
+- [x] `app/opengraph-image.tsx` — render edge com gradiente esmeralda + 🧭 (1200x630)
 - [x] Meta tags em `layout.tsx` (title + description já existem)
 - [ ] Mobile: testar `/tutor` em 375px — citações já têm `flex-col sm:flex-row` mas validar no device
 

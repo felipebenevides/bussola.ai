@@ -10,13 +10,12 @@
 
 ## Pendente — pré-deploy
 
-- [ ] Validar `git status` — todos arquivos atualmente `??` precisam estar limpos antes do primeiro commit
-- [ ] `git init` já está feito (branch `main` existe sem commits)
-- [ ] Configurar `git config user.email` e `user.name` se necessário
-- [ ] Verificar que nenhum `.env.local` ficou rastreado (`git status --ignored`)
-- [ ] Primeiro commit: tudo de `src/`, `supabase/`, `hackathon/`, `tasks/`, configs
-- [ ] Criar repo público `bussola-cefis` no GitHub
-- [ ] `git remote add origin` + `git push -u origin main`
+- [x] `git status` validado, `.env.local` confirmado como ignorado (git ls-files --others --ignored)
+- [x] `git config user.email/name` ok (Felipe Benevides / felipebenevides@outlook.com)
+- [x] Scan de secrets (sk-, eyJ, api_key=) — zero vazamentos
+- [x] **Primeiro commit feito**: `8e695da` chore: initial commit — Bússola MVP for CEFIS hackathon (815 files, +39987 lines)
+- [x] Remote `origin` já configurado: github.com/felipebenevides/bussola.ai.git
+- [ ] **Pendente:** `git push -u origin main` (commit local feito, não publicado ainda)
 
 ## Pendente — deploy Vercel
 
