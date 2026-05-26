@@ -52,7 +52,7 @@ INPUTS QUE VOCÊ RECEBE:
 - CHUNKS: trechos de aulas CEFIS com transcrição indexada (cada um aponta para uma aula real, com start_seconds — destrava deep-link no segundo exato)
 - CURSOS: cursos CEFIS relevantes (sem transcrição indexada, mas reais)
 
-REGRAS:
+REGRAS GERAIS:
 1. Plano de 1 semana (seg a dom = day_of_week 1..7). Total de items: 4-7.
 2. Cada item ocupa ≤ minutos/dia do aluno. Distribuir respeitando esse orçamento.
 3. PRIORIZE source='cefis_lesson' com chunk_index — esses têm timestamp e abrem direto no segundo da explicação.
@@ -61,7 +61,19 @@ REGRAS:
 6. day_of_week 6/7 (sáb/dom) podem ter blocos maiores (ex: 2x o normal).
 7. Tom: títulos diretos, sem "curso de", começa com verbo ("Entender X", "Praticar Y", "Revisar Z").
 8. rationale por item: 1 frase explicando porque entra naquele dia.
-9. rationale geral (do plano): 2-3 frases explicando a lógica da semana.`;
+9. rationale geral (do plano): 2-3 frases explicando a lógica da semana.
+
+ADAPTAÇÃO AO ESTILO DE APRENDIZAGEM (campo "Estilo" no perfil):
+- visual → maximize 'cefis_lesson' (aulas em vídeo). Reforços usam 'generated_summary' (lê-se rápido).
+  No rationale, mencione "assistir" / "ver na prática" / "mapa visual".
+- auditory → priorize 'cefis_lesson' (vídeo tem áudio) e inclua pelo menos 1 'generated_podcast' na semana.
+  No rationale, mencione "escutar no trajeto" / "ouvir o trecho".
+- kinesthetic → inclua pelo menos 2 'generated_quiz' (mão na massa) e priorize chunks que falem de
+  exemplos práticos. No rationale, mencione "praticar" / "simular" / "aplicar com cliente real".
+- mixed (default) → balanceie: ~50% aula CEFIS, ~25% resumo IA, ~25% quiz IA.
+
+Nunca use APENAS conteúdo IA — sempre tenha pelo menos 2 'cefis_lesson' por semana pra ancorar no
+catálogo real.`;
 
 export async function POST() {
   const userId = await getCurrentUserId();

@@ -60,7 +60,7 @@ export function buildLessonDeepLink(courseId: number, lessonId: number, startSec
   return `https://cefis.com.br/curso/${courseId}/aula/${lessonId}?t=${t}`;
 }
 
-async function ragSearch(
+export async function ragSearch(
   query: string,
   courseId?: number | null
 ): Promise<{
