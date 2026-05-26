@@ -45,6 +45,10 @@ export interface JourneySnapshot {
   citationsTotal: number;
   streak: number;
   lastActivityAt: string | null;
+  /** YYYY-MM-DD UTC dos dias com atividade nos últimos 30 dias (UI calendar). */
+  recentDays: string[];
+  /** Ordem fixa dos níveis com flag `unlocked` (xp ≥ minXp). */
+  ladder: Array<Level & { unlocked: boolean; current: boolean }>;
 }
 
 export async function computeJourney(userId: string | null): Promise<JourneySnapshot> {
@@ -57,6 +61,8 @@ export async function computeJourney(userId: string | null): Promise<JourneySnap
     citationsTotal: 0,
     streak: 0,
     lastActivityAt: null,
+    recentDays: [],
+    ladder: LEVELS.map((l, i) => ({ ...l, unlocked: i === 0, current: i === 0 })),
   };
   if (!userId) return empty;
 
@@ -129,6 +135,12 @@ export async function computeJourney(userId: string | null): Promise<JourneySnap
     citationsTotal,
     streak,
     lastActivityAt: lastActivity ? new Date(lastActivity).toISOString() : null,
+    recentDays: Array.from(dates).sort(),
+    ladder: LEVELS.map((l) => ({
+      ...l,
+      unlocked: xp >= l.minXp,
+      current: l.slug === level.slug,
+    })),
   };
 }
 

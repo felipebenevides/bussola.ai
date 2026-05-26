@@ -16,6 +16,7 @@ import {
   Plus,
   Search,
   Send,
+  Settings as SettingsIcon,
   Sparkles,
   Users,
   X,
@@ -25,6 +26,7 @@ import { ThemeToggleButton } from "@/components/theme-toggle";
 import { WhatsappModal } from "@/components/whatsapp-modal";
 import { StudyGroupModal } from "@/components/study-group-modal";
 import { JourneyWidget } from "@/components/journey-widget";
+import { SettingsModal } from "@/components/settings-modal";
 import { InstallCta } from "@/components/install-cta";
 import type {
   AvailableCourse,
@@ -93,6 +95,7 @@ export function TutorShell({
 }) {
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [courses, setCourses] = useState<CoursesResponse>({ indexed: [], available: [] });
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [coursesError, setCoursesError] = useState<string | null>(null);
@@ -573,6 +576,7 @@ export function TutorShell({
           isOnboarding={onboarding.active}
           onMenu={() => setMobileSidebarOpen(true)}
           onCloseOnboarding={closeOnboarding}
+          onOpenSettings={() => setSettingsModalOpen(true)}
           accent={onboarding.active ? "violet" : selectedCourse ? "emerald" : "blue"}
         />
 
@@ -655,6 +659,11 @@ export function TutorShell({
         open={groupModalOpen}
         onClose={() => setGroupModalOpen(false)}
         isLoggedIn={isLoggedIn}
+      />
+
+      <SettingsModal
+        open={settingsModalOpen}
+        onClose={() => setSettingsModalOpen(false)}
       />
     </div>
   );
@@ -907,6 +916,7 @@ function ChatHeader({
   isOnboarding,
   onMenu,
   onCloseOnboarding,
+  onOpenSettings,
   accent,
 }: {
   title: string;
@@ -914,6 +924,7 @@ function ChatHeader({
   isOnboarding: boolean;
   onMenu: () => void;
   onCloseOnboarding: () => void;
+  onOpenSettings: () => void;
   accent: "emerald" | "blue" | "violet";
 }) {
   const accentRing =
@@ -955,6 +966,17 @@ function ChatHeader({
           {subtitle}
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={onOpenSettings}
+        className="rounded-full p-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+        aria-label="Preferências de estudo"
+        title="Preferências"
+        style={{ color: "var(--wa-text-secondary)" }}
+      >
+        <SettingsIcon className="h-5 w-5" />
+      </button>
 
       {isOnboarding ? (
         <button
