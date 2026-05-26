@@ -1,6 +1,8 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// Railway self-host: edge runtime depende de Vercel infra. Em Node runtime
+// next/og funciona igualzinho via @vercel/og em modo Node — sem Vercel.
+export const runtime = "nodejs";
 export const alt = "Bússola — tutor de IA CEFIS";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
