@@ -47,3 +47,17 @@ export async function waSendAudio(
   });
   return null;
 }
+
+export interface WaCreateGroupResult {
+  jid: string;
+  subject: string;
+  participants: Array<{ id: string; admin?: string | null }>;
+}
+
+export async function waCreateGroup(opts: {
+  subject: string;
+  description?: string;
+  participants: string[]; // E.164 sem '+'
+}): Promise<WaCreateGroupResult> {
+  return call<WaCreateGroupResult>("/v1/group/create", opts);
+}

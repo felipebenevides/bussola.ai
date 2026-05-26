@@ -5,6 +5,7 @@ import { pingEvolution } from "./evolution";
 import { webhookRouter } from "./webhook";
 import { sendRouter } from "./send";
 import { instanceRouter } from "./instance";
+import { groupRouter } from "./group";
 import { queueSize } from "./queue";
 
 env(); // valida configuração no boot — sai com exit 1 se faltar algo
@@ -27,6 +28,7 @@ app.get("/health", async (c) => {
 app.route("/v1", webhookRouter);
 app.route("/v1", sendRouter);
 app.route("/v1", instanceRouter);
+app.route("/v1", groupRouter);
 
 app.onError((err, c) => {
   log.error("unhandled", { err: err.message });

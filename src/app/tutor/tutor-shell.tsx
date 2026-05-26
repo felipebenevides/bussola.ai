@@ -17,11 +17,15 @@ import {
   Search,
   Send,
   Sparkles,
+  Users,
   X,
 } from "lucide-react";
 import { formatDuration } from "@/lib/utils";
 import { ThemeToggleButton } from "@/components/theme-toggle";
 import { WhatsappModal } from "@/components/whatsapp-modal";
+import { StudyGroupModal } from "@/components/study-group-modal";
+import { JourneyWidget } from "@/components/journey-widget";
+import { InstallCta } from "@/components/install-cta";
 import type {
   AvailableCourse,
   CoursesResponse,
@@ -88,6 +92,7 @@ export function TutorShell({
   botPhone: string | null;
 }) {
   const [waModalOpen, setWaModalOpen] = useState(false);
+  const [groupModalOpen, setGroupModalOpen] = useState(false);
   const [courses, setCourses] = useState<CoursesResponse>({ indexed: [], available: [] });
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [coursesError, setCoursesError] = useState<string | null>(null);
@@ -435,6 +440,27 @@ export function TutorShell({
             </span>
             <Sparkles className="h-4 w-4 text-white/70 transition-transform group-hover:rotate-12" />
           </button>
+
+          <button
+            type="button"
+            onClick={() => setGroupModalOpen(true)}
+            className="group mt-2 flex w-full items-center gap-3 rounded-lg border border-violet-500/40 bg-gradient-to-br from-violet-600/20 to-fuchsia-600/10 px-3 py-2 text-left transition-all hover:from-violet-600/30 hover:to-fuchsia-600/20"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white shadow-sm">
+              <Users className="h-4 w-4" />
+            </span>
+            <span className="flex-1 leading-tight">
+              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-violet-700 dark:text-violet-200">
+                Plano Empresarial
+                <span className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+                  exclusivo
+                </span>
+              </span>
+              <span className="block text-[10px] text-violet-700/70 dark:text-violet-300/70">
+                Grupo no WhatsApp · até 5 alunos · 7 dias
+              </span>
+            </span>
+          </button>
         </div>
 
         <div className="border-b px-3 py-2" style={{ borderColor: "var(--wa-border)" }}>
@@ -521,6 +547,10 @@ export function TutorShell({
               </div>
             )}
         </nav>
+
+        <div className="border-t px-3 py-3" style={{ borderColor: "var(--wa-border)" }}>
+          <JourneyWidget isLoggedIn={isLoggedIn} />
+        </div>
 
         <SidebarFooter
           isLoggedIn={isLoggedIn}
@@ -619,6 +649,12 @@ export function TutorShell({
         open={waModalOpen}
         onClose={() => setWaModalOpen(false)}
         botPhone={botPhone}
+      />
+
+      <StudyGroupModal
+        open={groupModalOpen}
+        onClose={() => setGroupModalOpen(false)}
+        isLoggedIn={isLoggedIn}
       />
     </div>
   );
@@ -749,6 +785,10 @@ function SidebarFooter({
           Meu plano de estudos
         </Link>
       )}
+
+      <div className="flex justify-center pt-1">
+        <InstallCta variant="ghost" className="!h-9 !text-xs" />
+      </div>
     </div>
   );
 }

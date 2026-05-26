@@ -85,6 +85,29 @@ export async function connectInstance(name: string): Promise<{ qr?: string }> {
   return { qr: res.base64 ?? res.code };
 }
 
+export interface GroupCreateResponse {
+  /** JID do grupo (formato {numero}-{timestamp}@g.us). */
+  id?: string;
+  groupJid?: string;
+  subject?: string;
+  /** Lista de telefones aceitos pelo Evolution (alguns números podem ser
+   *  rejeitados se não tiverem WhatsApp). */
+  participants?: Array<{ id: string; admin?: string | null }>;
+}
+
+export async function createGroup(opts: {
+  instanceName: string;
+  subject: string;
+  description?: string;
+  participants: string[]; // E.164 sem '+'
+}): Promise<GroupCreateResponse> {
+  return call<GroupCreateResponse>("POST", `/group/create/${opts.instanceName}`, {
+    subject: opts.subject,
+    description: opts.description ?? "Grupo de estudo Bússola — 7 dias de acesso",
+    participants: opts.participants,
+  });
+}
+
 export async function instanceStatus(name: string): Promise<{
   state?: string;
   connected: boolean;
