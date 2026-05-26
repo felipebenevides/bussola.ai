@@ -26,19 +26,6 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  // 1. Gate: precisa estar logado na CEFIS
-  const userId = await getCurrentUserId();
-  if (!userId) {
-    return NextResponse.json(
-      {
-        error: "auth required",
-        message:
-          "Pra criar um grupo de estudo é preciso estar logado na CEFIS. Vá em /login.",
-      },
-      { status: 401 }
-    );
-  }
-
   let body: z.infer<typeof BodySchema>;
   try {
     body = BodySchema.parse(await req.json());
@@ -46,12 +33,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid body" }, { status: 400 });
   }
 
-  // 2. Normaliza e deduplica telefones
+  // 1. Normaliza e deduplica telefones (preservando ordem do input)
   const phones: string[] = [];
+  const participantsNorm: Array<{ phone: string; name: string | null }> = [];
   for (const p of body.participants) {
     const np = normalizePhone(p.phone);
-    if (!np) continue;
-    if (!phones.includes(np)) phones.push(np);
+    if (!np || phones.includes(np)) continue;
+    phones.push(np);
+    participantsNorm.push({ phone: np, name: (p.name ?? "").trim() || null });
   }
   if (phones.length === 0) {
     return NextResponse.json({ error: "no valid phone" }, { status: 400 });
@@ -63,44 +52,47 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 3. 1 grupo ativo por user (unique index na tabela já protege, mas damos
-  //    erro 409 amigável antes de bater na Evolution)
+  // 2. Identidade: prioriza CEFIS login; senão usa o 1º participante como
+  //    organizador anônimo (beta aberto).
+  const userId = await getCurrentUserId();
+  const creatorPhone = userId ? null : phones[0];
+
   const supabase = supabaseAdmin();
-  const { data: existing } = await supabase
+
+  // 3. Já tem grupo ativo? (mesma identidade)
+  let existingQuery = supabase
     .from("study_groups")
     .select("id, group_name, evolution_group_jid, expires_at, status")
-    .eq("creator_user_id", userId)
-    .in("status", ["pending", "active"])
-    .maybeSingle();
+    .in("status", ["pending", "active"]);
+  existingQuery = userId
+    ? existingQuery.eq("creator_user_id", userId)
+    : existingQuery.eq("creator_phone", creatorPhone!).is("creator_user_id", null);
+  const { data: existing } = await existingQuery.maybeSingle();
 
   if (existing) {
     return NextResponse.json(
       {
         error: "already exists",
         message:
-          "Você já tem um grupo de estudo ativo. Espere ele expirar (7 dias) pra criar outro.",
+          "Já existe um grupo ativo pra você. Aguarde os 7 dias da demo expirar antes de criar outro.",
         group: existing,
       },
       { status: 409 }
     );
   }
 
-  // 4. Persiste linha pending antes de chamar Evolution (idempotência se
-  //    o request travar)
+  // 4. Persiste linha pending antes de chamar Evolution
   const expiresAt = new Date(
     Date.now() + GROUP_VALIDITY_DAYS * 24 * 60 * 60 * 1000
   ).toISOString();
-
-  const participantsJson = body.participants
-    .map((p, i) => ({ phone: phones[i] ?? null, name: (p.name ?? "").trim() || null }))
-    .filter((p): p is { phone: string; name: string | null } => !!p.phone);
 
   const { data: pending, error: insErr } = await supabase
     .from("study_groups")
     .insert({
       creator_user_id: userId,
+      creator_phone: creatorPhone,
       group_name: body.name,
-      participants: participantsJson,
+      participants: participantsNorm,
       status: "pending",
       expires_at: expiresAt,
     })
@@ -114,7 +106,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 5. Cria grupo via Evolution (síncrono pq retornamos o JID na resposta)
+  // 5. Cria grupo via Evolution
   let jid: string;
   try {
     const res = await waCreateGroup({
@@ -140,8 +132,7 @@ export async function POST(req: NextRequest) {
     .update({ status: "active", evolution_group_jid: jid })
     .eq("id", pending.id);
 
-  // 6. Mensagem de boas-vindas dentro do grupo recém-criado (a fila do Bun
-  //    cuida do delay de 10s)
+  // 6. Mensagem de boas-vindas no grupo
   try {
     await waSendText(
       jid,
@@ -150,7 +141,7 @@ export async function POST(req: NextRequest) {
         "",
         "🧭 Aqui é a *Bússola*, sua tutora baseada no catálogo CEFIS.",
         "",
-        `Esse grupo é exclusivo do *plano demo* e fica ativo por *${GROUP_VALIDITY_DAYS} dias*.`,
+        `Esse grupo é do *plano demo* (aberto pra beta) e fica ativo por *${GROUP_VALIDITY_DAYS} dias*.`,
         "",
         "Qualquer um pode mandar dúvida — eu respondo com a aula no segundo certo.",
         "",
@@ -167,11 +158,14 @@ export async function POST(req: NextRequest) {
     jid,
     expiresAt,
     participants: phones,
+    mode: userId ? "cefis" : "beta-anonymous",
   });
 }
 
 export async function GET() {
   const userId = await getCurrentUserId();
+  // Anônimo não tem como ser identificado sem o telefone — devolve null mas
+  // não erra. A interface vai assumir "sem grupo ativo" e permitir criar.
   if (!userId) {
     return NextResponse.json({ group: null, authenticated: false });
   }

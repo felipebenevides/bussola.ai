@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckCircle2, Loader2, Lock, Plus, Trash2, Users, X } from "lucide-react";
+import { CheckCircle2, Loader2, Plus, Trash2, Users, X } from "lucide-react";
 
 interface ExistingGroup {
   id: string;
@@ -103,7 +103,6 @@ export function StudyGroupModal({
 
   const validParticipants = participants.filter((p) => !!fullPhone(p));
   const canSubmit =
-    isLoggedIn &&
     name.trim().length >= 2 &&
     validParticipants.length >= 1 &&
     state.status !== "submitting";
@@ -214,14 +213,17 @@ export function StudyGroupModal({
 
         <div className="space-y-4 px-5 pb-5 pt-4">
           {!isLoggedIn && (
-            <div className="flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2.5 text-xs text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
-              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <div className="flex items-start gap-2 rounded-lg border border-violet-300 bg-violet-50 px-3 py-2.5 text-xs text-violet-800 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-200">
+              <span className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+                beta aberto
+              </span>
               <span>
-                Esse recurso é exclusivo de alunos logados na CEFIS. Faça login em{" "}
+                Sem login? Sem problema — o primeiro participante vira o organizador
+                do grupo. Pra acumular XP e ter perfil persistente,{" "}
                 <a href="/login" className="font-semibold underline-offset-2 hover:underline">
-                  /login
-                </a>{" "}
-                pra criar seu grupo de estudo.
+                  faça login na CEFIS
+                </a>
+                .
               </span>
             </div>
           )}
@@ -246,7 +248,6 @@ export function StudyGroupModal({
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ex: Turma da OAB — Negociação"
                   className="h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600 dark:focus:ring-violet-900/60"
-                  disabled={!isLoggedIn}
                 />
               </div>
 
@@ -259,13 +260,17 @@ export function StudyGroupModal({
                     <button
                       type="button"
                       onClick={addParticipant}
-                      disabled={!isLoggedIn}
-                      className="flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[11px] font-semibold text-violet-700 transition-colors hover:bg-violet-200 disabled:opacity-50 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-950/60"
+                      className="flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[11px] font-semibold text-violet-700 transition-colors hover:bg-violet-200 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-950/60"
                     >
                       <Plus className="h-3 w-3" /> Adicionar
                     </button>
                   )}
                 </div>
+                <p className="mb-1.5 text-[10px] text-zinc-500">
+                  {!isLoggedIn
+                    ? "Sem login: o 1º participante é tratado como organizador."
+                    : "Você vira o organizador automaticamente."}
+                </p>
                 <div className="space-y-2">
                   {participants.map((p, i) => (
                     <ParticipantRow
@@ -273,7 +278,6 @@ export function StudyGroupModal({
                       value={p}
                       onChange={(patch) => updateParticipant(i, patch)}
                       onRemove={participants.length > 1 ? () => removeParticipant(i) : undefined}
-                      disabled={!isLoggedIn}
                     />
                   ))}
                 </div>
@@ -322,12 +326,10 @@ function ParticipantRow({
   value,
   onChange,
   onRemove,
-  disabled,
 }: {
   value: Participant;
   onChange: (patch: Partial<Participant>) => void;
   onRemove?: () => void;
-  disabled?: boolean;
 }) {
   return (
     <div className="flex items-center gap-1.5">
@@ -336,7 +338,6 @@ function ParticipantRow({
         value={value.name}
         onChange={(e) => onChange({ name: e.target.value })}
         placeholder="Nome (opcional)"
-        disabled={disabled}
         className="h-10 w-32 shrink-0 rounded-lg border border-zinc-300 bg-white px-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600"
       />
       <input
@@ -346,7 +347,6 @@ function ParticipantRow({
         onChange={(e) => onChange({ ddd: digits(e.target.value).slice(0, 2) })}
         maxLength={2}
         placeholder="11"
-        disabled={disabled}
         className="h-10 w-12 shrink-0 rounded-lg border border-zinc-300 bg-white px-2 text-center text-sm font-mono text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
       />
       <input
@@ -356,7 +356,6 @@ function ParticipantRow({
         onChange={(e) => onChange({ number: digits(e.target.value).slice(0, 9) })}
         maxLength={9}
         placeholder="99999-9999"
-        disabled={disabled}
         className="h-10 flex-1 rounded-lg border border-zinc-300 bg-white px-3 text-sm font-mono text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
       />
       {onRemove && (
