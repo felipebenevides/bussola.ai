@@ -7,15 +7,15 @@ import { log } from "./log";
  * 1. Garantir ordem: se o Next.js dispara várias respostas em paralelo, o
  *    usuário recebe na sequência correta de chegada na fila.
  * 2. Cadência humana: aplica um delay mínimo (DELAY_MS) entre o momento
- *    em que a mensagem foi enfileirada e o envio efetivo — evita o bot
- *    responder em <1s e dar sensação robótica.
+ *    em que a mensagem foi enfileirada e o envio efetivo. 1.5s evita
+ *    sensação de bot instantâneo sem perder responsividade.
  *
  * Persistência: zero. Reinício do processo perde a fila. Aceitável porque
  * o Next.js já tem retry no relay e o pior caso é mensagem perdida em
  * crash/redeploy raro.
  */
 
-const DELAY_MS = 10_000;
+const DELAY_MS = 1_500;
 
 interface Job {
   exec: () => Promise<string | null>;

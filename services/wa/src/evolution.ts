@@ -108,6 +108,32 @@ export async function createGroup(opts: {
   });
 }
 
+export async function addGroupParticipants(opts: {
+  instanceName: string;
+  groupJid: string;
+  participants: string[];
+}): Promise<{ added: string[]; rejected: Array<{ id: string; reason?: string }> }> {
+  // Evolution v2: POST /group/updateParticipant/{instance}?groupJid=...
+  // body: { action: "add", participants: [...] }
+  const path = `/group/updateParticipant/${opts.instanceName}?groupJid=${encodeURIComponent(opts.groupJid)}`;
+  const raw = await call<unknown>("POST", path, {
+    action: "add",
+    participants: opts.participants,
+  });
+  // O retorno costuma ser um array ou objeto; normalizamos.
+  if (Array.isArray(raw)) {
+    return {
+      added: raw
+        .filter((r: any) => r?.status === "200" || r?.status === 200)
+        .map((r: any) => r.jid ?? r.id),
+      rejected: raw
+        .filter((r: any) => r?.status && r.status !== 200 && r.status !== "200")
+        .map((r: any) => ({ id: r.jid ?? r.id, reason: r.message })),
+    };
+  }
+  return { added: opts.participants, rejected: [] };
+}
+
 export async function instanceStatus(name: string): Promise<{
   state?: string;
   connected: boolean;

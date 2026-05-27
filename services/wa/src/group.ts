@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { z } from "zod";
-import { createGroup } from "./evolution";
+import { addGroupParticipants, createGroup } from "./evolution";
 import { env } from "./env";
 import { hmacMiddleware, parseBody } from "./middleware";
 import { log } from "./log";
@@ -8,6 +8,11 @@ import { log } from "./log";
 const CreateSchema = z.object({
   subject: z.string().min(2).max(80),
   description: z.string().max(300).optional(),
+  participants: z.array(z.string().min(10).max(20)).min(1).max(5),
+});
+
+const AddParticipantsSchema = z.object({
+  groupJid: z.string().min(8),
   participants: z.array(z.string().min(10).max(20)).min(1).max(5),
 });
 
@@ -38,6 +43,24 @@ groupRouter.post("/group/create", async (c) => {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     log.error("group.create.failed", { msg });
+    return c.json({ error: msg }, 502);
+  }
+});
+
+groupRouter.post("/group/add-participant", async (c) => {
+  const parsed = AddParticipantsSchema.safeParse(parseBody(c));
+  if (!parsed.success) return c.json({ error: "invalid body" }, 400);
+
+  try {
+    const res = await addGroupParticipants({
+      instanceName: env().EVOLUTION_INSTANCE,
+      groupJid: parsed.data.groupJid,
+      participants: parsed.data.participants,
+    });
+    return c.json(res);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    log.error("group.addParticipant.failed", { msg });
     return c.json({ error: msg }, 502);
   }
 });
