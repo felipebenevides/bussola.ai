@@ -115,7 +115,7 @@ export function WhatsappModal({
       if (res.status === 429) {
         setInvite({
           status: "error",
-          message: "Já enviei convites demais pra esse número. Tenta de novo em ~15 min.",
+          message: "Já enviei convites demais para esse número. Tente de novo em ~15 min.",
         });
         return;
       }
@@ -220,7 +220,7 @@ export function WhatsappModal({
               />
             </div>
             <p className="mt-1.5 text-[10px] text-zinc-500">
-              Usamos pra te identificar na conversa — fica salvo só na sua sessão de hoje.
+              Usamos para te identificar na conversa — fica salvo só na sua sessão de hoje.
             </p>
           </div>
 
@@ -260,7 +260,7 @@ export function WhatsappModal({
 
           {invite.status === "sent" && (
             <div className="rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-200">
-              ✅ Mensagem enviada — abre o WhatsApp em {userDisplay} pra continuar.
+              ✅ Mensagem enviada — abra o WhatsApp em {userDisplay} para continuar.
             </div>
           )}
           {invite.status === "error" && (

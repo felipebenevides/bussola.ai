@@ -8,8 +8,10 @@ import {
   type PlanItemView,
   type PlanView,
 } from "@/lib/plan";
+import { getSettings } from "@/lib/settings";
 import { Card, CardContent } from "@/components/ui/card";
 import { GeneratePlanButton } from "./generate-button";
+import { PlanItemActions } from "./plan-item-actions";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +72,15 @@ export default async function PlanoPage({
     plan = await getActivePlanForUser(userId);
   }
 
+  // Bot phone pro ChannelToggle nos cards
+  let botPhone: string | null = null;
+  try {
+    const settings = await getSettings();
+    botPhone = settings.evolution_bot_phone ?? null;
+  } catch {
+    // sem botPhone — toggle não aparece
+  }
+
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-4xl flex-col p-4 sm:p-6">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 pb-4 dark:border-zinc-800">
@@ -122,7 +133,7 @@ export default async function PlanoPage({
             <GeneratePlanButton label="Refazer plano" variant="outline" />
           </div>
 
-          <WeekView items={plan.items} planId={plan.id} />
+          <WeekView items={plan.items} planId={plan.id} botPhone={botPhone} />
         </section>
       )}
     </main>
@@ -180,7 +191,15 @@ function PlanSwitcher({
   );
 }
 
-function WeekView({ items, planId }: { items: PlanItemView[]; planId: string }) {
+function WeekView({
+  items,
+  planId,
+  botPhone,
+}: {
+  items: PlanItemView[];
+  planId: string;
+  botPhone: string | null;
+}) {
   const byDay = new Map<number, PlanItemView[]>();
   for (const it of items) {
     const arr = byDay.get(it.day_of_week) ?? [];
@@ -205,7 +224,7 @@ function WeekView({ items, planId }: { items: PlanItemView[]; planId: string }) 
             </p>
             <ul className="space-y-3">
               {(byDay.get(d) ?? []).map((it) => (
-                <PlanItemRow key={it.id} item={it} planId={planId} />
+                <PlanItemRow key={it.id} item={it} planId={planId} botPhone={botPhone} />
               ))}
             </ul>
           </CardContent>
@@ -215,25 +234,20 @@ function WeekView({ items, planId }: { items: PlanItemView[]; planId: string }) 
   );
 }
 
-function PlanItemRow({ item, planId }: { item: PlanItemView; planId: string }) {
+function PlanItemRow({
+  item,
+  planId,
+  botPhone,
+}: {
+  item: PlanItemView;
+  planId: string;
+  botPhone: string | null;
+}) {
   const badge = SOURCE_BADGES[item.source] ?? {
     label: item.source,
     emoji: "•",
     classes: "bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300",
   };
-
-  // Prompt rico que pede a aula CEFIS + material complementar IA. O tutor vai
-  // responder com citações (vídeo no segundo certo) e o aluno pode pedir os
-  // próximos materiais (resumo/quiz) na conversa.
-  const studyPrompt =
-    `Monta pra mim o estudo COMPLETO desse item do meu plano: "${item.title}".\n\n` +
-    `Quero: (1) a aula da CEFIS apontando o momento exato; ` +
-    `(2) um resumo dos pontos-chave; ` +
-    `(3) 2-3 exemplos práticos pra aplicar; ` +
-    `(4) 1 mini-quiz pra fixar.`;
-  const studyHref = `/tutor?planId=${encodeURIComponent(planId)}&planItemId=${encodeURIComponent(
-    item.id
-  )}&q=${encodeURIComponent(studyPrompt)}`;
 
   return (
     <li className="space-y-2 border-l-2 border-zinc-200 pl-3 dark:border-zinc-800">
@@ -253,30 +267,14 @@ function PlanItemRow({ item, planId }: { item: PlanItemView; planId: string }) {
           {item.lesson_title}
         </p>
       )}
-      <div className="flex flex-wrap gap-2 text-xs">
-        <Link
-          href={studyHref}
-          className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2.5 py-1 font-semibold text-white hover:bg-emerald-700"
-        >
-          🧭 Estudar agora
-        </Link>
-        {item.deep_link && (
-          <a
-            href={item.deep_link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2.5 py-1 font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/60"
-          >
-            ▶ Vídeo CEFIS
-          </a>
-        )}
-        <Link
-          href={`/tutor?planId=${encodeURIComponent(planId)}`}
-          className="inline-flex items-center gap-1 rounded-md border border-zinc-300 px-2.5 py-1 font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-        >
-          Tirar dúvida
-        </Link>
-      </div>
+      <PlanItemActions
+        planItemId={item.id}
+        planId={planId}
+        itemTitle={item.title}
+        fallbackHref={`/tutor?planId=${encodeURIComponent(planId)}`}
+        deepLink={item.deep_link}
+        botPhone={botPhone}
+      />
     </li>
   );
 }

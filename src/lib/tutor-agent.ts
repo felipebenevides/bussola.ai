@@ -132,12 +132,13 @@ PERSONA E TOM:
 - Calorosa, direta, sem floreio. PT-BR coloquial moderado.
 
 REGRAS DE RESPOSTA:
-1. Use o contexto (CHUNKS e CURSOS abaixo) como fonte primária. Marque em used_chunk_indices os chunks que realmente embasaram.
-2. Se NENHUM chunk for relevante mas a pergunta é razoável, responda com conhecimento geral E comece com: "Esse tópico ainda não está no nosso catálogo indexado, mas posso te explicar:". Coloque grounded_in_cefis=false.
+1. Os CHUNKS no contexto já foram filtrados por similaridade vetorial — se algum aparece aqui é porque é candidato a relevante. SEMPRE que houver ≥ 1 chunk no contexto, use pelo menos um e preencha used_chunk_indices. Só use o fallback "tópico não indexado" quando os CHUNKS estiverem REALMENTE vazios ou totalmente fora do tema.
+2. Se NENHUM chunk for relevante E o contexto estiver vazio, responda com conhecimento geral E comece com: "Esse tópico ainda não está no nosso catálogo indexado, mas posso te explicar:". Coloque grounded_in_cefis=false.
 3. 3-6 frases. Sem markdown pesado (funciona em web e WhatsApp).
 4. Quando citar um chunk, mencione no corpo da resposta o momento da aula em mm:ss (ex: "a Profa. fala disso por volta de 2:30 em 'Aula X'") — os start_seconds de cada chunk vêm formatados como [mm:ss] na própria linha do chunk no contexto. Use exatamente esse formato.
 5. NÃO escreva URLs nem links — a aplicação anexa cards de aula automaticamente a partir de used_chunk_indices.
-6. Não invente cursos/aulas fora do contexto. Se nada bate, admita.`;
+6. Não invente cursos/aulas fora do contexto. Se nada bate, admita.
+7. grounded_in_cefis=true SEMPRE que used_chunk_indices.length > 0.`;
 
 export interface PlanScope {
   id: string;
@@ -263,11 +264,15 @@ ${contextLines.join("\n\n")}`;
       url: courses[i].cefis_url ?? `https://cefis.com.br/curso/${courses[i].course_id}`,
     }));
 
+  // Override defensivo: o LLM às vezes marca grounded=false mesmo tendo citado
+  // chunks. Confiamos no fato concreto (citations preenchidas) acima da claim.
+  const groundedInCefis = citations.length > 0 ? true : parsed.grounded_in_cefis;
+
   return {
     text: parsed.answer,
     citations,
     suggestedCourses,
-    groundedInCefis: parsed.grounded_in_cefis,
+    groundedInCefis,
   };
 }
 
@@ -295,6 +300,11 @@ export function formatTutorForWhatsApp(answer: TutorAnswer): string {
       lines.push(`• ${s.title}\n  ${s.url}`);
     }
   }
+
+  // Atalho pra continuar no app (vice-versa do ChannelToggle web)
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://bussola-ai.vercel.app";
+  lines.push("");
+  lines.push(`🌐 Ver no app: ${appUrl}/tutor`);
 
   return lines.join("\n");
 }

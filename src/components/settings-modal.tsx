@@ -201,7 +201,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
               <a href="/login" className="font-semibold underline-offset-2 hover:underline">
                 login
               </a>{" "}
-              pra salvar disponibilidade, estilo de aprendizagem e prazo.
+              para salvar disponibilidade, estilo de aprendizagem e prazo.
             </div>
           ) : (
             <>
@@ -324,7 +324,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
                   </div>
                 ) : (
                   <div className="mt-1 text-xs text-zinc-500">
-                    Nenhum número pareado. Use o footer do sidebar pra receber o convite no
+                    Nenhum número pareado. Use o rodapé do sidebar para receber o convite no
                     WhatsApp.
                   </div>
                 )}

@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       {
         error: "already exists",
         message:
-          "Já existe um grupo ativo pra você. Aguarde os 7 dias da demo expirar antes de criar outro.",
+          "Já existe um grupo ativo para você. Aguarde os 7 dias da demo expirarem antes de criar outro.",
         group: existing,
       },
       { status: 409 }
@@ -141,11 +141,11 @@ export async function POST(req: NextRequest) {
         "",
         "🧭 Aqui é a *Bússola*, sua tutora baseada no catálogo CEFIS.",
         "",
-        `Esse grupo é do *plano demo* (aberto pra beta) e fica ativo por *${GROUP_VALIDITY_DAYS} dias*.`,
+        `Esse grupo é do *plano demo* (aberto para beta) e fica ativo por *${GROUP_VALIDITY_DAYS} dias*.`,
         "",
         "Qualquer um pode mandar dúvida — eu respondo com a aula no segundo certo.",
         "",
-        "Digita *menu* pra ver as opções.",
+        "Envie *menu* para ver as opções.",
       ].join("\n")
     );
   } catch {

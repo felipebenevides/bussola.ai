@@ -21,7 +21,7 @@ function inviteMessage(name: string | null): string {
   return [
     `🧭 ${hi} Aqui é a *Bússola*, sua tutora baseada no catálogo CEFIS.`,
     "",
-    "Você pediu pra eu chamar pelo WhatsApp 💬",
+    "Você pediu para eu chamar pelo WhatsApp 💬",
     "",
     "Como posso te ajudar?",
     "",

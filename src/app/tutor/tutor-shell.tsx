@@ -305,7 +305,7 @@ export function TutorShell({
           role: "assistant",
           content:
             (firstName ? `Beleza ${firstName}! ` : "Beleza! ") +
-            "Pra indexar um curso CEFIS eu preciso só do **ID do curso** — manda o número (ex: `1132`) ou o link `https://cefis.com.br/curso/1132`. Depois eu cuido do resto: aulas, transcrições e embeddings.",
+            "Para indexar um curso CEFIS eu preciso só do **ID do curso** — me envie o número (ex: `1132`) ou o link `https://cefis.com.br/curso/1132`. Depois eu cuido do resto: aulas, transcrições e embeddings.",
           time: nowTime(),
         },
       ],
@@ -364,7 +364,7 @@ export function TutorShell({
       const sample = courses.available.map((c) => c.id).join(", ");
       appendOnboarding(
         "assistant",
-        `Esse curso não está no sample local pra essa demo. Cursos disponíveis: ${
+        `Esse curso não está no sample local para esta demo. Cursos disponíveis: ${
           sample || "(nenhum — todos já indexados)"
         }`
       );
@@ -645,7 +645,7 @@ export function TutorShell({
             filteredAvailable.length === 0 &&
             search.length > 0 && (
               <div className="px-5 py-6 text-xs" style={{ color: "var(--wa-text-muted)" }}>
-                Nada encontrado pra &quot;{search}&quot;.
+                Nada encontrado para &quot;{search}&quot;.
               </div>
             )}
         </nav>
@@ -850,7 +850,7 @@ function SidebarHeader({
               href="/login?next=/tutor"
               className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm transition-colors hover:bg-emerald-500"
             >
-              Entrar com CEFIS pra criar plano
+              Entrar com CEFIS para criar plano
             </Link>
           </div>
         </div>
@@ -1120,7 +1120,7 @@ function ChatHeader({
           onClick={onCloseOnboarding}
           className="rounded-full p-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
           aria-label="Fechar onboarding"
-          title="Voltar pra conversa"
+          title="Voltar para a conversa"
           style={{ color: "var(--wa-text-secondary)" }}
         >
           <ArrowLeft className="h-5 w-5" />
@@ -1173,7 +1173,7 @@ function EmptyState({
           ) : (
             <>
               Busco em todos os cursos indexados. Pergunte sobre <strong>negociação</strong>,
-              ou escolha um curso na lateral pra escopar a conversa.
+              ou escolha um curso na lateral para escopar a conversa.
             </>
           )}
         </p>
@@ -1223,7 +1223,7 @@ function EmptyState({
           </span>
         </div>
         <p>
-          Prefere mandar pelo zap? Clica aqui pra abrir uma conversa com a Bússola — ela
+          Prefere mandar pelo WhatsApp? Clique aqui para abrir uma conversa com a Bússola — ela
           responde com o link da aula no segundo certo, igualzinho aqui na web.
         </p>
       </button>

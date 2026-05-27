@@ -14,8 +14,9 @@ interface ExistingGroup {
 }
 
 interface Participant {
+  /** Código do país sem +, ex: "55" (Brasil), "1" (US/CA), "351" (Portugal) */
   ddi: string;
-  ddd: string;
+  /** Número local completo (DDD + telefone). Digits only. */
   number: string;
   name: string;
 }
@@ -25,15 +26,16 @@ function digits(s: string) {
 }
 
 function emptyParticipant(): Participant {
-  return { ddi: "55", ddd: "", number: "", name: "" };
+  return { ddi: "55", number: "", name: "" };
 }
 
 function fullPhone(p: Participant): string | null {
   const ddi = digits(p.ddi);
-  const ddd = digits(p.ddd);
   const num = digits(p.number);
-  if (!ddi || ddd.length !== 2 || num.length < 8 || num.length > 9) return null;
-  return `${ddi}${ddd}${num}`;
+  if (ddi.length < 1 || ddi.length > 4) return null;
+  // E.164 permite 4-14 dígitos após o DDI. Mínimo 6 pra ter sentido.
+  if (num.length < 6 || num.length > 14) return null;
+  return `${ddi}${num}`;
 }
 
 type CreateState =
@@ -126,7 +128,7 @@ export function StudyGroupModal({
       if (res.status === 401) {
         setState({
           status: "error",
-          message: (json.message as string) ?? "Faça login na CEFIS pra criar um grupo.",
+          message: (json.message as string) ?? "Faça login na CEFIS para criar um grupo.",
           needsAuth: true,
         });
         return;
@@ -219,7 +221,7 @@ export function StudyGroupModal({
               </span>
               <span>
                 Sem login? Sem problema — o primeiro participante vira o organizador
-                do grupo. Pra acumular XP e ter perfil persistente,{" "}
+                do grupo. Para acumular XP e ter perfil persistente,{" "}
                 <a href="/login" className="font-semibold underline-offset-2 hover:underline">
                   faça login na CEFIS
                 </a>
@@ -231,7 +233,7 @@ export function StudyGroupModal({
           {state.status === "success" ? (
             <SuccessPanel jid={state.jid} expiresAt={state.expiresAt} onClose={onClose} />
           ) : existing ? (
-            <ExistingPanel group={existing} onClose={onClose} />
+            <ExistingPanel group={existing} onClose={onClose} onUpdated={setExisting} />
           ) : loadingExisting && isLoggedIn ? (
             <div className="flex items-center justify-center py-8 text-sm text-zinc-500">
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Carregando…
@@ -338,24 +340,31 @@ function ParticipantRow({
         value={value.name}
         onChange={(e) => onChange({ name: e.target.value })}
         placeholder="Nome (opcional)"
-        className="h-10 w-32 shrink-0 rounded-lg border border-zinc-300 bg-white px-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600"
+        className="h-10 w-28 shrink-0 rounded-lg border border-zinc-300 bg-white px-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600"
       />
-      <input
-        type="text"
-        inputMode="numeric"
-        value={value.ddd}
-        onChange={(e) => onChange({ ddd: digits(e.target.value).slice(0, 2) })}
-        maxLength={2}
-        placeholder="11"
-        className="h-10 w-12 shrink-0 rounded-lg border border-zinc-300 bg-white px-2 text-center text-sm font-mono text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
-      />
+      <div className="relative">
+        <span className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-xs text-zinc-400">
+          +
+        </span>
+        <input
+          type="text"
+          inputMode="numeric"
+          value={value.ddi}
+          onChange={(e) => onChange({ ddi: digits(e.target.value).slice(0, 4) })}
+          maxLength={4}
+          placeholder="55"
+          title="Código do país (sem +). Ex: 55=BR, 1=US/CA, 351=PT, 54=AR"
+          className="h-10 w-16 shrink-0 rounded-lg border border-zinc-300 bg-white pl-5 pr-1.5 text-center text-sm font-mono text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+        />
+      </div>
       <input
         type="text"
         inputMode="numeric"
         value={value.number}
-        onChange={(e) => onChange({ number: digits(e.target.value).slice(0, 9) })}
-        maxLength={9}
-        placeholder="99999-9999"
+        onChange={(e) => onChange({ number: digits(e.target.value).slice(0, 14) })}
+        maxLength={14}
+        placeholder="11999999999"
+        title="DDD + telefone (só dígitos, sem espaços ou hífens)"
         className="h-10 flex-1 rounded-lg border border-zinc-300 bg-white px-3 text-sm font-mono text-zinc-900 placeholder:text-zinc-400 focus:border-violet-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
       />
       {onRemove && (
@@ -412,27 +421,144 @@ function SuccessPanel({
   );
 }
 
-function ExistingPanel({ group, onClose }: { group: ExistingGroup; onClose: () => void }) {
+function ExistingPanel({
+  group,
+  onClose,
+  onUpdated,
+}: {
+  group: ExistingGroup;
+  onClose: () => void;
+  onUpdated: (next: ExistingGroup) => void;
+}) {
   const expiresFmt = new Date(group.expires_at).toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "long",
   });
   const remainingMs = new Date(group.expires_at).getTime() - Date.now();
   const days = Math.max(0, Math.floor(remainingMs / (24 * 60 * 60 * 1000)));
+  const slots = 5 - group.participants.length;
+
+  const [adding, setAdding] = useState<Participant[]>([emptyParticipant()]);
+  const [addState, setAddState] = useState<
+    | { status: "idle" }
+    | { status: "submitting" }
+    | { status: "done"; added: number }
+    | { status: "error"; message: string }
+  >({ status: "idle" });
+
+  const validNew = adding.filter((p) => !!fullPhone(p));
+  const canAdd =
+    slots > 0 && validNew.length > 0 && validNew.length <= slots && addState.status !== "submitting";
+
+  function patchAdding(i: number, patch: Partial<Participant>) {
+    setAdding((arr) => arr.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
+  }
+  function removeAdding(i: number) {
+    setAdding((arr) => arr.filter((_, idx) => idx !== i));
+  }
+
+  async function submitAdd() {
+    if (!canAdd) return;
+    setAddState({ status: "submitting" });
+    try {
+      const res = await fetch("/api/whatsapp/group/add-participant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          groupId: group.id,
+          participants: validNew.map((p) => ({
+            phone: fullPhone(p),
+            name: p.name.trim() || null,
+          })),
+        }),
+      });
+      const j = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+      if (!res.ok) {
+        setAddState({
+          status: "error",
+          message: (j.message as string) ?? (j.detail as string) ?? (j.error as string) ?? `Erro ${res.status}.`,
+        });
+        return;
+      }
+      const addedArr = (j.added as Array<{ phone: string; name: string | null }>) ?? [];
+      onUpdated({
+        ...group,
+        participants: [...group.participants, ...addedArr],
+      });
+      setAdding([emptyParticipant()]);
+      setAddState({ status: "done", added: addedArr.length });
+    } catch (err) {
+      setAddState({
+        status: "error",
+        message: err instanceof Error ? err.message : "Falha de rede.",
+      });
+    }
+  }
+
   return (
     <div className="space-y-3 rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm text-violet-900 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-200">
       <div className="flex items-center gap-2">
         <Users className="h-5 w-5" />
-        <strong>Você já tem um grupo ativo</strong>
+        <strong>Grupo ativo: &ldquo;{group.group_name}&rdquo;</strong>
       </div>
-      <p>
-        <span className="font-semibold">"{group.group_name}"</span> · {group.participants.length}{" "}
-        participantes · expira em {days} {days === 1 ? "dia" : "dias"} ({expiresFmt}).
-      </p>
       <p className="text-xs">
-        Só é possível ter 1 grupo ativo por aluno no plano demo. Espere a validade encerrar pra
-        criar outro.
+        {group.participants.length} de 5 participantes · expira em {days}{" "}
+        {days === 1 ? "dia" : "dias"} ({expiresFmt}).
       </p>
+
+      {slots > 0 ? (
+        <div className="space-y-2 rounded-lg border border-violet-200 bg-white/60 p-3 dark:border-violet-900/60 dark:bg-zinc-950/40">
+          <div className="flex items-center justify-between text-xs font-semibold">
+            <span>Adicionar mais {slots > 1 ? `(até ${slots})` : ""}</span>
+            {adding.length < slots && (
+              <button
+                type="button"
+                onClick={() => setAdding((arr) => [...arr, emptyParticipant()])}
+                className="flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-700 hover:bg-violet-200 dark:bg-violet-950/60 dark:text-violet-300"
+              >
+                <Plus className="h-3 w-3" /> linha
+              </button>
+            )}
+          </div>
+          <div className="space-y-1.5">
+            {adding.map((p, i) => (
+              <ParticipantRow
+                key={i}
+                value={p}
+                onChange={(patch) => patchAdding(i, patch)}
+                onRemove={adding.length > 1 ? () => removeAdding(i) : undefined}
+              />
+            ))}
+          </div>
+          {addState.status === "error" && (
+            <p className="text-[11px] text-red-700 dark:text-red-300">{addState.message}</p>
+          )}
+          {addState.status === "done" && addState.added > 0 && (
+            <p className="text-[11px] text-emerald-700 dark:text-emerald-300">
+              ✅ {addState.added} participante(s) adicionado(s).
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={submitAdd}
+            disabled={!canAdd}
+            className="w-full rounded-lg bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {addState.status === "submitting" ? (
+              <span className="inline-flex items-center gap-1">
+                <Loader2 className="h-3 w-3 animate-spin" /> Enviando…
+              </span>
+            ) : (
+              `Adicionar ao grupo (+${validNew.length || 0})`
+            )}
+          </button>
+        </div>
+      ) : (
+        <p className="rounded-lg border border-violet-200 bg-white/60 px-3 py-2 text-[11px] dark:border-violet-900/60 dark:bg-zinc-950/40">
+          Grupo no limite (5/5). Pra adicionar mais, espere a validade encerrar e crie outro.
+        </p>
+      )}
+
       <button
         type="button"
         onClick={onClose}

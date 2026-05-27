@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error: "auth required",
-        message: "Faça login na CEFIS pra salvar seu diagnóstico.",
+        message: "Faça login na CEFIS para salvar seu diagnóstico.",
       },
       { status: 401 }
     );

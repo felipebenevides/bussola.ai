@@ -201,7 +201,7 @@ export function PlanModeModal({
                 description="Suba PDFs/áudios. A Bússola embeda no banco e gera o plano em cima."
                 onClick={() => {
                   alert(
-                    "🚧 Feature em fase de implementação.\n\nEm breve você poderá subir PDFs, vídeos e áudios próprios. A Bússola vai embedar tudo no Supabase e criar um curso personalizado pro seu plano. Por enquanto, use 'Curso CEFIS' ou 'Plano avulso'."
+                    "🚧 Funcionalidade em fase de implementação.\n\nEm breve você poderá subir PDFs, vídeos e áudios próprios. A Bússola vai indexar tudo no Supabase e criar um curso personalizado para o seu plano. Por enquanto, use 'Curso CEFIS' ou 'Plano avulso'."
                   );
                 }}
                 accent="amber"

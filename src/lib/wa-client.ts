@@ -61,3 +61,15 @@ export async function waCreateGroup(opts: {
 }): Promise<WaCreateGroupResult> {
   return call<WaCreateGroupResult>("/v1/group/create", opts);
 }
+
+export interface WaAddParticipantsResult {
+  added: string[];
+  rejected: Array<{ id: string; reason?: string }>;
+}
+
+export async function waAddGroupParticipants(opts: {
+  groupJid: string;
+  participants: string[];
+}): Promise<WaAddParticipantsResult> {
+  return call<WaAddParticipantsResult>("/v1/group/add-participant", opts);
+}

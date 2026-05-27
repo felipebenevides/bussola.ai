@@ -78,7 +78,7 @@ const STUDY_HINT_MESSAGE = [
   "•  _O que é BATNA?_",
   "•  _Diferença entre posição e interesse_",
   "",
-  "Vou te responder com o trecho exato da aula (mm:ss) pra você abrir no app.",
+  "Vou te responder com o trecho exato da aula (mm:ss) para você abrir no app.",
 ].join("\n");
 
 const MEDIA_NOTICE_MESSAGE = [
@@ -89,7 +89,7 @@ const MEDIA_NOTICE_MESSAGE = [
   "Por enquanto, manda sua dúvida em *texto* que eu respondo com a aula CEFIS no segundo certo.",
 ].join("\n");
 
-const UNKNOWN_MESSAGE = "Não consegui entender essa mensagem. Manda *menu* pra ver as opções ou já joga sua dúvida em texto.";
+const UNKNOWN_MESSAGE = "Não consegui entender essa mensagem. Envie *menu* para ver as opções ou já mande sua dúvida em texto.";
 
 export async function POST(req: NextRequest) {
   // 1. HMAC
@@ -204,7 +204,7 @@ export async function POST(req: NextRequest) {
       await sendAndLog(
         phone,
         null,
-        "Esse código já expirou. Manda *menu* pra ver as opções ou gera um novo no app."
+        "Esse código já expirou. Envie *menu* para ver as opções ou gere um novo no app."
       );
       return NextResponse.json({ handled: "expired-code" });
     }
@@ -248,7 +248,7 @@ export async function POST(req: NextRequest) {
     await sendAndLog(
       phone,
       userMatch?.user_id ?? null,
-      "Tive um problema pra consultar a IA agora. Tenta de novo em alguns segundos?"
+      "Tive um problema para consultar a IA agora. Tente de novo em alguns segundos."
     );
   }
 
@@ -316,7 +316,7 @@ async function listCoursesMessage(): Promise<string> {
       .order("title")
       .limit(15);
     if (!data || data.length === 0) {
-      return "Ainda não tenho cursos indexados. Manda *2* pra abrir o app e configurar.";
+      return "Ainda não tenho cursos indexados. Envie *2* para abrir o app e configurar.";
     }
     const lines = data.map(
       (c, i) => `${i + 1}. *${c.title}* — ${c.lesson_count ?? "?"} aulas (curso #${c.id})`
@@ -326,7 +326,7 @@ async function listCoursesMessage(): Promise<string> {
       "",
       ...lines,
       "",
-      "Manda sua dúvida que eu acho a aula certa. Ou *2* pra abrir no app web.",
+      "Envie sua dúvida que eu acho a aula certa. Ou *2* para abrir no app web.",
     ].join("\n");
   } catch (err) {
     logSafe("listCourses failed", err);

@@ -97,7 +97,7 @@ export function JourneyWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
           <Sparkles className="h-3.5 w-3.5" /> Jornada do Herói
         </div>
         <p className="relative mt-1 text-[10px] leading-tight text-emerald-100/70">
-          Entra com CEFIS pra acompanhar XP, nível e streak diário.
+          Entre com CEFIS para acompanhar XP, nível e streak diário.
         </p>
       </div>
     );
@@ -248,7 +248,7 @@ function JourneyModal({
               <span className="font-mono">{data.xp} XP</span>
               <span>
                 {data.level.nextXp
-                  ? `${nextDelta} XP pra subir`
+                  ? `${nextDelta} XP para subir`
                   : "Você é Lenda — topo da jornada!"}
               </span>
             </div>
@@ -352,7 +352,7 @@ function JourneyModal({
           <ul className="space-y-1 text-[11px]">
             <li>• <span className="font-semibold text-emerald-600 dark:text-emerald-400">+10 XP</span> por cada pergunta que você faz (web ou WhatsApp)</li>
             <li>• <span className="font-semibold text-emerald-600 dark:text-emerald-400">+5 XP</span> quando o tutor responde citando uma aula CEFIS</li>
-            <li>• 🔥 Pergunta todo dia pra manter o streak — bônus visual e diferenciação</li>
+            <li>• 🔥 Pergunte todo dia para manter o streak — bônus visual e diferenciação</li>
           </ul>
         </div>
       </div>

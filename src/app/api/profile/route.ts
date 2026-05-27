@@ -89,7 +89,7 @@ export async function PATCH(req: NextRequest) {
   const userId = await getCurrentUserId();
   if (!userId) {
     return NextResponse.json(
-      { error: "auth required", message: "Faça login na CEFIS pra salvar preferências." },
+      { error: "auth required", message: "Faça login na CEFIS para salvar preferências." },
       { status: 401 }
     );
   }
