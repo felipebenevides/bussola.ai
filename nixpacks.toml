@@ -1,0 +1,7 @@
+# Pin do builder Nixpacks pra Node 20.
+# Next 16 requer Node 20+. Sem isso, Nixpacks default a 18 e o build quebra.
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm-10_x"]
+
+[variables]
+NIXPACKS_NODE_VERSION = "20"
