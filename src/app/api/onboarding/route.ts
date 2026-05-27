@@ -4,6 +4,7 @@ import { genObject } from "@/lib/ai";
 import { getCurrentUserId, getCefisClient } from "@/lib/cefis-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { normalizePhone } from "@/lib/phone";
+import { ensureSessionId, recordEvent } from "@/lib/analytics-server";
 
 /**
  * O agente é instruído a devolver E.164 com DDI já incluso (assume Brasil e
@@ -205,6 +206,39 @@ Decida a próxima fala da Bússola e (se já tiver os 4 dados) preencha profile 
       } catch (err) {
         console.error("[onboarding] persistência falhou:", err);
       }
+    }
+
+    // Analytics: identify event ao concluir onboarding (com phone se houver)
+    try {
+      const sessionId = await ensureSessionId();
+      let emailFromCefis: string | null = null;
+      try {
+        const client = await getCefisClient();
+        if (client) {
+          const me = await client.me();
+          emailFromCefis = me.email?.toLowerCase() ?? null;
+        }
+      } catch {
+        // sem email — segue
+      }
+      await recordEvent({
+        sessionId,
+        userId,
+        email: emailFromCefis,
+        phone:
+          turn.profile.phone_raw && /\d{10,}/.test(turn.profile.phone_raw.replace(/\D/g, ""))
+            ? turn.profile.phone_raw.replace(/\D/g, "")
+            : null,
+        eventType: "identify",
+        userAgent: req.headers.get("user-agent"),
+        metadata: {
+          source: "onboarding",
+          goal: turn.profile.goal,
+          learning_style: turn.profile.learning_style,
+        },
+      });
+    } catch {
+      // não-crítico
     }
   }
 

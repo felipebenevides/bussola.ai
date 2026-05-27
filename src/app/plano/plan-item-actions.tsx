@@ -6,7 +6,9 @@ import ReactMarkdown from "react-markdown";
 import {
   BookOpen,
   CheckCircle2,
+  ExternalLink,
   Loader2,
+  Play,
   RefreshCw,
   Sparkles,
   X,
@@ -33,6 +35,8 @@ export function PlanItemActions({
   itemTitle,
   fallbackHref,
   deepLink,
+  lessonId,
+  startSeconds,
   botPhone,
   userPhone,
 }: {
@@ -41,11 +45,15 @@ export function PlanItemActions({
   itemTitle: string;
   fallbackHref: string;
   deepLink: string | null;
+  /** Quando presente, habilita o player embedado (carrega stream_sources). */
+  lessonId?: number | null;
+  startSeconds?: number | null;
   botPhone?: string | null;
   userPhone?: string | null;
 }) {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
   const [viewerOpen, setViewerOpen] = useState(false);
+  const [playerOpen, setPlayerOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -143,16 +151,24 @@ export function PlanItemActions({
           </button>
         )}
 
-        {deepLink && (
+        {deepLink && lessonId ? (
+          <button
+            type="button"
+            onClick={() => setPlayerOpen(true)}
+            className="inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2.5 py-1 font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/60"
+          >
+            <Play className="h-3 w-3" /> Vídeo CEFIS
+          </button>
+        ) : deepLink ? (
           <a
             href={deepLink}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2.5 py-1 font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/60"
           >
-            ▶ Vídeo CEFIS
+            <Play className="h-3 w-3" /> Vídeo CEFIS
           </a>
-        )}
+        ) : null}
 
         <Link
           href={fallbackHref}
@@ -180,6 +196,16 @@ export function PlanItemActions({
       )}
 
       {isGenerating && !viewerOpen && <GeneratingOverlay itemTitle={itemTitle} />}
+
+      {playerOpen && lessonId && (
+        <LessonPlayerModal
+          lessonId={lessonId}
+          startSeconds={startSeconds ?? 0}
+          itemTitle={itemTitle}
+          fallbackDeepLink={deepLink}
+          onClose={() => setPlayerOpen(false)}
+        />
+      )}
     </>
   );
 }
@@ -358,6 +384,238 @@ function GeneratingOverlay({ itemTitle }: { itemTitle: string }) {
           <CheckCircle2 className="h-3 w-3 text-emerald-500" /> RAG nos chunks da aula
           <CheckCircle2 className="h-3 w-3 text-emerald-500" /> Adaptação ao seu estilo
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────
+// LessonPlayerModal — abre o vídeo CEFIS embedado na própria página
+// Estratégia: tenta iframe da página real CEFIS. Se a CEFIS bloquear
+// (X-Frame-Options / frame-ancestors), o usuário usa o botão "Abrir no
+// CEFIS" no rodapé. Se as stream_sources estiverem disponíveis, mostra
+// também tab "Player nativo" com <video> apontando direto pro HLS — útil
+// quando o iframe não carrega.
+// ────────────────────────────────────────────────────────────────────
+
+interface PlayerStreamSource {
+  quality: string | null;
+  type: string | null;
+  height: number | null;
+  url: string;
+}
+
+interface PlayerStreamData {
+  lessonId: number;
+  courseId: number;
+  title: string | null;
+  durationSeconds: number | null;
+  deepLink: string;
+  startSeconds: number;
+  streams: PlayerStreamSource[];
+}
+
+type PlayerLoad =
+  | { kind: "loading" }
+  | { kind: "ready"; data: PlayerStreamData }
+  | { kind: "error"; message: string };
+
+function LessonPlayerModal({
+  lessonId,
+  startSeconds,
+  itemTitle,
+  fallbackDeepLink,
+  onClose,
+}: {
+  lessonId: number;
+  startSeconds: number;
+  itemTitle: string;
+  fallbackDeepLink: string | null;
+  onClose: () => void;
+}) {
+  const [load, setLoad] = useState<PlayerLoad>({ kind: "loading" });
+  const [mode, setMode] = useState<"iframe" | "native">("iframe");
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoad({ kind: "loading" });
+    fetch(`/api/lessons/${lessonId}/stream?t=${startSeconds}`)
+      .then(async (r) => {
+        const json = (await r.json().catch(() => ({}))) as Partial<PlayerStreamData> & {
+          error?: string;
+        };
+        if (cancelled) return;
+        if (!r.ok || typeof json.deepLink !== "string") {
+          setLoad({ kind: "error", message: json.error ?? `Erro ${r.status}` });
+          return;
+        }
+        setLoad({ kind: "ready", data: json as PlayerStreamData });
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        setLoad({
+          kind: "error",
+          message: err instanceof Error ? err.message : "Falha de rede",
+        });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [lessonId, startSeconds]);
+
+  const data = load.kind === "ready" ? load.data : null;
+  const cefisUrl = data?.deepLink ?? fallbackDeepLink ?? null;
+  const nativeStream = data?.streams[0] ?? null;
+  const hasNative = !!nativeStream;
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        type="button"
+        aria-label="Fechar"
+        onClick={onClose}
+        className="absolute inset-0 cursor-default bg-black/85 backdrop-blur-sm"
+      />
+
+      <div
+        className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <header className="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+              Vídeo CEFIS · embed
+            </p>
+            <h2 className="mt-0.5 truncate text-base font-bold text-zinc-900 dark:text-zinc-50">
+              {itemTitle}
+            </h2>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            {hasNative && (
+              <div
+                className="hidden items-center gap-1 rounded-lg border border-zinc-200 bg-zinc-100 p-0.5 text-[11px] font-semibold dark:border-zinc-700 dark:bg-zinc-800 sm:flex"
+                role="tablist"
+              >
+                <button
+                  type="button"
+                  onClick={() => setMode("iframe")}
+                  className={`rounded-md px-2 py-1 transition-colors ${
+                    mode === "iframe"
+                      ? "bg-white text-zinc-900 shadow-sm dark:bg-zinc-950 dark:text-zinc-50"
+                      : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+                  }`}
+                >
+                  Player CEFIS
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMode("native")}
+                  className={`rounded-md px-2 py-1 transition-colors ${
+                    mode === "native"
+                      ? "bg-white text-zinc-900 shadow-sm dark:bg-zinc-950 dark:text-zinc-50"
+                      : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+                  }`}
+                >
+                  Player nativo
+                </button>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Fechar"
+              className="rounded-full p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </header>
+
+        <div className="relative flex-1 bg-black">
+          <div className="relative aspect-video w-full">
+            {load.kind === "loading" && (
+              <div className="absolute inset-0 flex items-center justify-center text-white/80">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            )}
+
+            {load.kind === "error" && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-white/80">
+                <p className="text-sm font-semibold">
+                  Não consegui carregar os dados da aula.
+                </p>
+                <p className="text-xs text-white/60">{load.message}</p>
+                {cefisUrl && (
+                  <a
+                    href={cefisUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold hover:bg-emerald-500"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" /> Abrir no CEFIS
+                  </a>
+                )}
+              </div>
+            )}
+
+            {load.kind === "ready" && mode === "iframe" && cefisUrl && (
+              <iframe
+                key={cefisUrl}
+                src={cefisUrl}
+                title={itemTitle}
+                className="absolute inset-0 h-full w-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowFullScreen
+              />
+            )}
+
+            {load.kind === "ready" && mode === "native" && nativeStream && (
+              <video
+                key={nativeStream.url}
+                controls
+                autoPlay
+                className="absolute inset-0 h-full w-full bg-black"
+                src={nativeStream.url}
+              >
+                Seu navegador não suporta vídeo embedado.
+              </video>
+            )}
+          </div>
+        </div>
+
+        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200 bg-zinc-50 px-5 py-3 text-xs dark:border-zinc-800 dark:bg-zinc-950">
+          <p className="text-zinc-500 dark:text-zinc-400">
+            Se o player não carregar (CEFIS bloqueia embed em alguns navegadores),
+            abra direto no portal.
+          </p>
+          {cefisUrl && (
+            <a
+              href={cefisUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-3 py-1.5 font-semibold text-white shadow-sm hover:bg-emerald-500"
+            >
+              <ExternalLink className="h-3.5 w-3.5" /> Abrir no CEFIS
+            </a>
+          )}
+        </footer>
       </div>
     </div>
   );

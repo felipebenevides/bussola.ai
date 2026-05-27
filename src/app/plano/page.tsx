@@ -305,6 +305,12 @@ function PlanItemRow({
         itemTitle={item.title}
         fallbackHref={`/tutor?planId=${encodeURIComponent(planId)}`}
         deepLink={item.deep_link}
+        lessonId={item.cefis_lesson_id}
+        startSeconds={
+          item.source_ref && Number.isFinite(Number(item.source_ref))
+            ? Number(item.source_ref)
+            : 0
+        }
         botPhone={botPhone}
         userPhone={userPhone}
       />

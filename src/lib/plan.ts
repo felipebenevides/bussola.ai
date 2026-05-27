@@ -1,6 +1,6 @@
 import "server-only";
 import { supabaseAdmin } from "./supabase";
-import { buildCourseDeepLink, buildLessonDeepLink } from "./tutor-agent";
+import { buildCourseDeepLink, buildLessonDeepLink, buildTrackDeepLink } from "./tutor-agent";
 
 export interface PlanItemView {
   id: string;
@@ -100,7 +100,7 @@ export async function loadPlan(planId: string, userId?: string | null): Promise<
     } else if (i.cefis_course_id) {
       deepLink = buildCourseDeepLink(i.cefis_course_id);
     } else if (i.cefis_track_id) {
-      deepLink = `https://cefis.com.br/trilha/${i.cefis_track_id}`;
+      deepLink = buildTrackDeepLink(i.cefis_track_id);
     }
     return {
       id: i.id,

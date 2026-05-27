@@ -69,6 +69,14 @@ export function buildCourseDeepLink(courseId: number): string {
   return `https://cefis.com.br/portal/cursos/${courseId}`;
 }
 
+/**
+ * Link da trilha no portal CEFIS. Formato presumido (alinhado com /portal/cursos/).
+ * Se o real for diferente, ajustar aqui — ponto único de mudança.
+ */
+export function buildTrackDeepLink(trackId: number): string {
+  return `https://cefis.com.br/portal/trilhas/${trackId}`;
+}
+
 export async function ragSearch(
   query: string,
   courseId?: number | null

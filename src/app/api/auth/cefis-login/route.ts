@@ -4,6 +4,7 @@ import { z } from "zod";
 import { CefisClient } from "@/lib/cefis";
 import { supabaseAdmin } from "@/lib/supabase";
 import { CEFIS_COOKIE, CEFIS_USER_COOKIE } from "@/lib/cefis-server";
+import { ensureSessionId, recordEvent } from "@/lib/analytics-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -77,6 +78,20 @@ export async function POST(req: NextRequest) {
     maxAge: oneYear,
     path: "/",
   });
+
+  // Analytics: identify event vinculando sessão anônima ao login CEFIS
+  try {
+    const sessionId = await ensureSessionId();
+    await recordEvent({
+      sessionId,
+      email: loginData.user.email?.toLowerCase() ?? null,
+      eventType: "identify",
+      userAgent: req.headers.get("user-agent"),
+      metadata: { source: "login", cefis_user_id: loginData.user.id },
+    });
+  } catch {
+    // não-crítico
+  }
 
   return NextResponse.json({
     ok: true,
