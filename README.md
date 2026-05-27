@@ -18,7 +18,7 @@ Tutor de IA que combina o catálogo real da **CEFIS** com RAG sobre transcriçõ
 | **Gamificação Duolingo-style** | Jornada do Herói (Aprendiz → Lenda), ligas semanais (Bronze → Diamante), XP, gemas, streak com protetor, meta diária, mascote 🧭 com fala por fase |
 | **Acompanhamento contínuo** | Lembretes via Vercel Cron (a cada 30min na janela 8h–20h BRT) + quiz de revisão diário (9h BRT) baseado em `lacuna_critica` |
 | **Multi-plano** | N planos por usuário, switcher no header, contexto passado pro tutor via `planId` |
-| **Analytics** | Sessões anônimas (cookie UUID) + identify automático no login/onboarding |
+| **Acompanhamento de acesso** | Painel simples pra ver quem acessou o projeto e por onde navegou |
 
 ---
 
@@ -138,7 +138,7 @@ src/
 │   ├── tutor-agent.ts           askTutor() + RAG search
 │   ├── journey.ts               Gamificação Duolingo-style
 │   ├── plan.ts                  loadPlan, listPlansForUser, loadPlanContext
-│   ├── analytics-server.ts      Cookie de sessão + recordEvent
+│   ├── analytics-server.ts      Registra acessos (telas + identificações)
 │   └── ...
 services/wa/                     Bun + Hono + Evolution adapter + fila FIFO 1.5s
 supabase/migrations/bussola/     SQL migrations (10+ arquivos)
@@ -203,7 +203,7 @@ Schema dedicado `bussola` — 17 tabelas. Destaque:
 - `study_groups` — Plano Empresarial (creator_user_id OU creator_phone, expira +7d)
 - `generated_content` — resumos/quizzes/estudos materializados (ligado a `plan_item_id`)
 - `whatsapp_link_codes`, `user_whatsapp` — pareamento OTP + throttle de lembretes/quizzes
-- `analytics_events` — page_view/identify/action com cookie de sessão UUID
+- `analytics_events` — registro de telas visitadas e identificações por acesso
 
 **RPCs (pgvector):** `match_lesson_chunks(query_embedding, threshold, count)` e `match_courses(...)`.
 
@@ -231,21 +231,16 @@ Ambos exigem header `Authorization: Bearer ${CRON_SECRET}`.
 
 ---
 
-## 📊 Analytics
+## 📊 Acompanhamento de acesso
 
-Endpoint admin para visualizar uso:
+Painel simples pra acompanhar quem está acessando o projeto durante a apresentação:
 
 ```bash
 curl -H "x-admin-password: $ADMIN_PASSWORD" \
   https://bussola-ai.vercel.app/api/analytics/stats
 ```
 
-Retorna:
-- Totais (sessões totais / anônimas / identificadas / distinct emails+phones)
-- Top paths visitados
-- Últimos identificados com email/phone/paths percorridos
-
-`<AnalyticsTracker />` no `layout.tsx` dispara `page_view` a cada mudança de rota. Identify automático no login CEFIS e onboarding completo.
+Retorna totais de acessos, telas mais visitadas e quem se identificou (com email/telefone informado no login ou onboarding) com as rotas que percorreu.
 
 ---
 
