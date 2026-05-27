@@ -261,7 +261,7 @@ export default function SobrePage() {
             {/* Strip de stats pessoais */}
             <div className="flex flex-wrap gap-2 pt-1">
               <StatChip emoji="🎂" label="32 anos" />
-              <StatChip emoji="✝️" label="Cristão" />
+              <StatChip emoji="🙏" label="Cristão · em gratidão" />
               <StatChip emoji="💍" label="Casado há 10 anos" />
               <StatChip emoji="👨‍👩‍👧‍👦" label="4 filhos" />
               <StatChip emoji="⏱️" label="10+ anos de engenharia" />
