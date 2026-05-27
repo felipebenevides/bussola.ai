@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BackToHome } from "@/components/back-to-home";
 
 interface SettingsView {
   openai_api_key: string | null;
@@ -147,7 +148,10 @@ export default function AdminPage() {
 
   if (!authed) {
     return (
-      <div className="mx-auto flex min-h-screen max-w-md items-center justify-center p-6">
+      <div className="mx-auto flex min-h-screen max-w-md flex-col items-stretch justify-center gap-4 p-6">
+        <div>
+          <BackToHome variant="pill" />
+        </div>
         <Card className="w-full">
           <CardHeader>
             <CardTitle>🧭 Bússola — Admin</CardTitle>
@@ -182,6 +186,7 @@ export default function AdminPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6 p-6">
+      <BackToHome variant="pill" />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">🧭 Bússola — Admin</h1>

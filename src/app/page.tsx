@@ -139,7 +139,10 @@ function Hero({ isLoggedIn, firstName }: { isLoggedIn: boolean; firstName: strin
           {" "}— repetição espaçada, microlearning, deep-link no segundo exato da aula, gamificação
           com Jornada do Herói e atendimento em{" "}
           <strong className="text-zinc-900 dark:text-zinc-50">quatro canais</strong>{" "}
-          (app, web, WhatsApp e grupo) sobre o catálogo da CEFIS. Absorção fácil, evolução medida.
+          (app, web, WhatsApp e grupo), utilizando como parceria a melhor plataforma de ensino
+          atual:{" "}
+          <strong className="text-emerald-700 dark:text-emerald-300">CEFIS</strong>.
+          Absorção fácil, evolução medida.
         </p>
 
         <div className="flex flex-col gap-3 sm:flex-row">

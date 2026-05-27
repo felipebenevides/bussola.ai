@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BackToHome } from "@/components/back-to-home";
 
 interface LinkPayload {
   code: string;
@@ -53,7 +54,10 @@ export default function ConectarWhatsappPage() {
   }, [payload]);
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-xl items-center justify-center p-6">
+    <div className="mx-auto flex min-h-screen max-w-xl flex-col items-stretch justify-center gap-4 p-6">
+      <div>
+        <BackToHome variant="pill" />
+      </div>
       <Card className="w-full">
         <CardHeader>
           <div className="mb-2 text-4xl">💬</div>
