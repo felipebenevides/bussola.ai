@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BackToHome } from "@/components/back-to-home";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -37,7 +38,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md items-center justify-center p-6">
+    <div className="mx-auto flex min-h-screen max-w-md flex-col items-stretch justify-center gap-4 p-6">
+      <div>
+        <BackToHome variant="pill" />
+      </div>
       <Card className="w-full">
         <CardHeader>
           <div className="mb-2 text-4xl">🧭</div>

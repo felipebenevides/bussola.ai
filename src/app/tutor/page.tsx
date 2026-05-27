@@ -1,5 +1,5 @@
-import { getCefisClient } from "@/lib/cefis-server";
-import { getSettings } from "@/lib/settings";
+import { getCefisClient, getCurrentUserId } from "@/lib/cefis-server";
+import { supabaseAdmin } from "@/lib/supabase";
 import { TutorShell } from "./tutor-shell";
 
 export const dynamic = "force-dynamic";
@@ -26,12 +26,21 @@ export default async function TutorPage() {
     // ignora — UI funciona sem login
   }
 
-  let botPhone: string | null = null;
-  try {
-    const settings = await getSettings();
-    botPhone = settings.evolution_bot_phone ?? null;
-  } catch {
-    // sem settings, sem telefone — modal mostra aviso
+  let userPhone: string | null = null;
+  if (isLoggedIn) {
+    try {
+      const userId = await getCurrentUserId();
+      if (userId) {
+        const { data } = await supabaseAdmin()
+          .from("user_profile")
+          .select("phone")
+          .eq("user_id", userId)
+          .maybeSingle();
+        userPhone = (data?.phone as string | null) ?? null;
+      }
+    } catch {
+      // sem profile, sem phone — modal mostra "complete o onboarding"
+    }
   }
 
   return (
@@ -40,7 +49,7 @@ export default async function TutorPage() {
       firstName={firstName}
       fullName={fullName}
       avatar={avatar}
-      botPhone={botPhone}
+      userPhone={userPhone}
     />
   );
 }

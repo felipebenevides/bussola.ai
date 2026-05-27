@@ -100,6 +100,18 @@ export async function GET() {
         lastSyncedAt: c.last_synced_at,
       };
     });
+
+    // Ordena por "completude": curso com chunks indexados (RAG full) primeiro,
+    // depois por aulas com transcrição, depois nº de aulas total, e por fim
+    // título alfabético como desempate determinístico.
+    indexed.sort((a, b) => {
+      if (b.chunkCount !== a.chunkCount) return b.chunkCount - a.chunkCount;
+      if (b.lessonsWithTranscription !== a.lessonsWithTranscription) {
+        return b.lessonsWithTranscription - a.lessonsWithTranscription;
+      }
+      if (b.lessonCount !== a.lessonCount) return b.lessonCount - a.lessonCount;
+      return a.title.localeCompare(b.title, "pt-BR");
+    });
   } catch (err) {
     console.warn("[courses] supabase indisponível:", err);
   }
@@ -117,7 +129,12 @@ export async function GET() {
         teacher: c.teacherName ?? null,
         lessonCount: c.lessons.length,
         lessonsWithVtt: c.lessons.filter((l) => l.vttContent).length,
-      }));
+      }))
+      .sort((a, b) => {
+        if (b.lessonsWithVtt !== a.lessonsWithVtt) return b.lessonsWithVtt - a.lessonsWithVtt;
+        if (b.lessonCount !== a.lessonCount) return b.lessonCount - a.lessonCount;
+        return a.title.localeCompare(b.title, "pt-BR");
+      });
   } catch (err) {
     console.warn("[courses] sample indisponível:", err);
   }

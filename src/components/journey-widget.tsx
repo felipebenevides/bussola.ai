@@ -50,6 +50,7 @@ export function JourneyWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   useEffect(() => {
     if (!isLoggedIn) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
       return;
     }
@@ -91,12 +92,14 @@ export function JourneyWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   if (!isLoggedIn) {
     return (
-      <div className="relative overflow-hidden rounded-xl border border-emerald-900/30 bg-gradient-to-br from-emerald-950/40 via-emerald-950/20 to-transparent p-3">
-        <div className="pointer-events-none absolute -right-6 -top-6 text-7xl opacity-10">🧭</div>
-        <div className="relative flex items-center gap-1.5 text-xs font-semibold text-emerald-300">
+      <div className="relative overflow-hidden rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-emerald-50/40 to-transparent p-3 dark:border-emerald-900/30 dark:from-emerald-950/40 dark:via-emerald-950/20">
+        <div className="pointer-events-none absolute -right-4 -top-4 text-5xl opacity-[0.08] dark:opacity-10 sm:-right-6 sm:-top-6 sm:text-7xl">
+          🧭
+        </div>
+        <div className="relative flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
           <Sparkles className="h-3.5 w-3.5" /> Jornada do Herói
         </div>
-        <p className="relative mt-1 text-[10px] leading-tight text-emerald-100/70">
+        <p className="relative mt-1 text-[10px] leading-snug text-emerald-800/80 dark:text-emerald-100/70">
           Entre com CEFIS para acompanhar XP, nível e streak diário.
         </p>
       </div>

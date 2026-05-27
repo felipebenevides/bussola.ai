@@ -20,17 +20,20 @@ const SECTIONS: Section[] = [
   { id: "arquitetura", title: "4. Arquitetura", subtitle: "Diagrama macro" },
   { id: "fluxos", title: "5. Fluxos do usuário", subtitle: "Login, onboarding, tutor, plano" },
   { id: "rag", title: "6. RAG", subtitle: "Embeddings + pgvector" },
-  { id: "agentes", title: "7. Agentes de IA", subtitle: "Onboarding, curador, tutor" },
-  { id: "schema", title: "8. Schema do banco", subtitle: "Tabelas e RPCs" },
+  { id: "agentes", title: "7. Agentes de IA", subtitle: "6 agentes + 1 especializado" },
+  { id: "schema", title: "8. Schema do banco", subtitle: "Tabelas, RPCs, migrações" },
   { id: "rotas", title: "9. Rotas e API", subtitle: "Páginas + endpoints" },
   { id: "cefis", title: "10. Integração CEFIS", subtitle: "API v1 + v3" },
-  { id: "whatsapp", title: "11. WhatsApp", subtitle: "Serviço Bun + Evolution" },
-  { id: "admin", title: "12. Backoffice /admin", subtitle: "Credenciais e modelos" },
-  { id: "seguranca", title: "13. Segurança", subtitle: "Princípios + checklist" },
-  { id: "negocio", title: "14. Regras de negócio", subtitle: "O que o produto faz e não faz" },
-  { id: "numeros", title: "15. Números do sample", subtitle: "Métricas reais" },
-  { id: "limitacoes", title: "16. Limitações", subtitle: "Escopo cortado, dívidas" },
-  { id: "deploy", title: "17. Deploy & ambiente", subtitle: "Vercel + Railway + Supabase" },
+  { id: "whatsapp", title: "11. WhatsApp", subtitle: "Bun + Evolution + fila FIFO" },
+  { id: "channel-toggle", title: "12. Continuidade Web ↔ WA", subtitle: "ChannelToggle bidirecional" },
+  { id: "jornada", title: "13. Jornada do Herói", subtitle: "Gamificação 5 níveis" },
+  { id: "lembretes", title: "14. Lembretes via cron", subtitle: "Vercel Cron a cada 30min" },
+  { id: "admin", title: "15. Backoffice /admin", subtitle: "Credenciais e modelos" },
+  { id: "seguranca", title: "16. Segurança", subtitle: "Princípios + checklist" },
+  { id: "negocio", title: "17. Regras de negócio", subtitle: "O que o produto faz e não faz" },
+  { id: "numeros", title: "18. Números do sample", subtitle: "Métricas reais" },
+  { id: "limitacoes", title: "19. Limitações", subtitle: "Escopo cortado, dívidas" },
+  { id: "deploy", title: "20. Deploy & ambiente", subtitle: "Vercel + Railway + Supabase" },
 ];
 
 export default function DocsPage() {
@@ -53,6 +56,9 @@ export default function DocsPage() {
           <Rotas />
           <Cefis />
           <Whatsapp />
+          <ChannelToggleSection />
+          <JornadaSection />
+          <LembretesSection />
           <Admin />
           <Seguranca />
           <Negocio />
@@ -677,46 +683,75 @@ function Agentes() {
       <SectionTitle id="agentes" eyebrow="Agentes" title="Agentes de IA" />
 
       <p>
-        A proposta original tinha 5 agentes. Para caber em time solo e ~16h de execução,
-        cortamos para <strong>2 agentes + 1 função síncrona</strong>:
+        A Bússola tem hoje <strong>6 agentes ativos + 1 especializado</strong>. Cada um com
+        responsabilidade específica e schema estruturado via{" "}
+        <Code>generateObject</Code> (Vercel AI SDK + Zod). Página visual em{" "}
+        <Link href="/agentes" className="underline">/agentes</Link>.
       </p>
 
       <Table
-        headers={["Agente", "Onde mora", "Tools / output", "Responsabilidade"]}
+        headers={["Agente", "Endpoint", "Input → Output", "Responsabilidade"]}
         rows={[
           [
             "Onboarding",
-            "/api/onboarding",
-            "save_profile, save_skill_assessment, complete",
-            "Conversar 4-5 mensagens, extrair perfil + lacuna crítica e salvar",
+            <Code key="o">/api/onboarding</Code>,
+            "Conversa turn-by-turn → user_profile + 1 skill_assessment",
+            "Extrai goal, minutes/day, deadline, learning_style, weak_area em até 4 perguntas",
           ],
           [
-            "Tutor",
-            "src/lib/tutor-agent.ts",
-            "Structured output: answer + chunk indices",
-            "RAG → resposta + citações com deep-link no segundo",
+            "Diagnóstico",
+            <Code key="d">/api/diagnostic</Code>,
+            "Goal → 4-6 sub-skills com self-scores",
+            "Decompõe objetivo em sub-habilidades, classifica em domina/lacuna parcial/lacuna crítica",
           ],
           [
-            "Curador (síncrono)",
-            "/api/curator/generate-plan",
-            "Structured output: plano completo de 1 semana",
-            "Combina perfil + RAG (chunks + cursos) em 4-7 items distribuídos na semana",
+            "Curador",
+            <Code key="c">/api/curator/generate-plan</Code>,
+            "Perfil + skills + RAG → study_plan + 4-7 plan_items",
+            "Plano de 1 semana adaptado ao learning_style (visual→vídeo, auditory→podcast, kinesthetic→quiz). Modes: auto, course, custom",
           ],
           [
-            "Indexador (UI)",
-            "/tutor (shell) + /api/courses/ingest",
-            "Streaming de log de progresso",
-            "Aceita ID de curso do sample, parseia VTTs, gera embeddings, persiste",
+            "Tutor (killer)",
+            <Code key="t">/api/tutor</Code>,
+            "Query → answer + citations[] com deep-link mm:ss",
+            "RAG no pgvector + LLM cita aulas CEFIS no segundo exato. Aceita planId pra contextualizar",
+          ],
+          [
+            "Quick-Learn",
+            <Code key="q">/api/quick-learn</Code>,
+            "{ topic, minutes } → highlights + takeaway",
+            "Resumo calibrado pelo tempo disponível: 1min→1 bullet, 30min→6 bullets profundos",
+          ],
+          [
+            "Gerador de Conteúdo",
+            <Code key="g">/api/generate-content</Code>,
+            "{ planItemId | topic, kind } → markdown ou quiz",
+            "Materializa generated_summary (markdown) ou generated_quiz (3-5 questões)",
+          ],
+          [
+            "Estudo da Aula (especializado)",
+            <Code key="s">/api/plan-item-study</Code>,
+            "planItemId → markdown 800-1500 palavras estruturado",
+            "Conteúdo extenso por item: importance, conceitos, exemplos práticos, erros, ações, reflexão. Persistido pra revisar",
           ],
         ]}
       />
 
+      <h3 className="text-xl font-semibold">Bot WhatsApp (não é agente, é roteador)</h3>
+      <p>
+        <Code>/api/whatsapp/process</Code> recebe mensagens via Bun, detecta saudações
+        (oi/menu/ajuda) → mostra menu numerado; comandos 1/2/3 → lista cursos / link app /
+        instrução; mídia (áudio/imagem/vídeo) → tenta Whisper pra áudio com fallback
+        &quot;em construção&quot;; texto livre → delega pro Tutor.
+      </p>
+
       <Callout tone="info" title="Por que não LangChain / LlamaIndex">
         <p>
-          Curva de aprendizado alta para um dia. Vercel AI SDK + <Code>generateObject</Code>{" "}
-          com Zod resolve 90% do que precisamos com 1/5 do código. Tool calling fica para
-          quando precisar — onboarding por enquanto usa structured output puro (saída
-          tipada e chega o trabalho).
+          Curva de aprendizado alta para um dia. Vercel AI SDK +{" "}
+          <Code>generateObject</Code> com Zod resolve 90% do que precisamos com 1/5 do
+          código. Os agentes compartilham infra: <Code>embed()</Code> (Google
+          gemini-embedding-001 com fallback OpenAI), <Code>genObject()</Code> (OpenRouter →
+          OpenAI fallback) e <Code>ragSearch()</Code>.
         </p>
       </Callout>
     </section>
@@ -739,22 +774,35 @@ function Schema() {
         headers={["Tabela", "Função"]}
         rows={[
           [<Code key="1">app_settings</Code>, "Singleton (id=1) com chaves de API + modelos + flags"],
-          [<Code key="2">users</Code>, "Espelha conta CEFIS — guarda cefis_user_id, cefis_api_key, perfil básico"],
+          [<Code key="2">users</Code>, "Espelha conta CEFIS — cefis_user_id, name, avatar + journey_xp cache"],
           [<Code key="3">user_profile</Code>, "Saída do onboarding: goal, minutos/dia, learning_style, deadline"],
-          [<Code key="4">skill_assessment</Code>, "Mapa de competências (score, status, importance) — gerado no onboarding"],
-          [<Code key="5">study_plan</Code>, "Plano semanal (title, total_weeks, active, rationale)"],
+          [<Code key="4">skill_assessment</Code>, "Sub-skills com score/status/importance — onboarding + /diagnostico"],
+          [<Code key="5">study_plan</Code>, "Plano semanal (title, total_weeks, active, rationale) — vários por user"],
           [<Code key="6">plan_items</Code>, "Items por dia (source, source_ref, cefis_course/lesson/track_id, duration_minutes, status)"],
           [<Code key="7">cefis_courses</Code>, "Cache local dos cursos indexados (metadados + cefis_url)"],
           [<Code key="8">cefis_lessons</Code>, "Aulas dos cursos indexados"],
-          [<Code key="9">cefis_lesson_chunks</Code>, "Chunks de transcrição com start/end seconds + embedding(1536)"],
-          [<Code key="10">cefis_course_embeddings</Code>, "Embedding único por curso (metadados) para RAG light"],
-          [<Code key="11">tutor_sessions</Code>, "Sessões de conversa (para histórico futuro)"],
-          [<Code key="12">tutor_messages</Code>, "Mensagens persistidas (best-effort) com citations jsonb"],
-          [<Code key="13">whatsapp_link</Code>, "Pareamento WhatsApp ↔ user via OTP (TTL curto)"],
-          [<Code key="14">progress_log</Code>, "Eventos de progresso por plan_item (started, completed, …)"],
-          [<Code key="15">generated_content</Code>, "Conteúdo gerado pela IA (resumos, podcasts, quizzes) — placeholder"],
+          [<Code key="9">cefis_lesson_embeddings</Code>, "Chunks de transcrição com start/end seconds + embedding(1536)"],
+          [<Code key="10">cefis_course_embeddings</Code>, "Embedding único por curso (metadados) — RAG light"],
+          [<Code key="11">tutor_messages</Code>, "Mensagens persistidas (best-effort) com citations jsonb — base de XP"],
+          [<Code key="12">whatsapp_link_codes</Code>, "Pareamento WhatsApp ↔ user via OTP (TTL curto)"],
+          [<Code key="13">user_whatsapp</Code>, "Vínculo phone ↔ user_id (1-1) + last_reminder_sent_at pra throttle do cron"],
+          [<Code key="14">whatsapp_messages</Code>, "Log raw in/out direction, kind, content, citations, evolution_message_id"],
+          [<Code key="15">progress_log</Code>, "Eventos por plan_item (started, completed, …)"],
+          [<Code key="16">generated_content</Code>, "Conteúdo IA materializado — kind (summary/quiz/pdf/podcast), plan_item_id FK pra estudo extenso"],
+          [<Code key="17">study_groups</Code>, "Grupos WhatsApp do Plano Empresarial — creator_user_id ou creator_phone, evolution_group_jid, participants jsonb, expires_at +7d"],
         ]}
       />
+
+      <h3 className="text-xl font-semibold">Migrações aplicadas (ordem)</h3>
+      <Pre>{`20260526000000_init.sql                    Schema base, RLS, RPCs match_*
+20260526000001_whatsapp.sql                Pareamento OTP + user_whatsapp + whatsapp_messages
+20260526000002_enable_rls.sql              RLS policies por tabela
+20260526000003_openrouter_key.sql          app_settings.openrouter_api_key
+20260526000004_google_api_key.sql          app_settings.google_api_key
+20260526000005_groups_and_journey.sql      study_groups + journey_xp + last_reminder_sent_at
+20260526000006_study_groups_anonymous.sql  creator_user_id nullable + creator_phone (beta aberto)
+20260526000007_generated_content_plan_item Liga generated_content ao plan_item pra revisar/regerar
+20260526000008_grants_refresh.sql          service_role ALL + ALTER DEFAULT PRIVILEGES`}</Pre>
 
       <h3 className="text-xl font-semibold">RPCs (Postgres functions)</h3>
       <Pre>{`-- RAG profundo: chunks de transcrição com timestamp
@@ -799,14 +847,19 @@ function Rotas() {
       <Table
         headers={["Rota", "Tipo", "Função"]}
         rows={[
-          ["/", "RSC", "Landing — CTAs para login e tutor"],
+          ["/", "RSC", "Landing — CTAs para login, tutor e PWA install"],
           ["/login", "Client", "Form CEFIS (email + senha)"],
           ["/onboarding", "RSC + Client", "Chat curto que monta perfil"],
-          ["/plano", "RSC", "Plano ativo do user com deep-links"],
-          ["/tutor", "RSC + Client", "Shell WhatsApp-dark com sidebar de cursos"],
-          ["/conectar-whatsapp", "Client", "OTP de pareamento com bot do zap"],
+          ["/diagnostico", "RSC + Client", "Quiz adaptativo de sub-skills com sliders"],
+          ["/plano", "RSC", "Plano ativo + switcher de N planos + cards com Estudar/Revisar/ChannelToggle"],
+          ["/plano?id=<uuid>", "RSC", "Carrega plano específico (ownership via loadPlan)"],
+          ["/tutor", "RSC + Client", "Shell WhatsApp-style com sidebar de cursos, planos, Plano Empresarial, Jornada do Herói, engrenagem de preferências"],
+          ["/tutor?planId=&q=", "Client", "Auto-submete pergunta com contexto do plano (vindo do botão Estudar agora)"],
+          ["/agentes", "RSC", "Página visual com os 6 agentes — cards + flow diagram"],
+          ["/sobre", "RSC", "Portfólio + descrição da Bússola"],
+          ["/conectar-whatsapp", "Client", "OTP de pareamento (legado, ainda funciona)"],
           ["/admin", "Client", "Backoffice protegido por senha (env)"],
-          ["/docs", "RSC", "Esta página — documentação"],
+          ["/docs", "RSC", "Esta página"],
         ]}
       />
 
@@ -817,16 +870,27 @@ function Rotas() {
           ["/api/auth/cefis-login", "POST", "Auth real contra CEFIS v1, set cookie"],
           ["/api/auth/logout", "POST", "Limpa cookie de sessão"],
           ["/api/auth/me", "GET", "Devolve user atual (ou 401)"],
-          ["/api/onboarding", "POST", "Próxima mensagem do agente Onboarding (structured)"],
-          ["/api/curator/generate-plan", "POST", "Curador gera plano semanal e persiste"],
-          ["/api/tutor", "POST", "RAG + resposta com citações"],
-          ["/api/plan/active", "GET", "Plano ativo do user logado"],
-          ["/api/plan/[id]", "GET", "Plano por ID (com ownership check)"],
+          ["/api/profile", "GET/PATCH", "Lê/atualiza user_profile (gate CEFIS login)"],
+          ["/api/journey", "GET", "Snapshot da Jornada do Herói (XP, level, streak, ladder, recentDays)"],
+          ["/api/onboarding", "POST", "Agente Onboarding turn-by-turn (structured)"],
+          ["/api/diagnostic", "POST", "phase=start gera sub-skills; phase=submit grava skill_assessment"],
+          ["/api/curator/generate-plan", "POST", "Curador — body { mode: auto|course|custom, courseId?, customName?, customGoal? }"],
+          ["/api/tutor", "POST", "RAG + resposta com citações; aceita planId pra biasar"],
+          ["/api/quick-learn", "POST", "Resumo IA calibrado por { topic, minutes }"],
+          ["/api/generate-content", "POST", "Materializa generated_summary ou generated_quiz a partir de plan_item ou tópico"],
+          ["/api/plan-item-study", "GET/POST", "GET retorna estudo salvo (markdown 800-1500 palavras); POST gera+persiste"],
+          ["/api/plan/active", "GET", "Plano ativo do user"],
+          ["/api/plan/list", "GET", "Todos os planos do user (active + arquivados)"],
+          ["/api/plan/[id]", "GET", "Plano por ID (ownership check)"],
           ["/api/courses", "GET", "Cursos indexados + disponíveis no sample"],
           ["/api/courses/ingest", "POST", "Indexa curso do sample (VTTs + embeddings)"],
-          ["/api/whatsapp/link", "POST/GET", "Gera/valida OTP de pareamento"],
-          ["/api/whatsapp/process", "POST", "Endpoint interno chamado pelo service Bun"],
+          ["/api/whatsapp/group", "POST/GET", "Cria grupo no zap (até 5 participantes, expira 7d). Beta: anônimo OK"],
+          ["/api/whatsapp/group/add-participant", "POST", "Adiciona até esgotar quota de 5 num grupo existente"],
+          ["/api/whatsapp/invite", "POST", "Bot inicia conversa com o número informado (rate-limit 3/15min)"],
+          ["/api/whatsapp/link", "POST/GET", "Gera/valida OTP de pareamento (legado)"],
+          ["/api/whatsapp/process", "POST", "Endpoint interno chamado pelo service Bun (HMAC)"],
           ["/api/whatsapp/webhook", "*", "Deprecated — 410. Webhook agora vive em services/wa"],
+          ["/api/cron/reminders", "GET", "Vercel Cron (0,30 11-23 UTC) → lembretes WhatsApp baseados em disponibilidade"],
           ["/api/admin/settings", "GET/POST", "Lê/grava app_settings (auth por senha)"],
           ["/api/admin/ingest-sample", "GET/POST", "Dry-run ou ingestão completa do sample"],
         ]}
@@ -934,25 +998,195 @@ function Whatsapp() {
 
       <h3 className="text-xl font-semibold">Estrutura do serviço</h3>
       <Pre>{`services/wa/src/
-├── index.ts        # bootstrap Bun.serve()
+├── index.ts        # bootstrap Bun.serve() + /health expõe queue size
 ├── env.ts          # validação de variáveis
-├── middleware.ts   # body parsing + error wrap
+├── middleware.ts   # HMAC + body parsing
 ├── webhook.ts      # POST /v1/evolution/webhook
-├── hmac.ts         # validação de secret
-├── relay.ts        # askTutor() + format pra zap
-├── send.ts         # Evolution sendText / sendList
-├── evolution.ts    # cliente Evolution v2
+├── hmac.ts         # validação de assinatura
+├── relay.ts        # encaminha pra Next.js /api/whatsapp/process
+├── queue.ts        # FIFO global, delay 1.5s entre cada envio
+├── send.ts         # /v1/send/text, /v1/send/audio (enfileira via queue)
+├── group.ts        # /v1/group/create, /v1/group/add-participant
+├── evolution.ts    # cliente Evolution v2 (sendText, createGroup, etc.)
 ├── instance.ts     # gerenciamento de instâncias
 ├── supabase.ts     # cliente compartilhado
 ├── phone.ts        # E.164 normalize
 └── log.ts          # log estruturado (sem PII)`}</Pre>
 
+      <h3 className="text-xl font-semibold">Fila FIFO com delay</h3>
       <p>
-        O serviço chama <Code>askTutor()</Code> (a mesma função usada por{" "}
-        <Code>/api/tutor</Code>) e formata a resposta com{" "}
-        <Code>formatTutorForWhatsApp()</Code> — texto plain com emojis sutis e links
-        absolutos clicáveis no zap.
+        Todo envio outbound (texto, áudio) passa por uma fila FIFO em memória no Bun com{" "}
+        <Code>DELAY_MS = 1500</Code> entre o enqueue e o envio efetivo. Garante ordem entre
+        mensagens disparadas em paralelo (ex: tutor + lembrete simultâneos) e evita
+        sensação de bot instantâneo. <Code>/v1/send/text</Code> retorna{" "}
+        <Code>202 {`{ queued: true, position }`}</Code>.
       </p>
+
+      <h3 className="text-xl font-semibold">Fluxo de mensagem inbound</h3>
+      <ol className="ml-5 list-decimal space-y-1">
+        <li>Evolution → POST <Code>/v1/evolution/webhook?secret=...</Code> no Bun</li>
+        <li>Bun valida secret, ack rápido (&lt;5s), normaliza phone + extrai text/audio</li>
+        <li>Bun encaminha via HMAC POST pro Next.js <Code>/api/whatsapp/process</Code></li>
+        <li>Next.js detecta saudação (oi/menu/ajuda) → menu numerado; ou comando 1/2/3 → ação; ou texto livre → tutor</li>
+        <li>Resposta gerada → POST <Code>/v1/send/text</Code> no Bun → fila → Evolution → usuário</li>
+      </ol>
+
+      <h3 className="text-xl font-semibold">Grupos de estudo (Plano Empresarial)</h3>
+      <p>
+        Endpoint <Code>POST /api/whatsapp/group</Code> cria grupo no WhatsApp via Evolution
+        (até 5 participantes, expira em 7 dias). Beta aberto:{" "}
+        <strong>anônimo também pode criar</strong>, usando o 1º participante como
+        organizador (creator_phone). Logado usa creator_user_id. Adicionar mais
+        participantes via <Code>/api/whatsapp/group/add-participant</Code>.
+      </p>
+    </section>
+  );
+}
+
+// ── 11b. Continuidade entre canais ──
+function ChannelToggleSection() {
+  return (
+    <section className="space-y-5">
+      <SectionTitle
+        id="channel-toggle"
+        eyebrow="Multi-canal"
+        title="Continuidade Web ↔ WhatsApp"
+      />
+
+      <p>
+        O aluno pode pular entre web e WhatsApp sem perder contexto:
+      </p>
+
+      <ul className="ml-5 list-disc space-y-2">
+        <li>
+          <strong>Web → WhatsApp</strong>: o componente{" "}
+          <Code>{`<ChannelToggle />`}</Code> (em{" "}
+          <Code>src/components/channel-toggle.tsx</Code>) renderiza uma pill{" "}
+          &ldquo;🌐 App → 💬 WhatsApp&rdquo;. Clicando no lado WhatsApp, abre{" "}
+          <Code>wa.me/{`{bot}`}?text={`{prompt}`}</Code> com mensagem pré-formatada
+          pedindo pra continuar o estudo no zap. Usado dentro do StudyViewer modal
+          (rodapé) — passa o título do plan_item no prompt.
+        </li>
+        <li>
+          <strong>WhatsApp → Web</strong>: toda resposta do tutor no zap termina com{" "}
+          <Code>🌐 Ver no app: {`<APP_URL>`}/tutor</Code> (via{" "}
+          <Code>formatTutorForWhatsApp()</Code>). E o menu numerado (opção 2) entrega
+          o link da landing.
+        </li>
+      </ul>
+    </section>
+  );
+}
+
+// ── 11c. Gamificação ──
+function JornadaSection() {
+  return (
+    <section className="space-y-5">
+      <SectionTitle
+        id="jornada"
+        eyebrow="Engajamento"
+        title="Jornada do Herói (gamificação)"
+      />
+
+      <p>
+        Modelo de 5 níveis baseado no monomito de Joseph Campbell, computado em runtime
+        em <Code>src/lib/journey.ts</Code> a partir das interações reais do aluno.
+        Endpoint <Code>GET /api/journey</Code> devolve o snapshot completo.
+      </p>
+
+      <h3 className="text-xl font-semibold">Níveis</h3>
+      <Table
+        headers={["Slug", "Nome", "Fase Campbell", "Emoji", "minXp", "nextXp"]}
+        rows={[
+          ["aprendiz",     "Aprendiz",     "Chamado da Aventura",          "🧭", "0",   "30"],
+          ["aventureiro",  "Aventureiro",  "Cruzando o Limiar",            "🚪", "30",  "100"],
+          ["estrategista", "Estrategista", "Provas, Aliados e Inimigos",   "⚔️", "100", "250"],
+          ["mestre",       "Mestre",       "Ordália e Recompensa",         "🏆", "250", "600"],
+          ["lenda",        "Lenda",        "Retorno com o Elixir",         "🌟", "600", "—"],
+        ]}
+      />
+
+      <h3 className="text-xl font-semibold">Cálculo de XP e streak</h3>
+      <ul className="ml-5 list-disc space-y-1">
+        <li>
+          <strong>+10 XP</strong> por pergunta do aluno (count em{" "}
+          <Code>tutor_messages.role=&apos;user&apos;</Code> +{" "}
+          <Code>whatsapp_messages.direction=&apos;in&apos; AND kind=&apos;text&apos;</Code>)
+        </li>
+        <li>
+          <strong>+5 XP</strong> por resposta do tutor com citação (heurística:
+          citations jsonb não vazio)
+        </li>
+        <li>
+          <strong>Streak</strong>: dias consecutivos com pelo menos 1 pergunta nos
+          últimos 30 dias (UTC). Quebra na primeira lacuna.
+        </li>
+        <li>
+          <strong>recentDays</strong>: array YYYY-MM-DD pro calendar do modal (grid
+          10×3 nos últimos 30 dias)
+        </li>
+      </ul>
+
+      <h3 className="text-xl font-semibold">UI</h3>
+      <p>
+        <Code>{`<JourneyWidget />`}</Code> no sidebar do tutor. Pill com gradient por
+        nível, barra de XP animada (ease-out 900ms ao montar), flame pulsante do
+        streak. Clica e abre <Code>JourneyModal</Code> com hero header, 3 stats,
+        ladder dos 5 níveis e calendário visual.
+      </p>
+    </section>
+  );
+}
+
+// ── 11d. Lembretes ──
+function LembretesSection() {
+  return (
+    <section className="space-y-5">
+      <SectionTitle
+        id="lembretes"
+        eyebrow="Automação"
+        title="Lembretes via Vercel Cron"
+      />
+
+      <p>
+        Cron agendado em <Code>vercel.json</Code> com schedule{" "}
+        <Code>0,30 11-23 * * *</Code> (UTC) — cobre 8h-20h BRT a cada 30 min. Vercel
+        Cron invoca <Code>GET /api/cron/reminders</Code> com header{" "}
+        <Code>Authorization: Bearer {`{CRON_SECRET}`}</Code>.
+      </p>
+
+      <h3 className="text-xl font-semibold">Lógica</h3>
+      <ol className="ml-5 list-decimal space-y-1">
+        <li>
+          Lê <Code>user_whatsapp</Code> onde{" "}
+          <Code>last_reminder_sent_at IS NULL OR &lt; now() - 18h</Code>
+        </li>
+        <li>
+          Filtra pelos que têm{" "}
+          <Code>user_profile.available_minutes_per_day &gt; 0</Code>
+        </li>
+        <li>
+          Envia até 25 lembretes por execução (cap pra não estourar timeout do
+          Vercel — 60s)
+        </li>
+        <li>
+          Mensagem usa o <Code>first_name</Code> + minutos por dia declarados; passa
+          pela fila do Bun (1.5s)
+        </li>
+        <li>
+          Atualiza <Code>last_reminder_sent_at</Code> + persiste em{" "}
+          <Code>whatsapp_messages</Code>
+        </li>
+      </ol>
+
+      <Callout tone="info" title="Pré-requisito do usuário">
+        <p>
+          O aluno precisa ter completado o onboarding (pra ter{" "}
+          <Code>available_minutes_per_day</Code>) <em>e</em> pareado o WhatsApp (linha
+          em <Code>user_whatsapp</Code>). Quem só usou o tutor anônimo na web não
+          recebe lembretes.
+        </p>
+      </Callout>
     </section>
   );
 }

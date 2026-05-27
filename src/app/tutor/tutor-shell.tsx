@@ -98,13 +98,13 @@ export function TutorShell({
   firstName,
   fullName = null,
   avatar = null,
-  botPhone,
+  userPhone,
 }: {
   isLoggedIn: boolean;
   firstName: string | null;
   fullName?: string | null;
   avatar?: string | null;
-  botPhone: string | null;
+  userPhone: string | null;
 }) {
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
@@ -751,7 +751,9 @@ export function TutorShell({
       <WhatsappModal
         open={waModalOpen}
         onClose={() => setWaModalOpen(false)}
-        botPhone={botPhone}
+        isLoggedIn={isLoggedIn}
+        userPhone={userPhone}
+        firstName={firstName}
       />
 
       <StudyGroupModal

@@ -310,19 +310,53 @@ async function tryLinkCode(
 
 async function listCoursesMessage(): Promise<string> {
   try {
-    const { data } = await supabaseAdmin()
+    const supabase = supabaseAdmin();
+    const { data: courses } = await supabase
       .from("cefis_courses")
       .select("id, title, lesson_count")
-      .order("title")
       .limit(15);
-    if (!data || data.length === 0) {
+    if (!courses || courses.length === 0) {
       return "Ainda não tenho cursos indexados. Envie *2* para abrir o app e configurar.";
     }
-    const lines = data.map(
-      (c, i) => `${i + 1}. *${c.title}* — ${c.lesson_count ?? "?"} aulas (curso #${c.id})`
-    );
+
+    // Conta chunks indexados por curso pra ordenar os mais completos primeiro
+    const courseIds = courses.map((c) => c.id);
+    const chunksByCourse = new Map<number, number>();
+    try {
+      const { data: chunkRows } = await supabase
+        .from("cefis_lesson_embeddings")
+        .select("lesson_id, cefis_lessons!inner(course_id)");
+      for (const row of (chunkRows ?? []) as Array<{
+        cefis_lessons: { course_id: number } | { course_id: number }[];
+      }>) {
+        const rel = row.cefis_lessons;
+        const cid = Array.isArray(rel) ? rel[0]?.course_id : rel?.course_id;
+        if (cid && courseIds.includes(cid)) {
+          chunksByCourse.set(cid, (chunksByCourse.get(cid) ?? 0) + 1);
+        }
+      }
+    } catch {
+      // sem chunks — fallback alfabético
+    }
+
+    const sorted = [...courses].sort((a, b) => {
+      const ca = chunksByCourse.get(a.id) ?? 0;
+      const cb = chunksByCourse.get(b.id) ?? 0;
+      if (cb !== ca) return cb - ca;
+      const la = a.lesson_count ?? 0;
+      const lb = b.lesson_count ?? 0;
+      if (lb !== la) return lb - la;
+      return a.title.localeCompare(b.title, "pt-BR");
+    });
+
+    const lines = sorted.map((c, i) => {
+      const chunks = chunksByCourse.get(c.id) ?? 0;
+      const tag = chunks > 0 ? ` · 🎯 ${chunks} trechos indexados` : "";
+      return `${i + 1}. *${c.title}* — ${c.lesson_count ?? "?"} aulas${tag}`;
+    });
     return [
       "📚 *Cursos disponíveis no catálogo:*",
+      "(ordenados por nível de indexação — top tem o conteúdo mais completo)",
       "",
       ...lines,
       "",
@@ -330,7 +364,7 @@ async function listCoursesMessage(): Promise<string> {
     ].join("\n");
   } catch (err) {
     logSafe("listCourses failed", err);
-    return "Não consegui buscar a lista agora. Tenta de novo em alguns segundos.";
+    return "Não consegui buscar a lista agora. Tente de novo em alguns segundos.";
   }
 }
 
