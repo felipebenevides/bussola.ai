@@ -1137,7 +1137,7 @@ function ChatHeader({
           className="hidden items-center gap-2 rounded-full bg-emerald-100/80 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-200/80 dark:bg-emerald-600/15 dark:text-emerald-300 dark:hover:bg-emerald-600/25 sm:inline-flex"
         >
           <span>💬</span>
-          <span>Receber no WhatsApp</span>
+          <span>Continuar estudo pelo WhatsApp</span>
         </button>
       )}
     </header>

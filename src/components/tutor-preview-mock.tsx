@@ -27,7 +27,7 @@ import {
  * - Busca + lista de cursos (Todos + Indexados)
  * - JourneyWidget compacto (gamificação)
  * - SidebarFooter (Receber no WhatsApp + Meu plano)
- * - ChatHeader com Settings + pill "Receber no WhatsApp"
+ * - ChatHeader com Settings + pill "Continuar estudo pelo WhatsApp"
  * - Mensagens + citation card no segundo exato
  * - Composer com input
  *
@@ -429,7 +429,7 @@ function MockChatHeader() {
       </button>
       <div className="hidden items-center gap-1.5 rounded-full bg-emerald-100/80 px-2.5 py-1 text-[10px] font-medium text-emerald-700 dark:bg-emerald-600/15 dark:text-emerald-300 sm:inline-flex">
         <span>💬</span>
-        <span>Receber no WhatsApp</span>
+        <span>Continuar estudo pelo WhatsApp</span>
       </div>
     </header>
   );
