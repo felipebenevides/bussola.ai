@@ -447,7 +447,8 @@ function Arquitetura() {
 │                                                                   │
 │   /                /login              /onboarding   /plano       │
 │   /tutor (shell estilo WhatsApp)       /admin        /docs        │
-│   (botão "Receber no WhatsApp" → modal → /api/whatsapp/invite)    │
+│   (header "Continuar estudo pelo zap" / footer "Receber no WhatsApp"│
+│      └→ WhatsappModal → POST /api/whatsapp/invite)                │
 └────────────────────────┬─────────────────────────────────────────┘
                          │ HTTPS
                          ▼
@@ -482,7 +483,10 @@ function Arquitetura() {
    │  • tutor_messages    │       │  v3: catálogo,       │
    │  • tutor_sessions    │       │      cursos, aulas,  │
    │  • app_settings      │       │      trilhas         │
-   │  • whatsapp_link     │       └──────────────────────┘
+   │  • user_profile      │       └──────────────────────┘
+   │    .phone (onboard.) │
+   │  • whatsapp_messages │
+   │  • user_whatsapp     │
    └──────────────────────┘
              ▲
              │
@@ -493,7 +497,7 @@ function Arquitetura() {
 │                                                                   │
 │  POST /v1/evolution/webhook?secret=...                            │
 │     ├─ HMAC check                                                 │
-│     ├─ Resolve aluno via whatsapp_link                            │
+│     ├─ Resolve aluno via user_profile.phone (E.164 sem +)         │
 │     ├─ Chama askTutor() reusando lib do app web                   │
 │     └─ Envia resposta via Evolution API v2                        │
 └──────────────────────────────────────────────────────────────────┘`}</Pre>
@@ -517,11 +521,12 @@ function Fluxos() {
       <SectionTitle id="fluxos" eyebrow="UX" title="Fluxos do usuário" />
 
       <h3 className="text-xl font-semibold">Fluxo principal (caminho feliz)</h3>
-      <Pre>{`/  →  /login  →  /onboarding  →  /plano  →  /tutor
-                                       │
-                                       └─ (opcional) botão "Receber no WhatsApp"
-                                               │
-                                               └─ Bússola te chama no zap`}</Pre>
+      <Pre>{`/  →  /login  →  /onboarding (6 perguntas, inclui WhatsApp)  →  /plano  →  /tutor
+                                  │                                       │
+                                  │                                       ├─ header: "Continuar estudo pelo WhatsApp"
+                                  └─ phone → user_profile.phone           └─ sidebar footer: "Receber no WhatsApp"
+                                                                              │
+                                                                              └─ WhatsappModal → invite (Bússola te chama no zap)`}</Pre>
 
       <h3 className="text-xl font-semibold">/login — auth real CEFIS</h3>
       <ol className="ml-5 list-decimal space-y-1">
@@ -775,7 +780,7 @@ function Schema() {
         rows={[
           [<Code key="1">app_settings</Code>, "Singleton (id=1) com chaves de API + modelos + flags"],
           [<Code key="2">users</Code>, "Espelha conta CEFIS — cefis_user_id, name, avatar + journey_xp cache"],
-          [<Code key="3">user_profile</Code>, "Saída do onboarding: goal, minutos/dia, learning_style, deadline"],
+          [<Code key="3">user_profile</Code>, "Saída do onboarding (6 perguntas): goal, minutos/dia, learning_style, deadline, professional_experience, phone E.164 (fonte canônica do WhatsApp)"],
           [<Code key="4">skill_assessment</Code>, "Sub-skills com score/status/importance — onboarding + /diagnostico"],
           [<Code key="5">study_plan</Code>, "Plano semanal (title, total_weeks, active, rationale) — vários por user"],
           [<Code key="6">plan_items</Code>, "Items por dia (source, source_ref, cefis_course/lesson/track_id, duration_minutes, status)"],
@@ -784,8 +789,8 @@ function Schema() {
           [<Code key="9">cefis_lesson_embeddings</Code>, "Chunks de transcrição com start/end seconds + embedding(1536)"],
           [<Code key="10">cefis_course_embeddings</Code>, "Embedding único por curso (metadados) — RAG light"],
           [<Code key="11">tutor_messages</Code>, "Mensagens persistidas (best-effort) com citations jsonb — base de XP"],
-          [<Code key="12">whatsapp_link_codes</Code>, "Pareamento WhatsApp ↔ user via OTP (TTL curto)"],
-          [<Code key="13">user_whatsapp</Code>, "Vínculo phone ↔ user_id (1-1) + last_reminder_sent_at pra throttle do cron"],
+          [<Code key="12">whatsapp_link_codes</Code>, "OTP de pareamento (6 chars A-F0-9, TTL 10min, uso único). Gerado por /api/whatsapp/link gated em login CEFIS, consumido pelo webhook quando o aluno envia o código pelo zap."],
+          [<Code key="13">user_whatsapp</Code>, "Fonte canônica do vínculo phone ↔ user_id (1-1) — criada pelo OTP redeem. Inclui linked_at, last_reminder_sent_at, last_quiz_sent_at pro throttle do cron."],
           [<Code key="14">whatsapp_messages</Code>, "Log raw in/out direction, kind, content, citations, evolution_message_id"],
           [<Code key="15">progress_log</Code>, "Eventos por plan_item (started, completed, …)"],
           [<Code key="16">generated_content</Code>, "Conteúdo IA materializado — kind (summary/quiz/pdf/podcast), plan_item_id FK pra estudo extenso"],
@@ -795,14 +800,16 @@ function Schema() {
 
       <h3 className="text-xl font-semibold">Migrações aplicadas (ordem)</h3>
       <Pre>{`20260526000000_init.sql                    Schema base, RLS, RPCs match_*
-20260526000001_whatsapp.sql                Pareamento OTP + user_whatsapp + whatsapp_messages
+20260526000001_whatsapp.sql                whatsapp_link_codes (legado OTP) + user_whatsapp + whatsapp_messages
 20260526000002_enable_rls.sql              RLS policies por tabela
 20260526000003_openrouter_key.sql          app_settings.openrouter_api_key
 20260526000004_google_api_key.sql          app_settings.google_api_key
 20260526000005_groups_and_journey.sql      study_groups + journey_xp + last_reminder_sent_at
 20260526000006_study_groups_anonymous.sql  creator_user_id nullable + creator_phone (beta aberto)
 20260526000007_generated_content_plan_item Liga generated_content ao plan_item pra revisar/regerar
-20260526000008_grants_refresh.sql          service_role ALL + ALTER DEFAULT PRIVILEGES`}</Pre>
+20260526000008_grants_refresh.sql          service_role ALL + ALTER DEFAULT PRIVILEGES
+20260527000000_user_profile_phone.sql      user_profile.phone (fonte canônica do WhatsApp — substitui OTP)
+20260527000001_user_whatsapp_last_quiz.sql user_whatsapp.last_quiz_sent_at (throttle do cron diário)`}</Pre>
 
       <h3 className="text-xl font-semibold">RPCs (Postgres functions)</h3>
       <Pre>{`-- RAG profundo: chunks de transcrição com timestamp
@@ -984,35 +991,100 @@ function Whatsapp() {
         </ul>
       </Callout>
 
-      <h3 className="text-xl font-semibold">Fluxo de convite (sem pareamento explícito)</h3>
-      <Callout tone="info" title="Instância única, invisível para o usuário">
+      <h3 className="text-xl font-semibold">Pareamento por OTP (gated por login CEFIS)</h3>
+      <Callout tone="info" title="O aluno NUNCA conecta na instância Evolution diretamente">
         <p>
-          A Bússola usa uma única instância Evolution já conectada. O usuário nunca vê o
-          número do bot nem entra em fluxo de OTP — o telefone dele é capturado no
-          onboarding e a Bússola simplesmente <strong>manda mensagem primeiro</strong>{" "}
-          quando ele aperta o botão.
+          Existe uma <strong>única instância da Bússola</strong>, já conectada e administrada.
+          O aluno nunca escaneia QR, nunca configura número, nunca toca na Evolution. Ele
+          apenas <strong>envia um código de 6 caracteres</strong> da própria conta dele para o
+          número público do bot — e isso vincula o WhatsApp à conta CEFIS.
+        </p>
+        <p className="mt-2">
+          O fluxo é gated em login CEFIS:{" "}
+          <Code>/api/whatsapp/link</Code> exige cookie de auth e retorna 401 pra anônimo.
+          Sem CEFIS autenticado não há geração de OTP.
         </p>
       </Callout>
-      <ol className="ml-5 list-decimal space-y-1">
+      <h4 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+        Fluxo end-to-end
+      </h4>
+      <ol className="ml-5 list-decimal space-y-1.5">
         <li>
-          No <Code>/onboarding</Code>, o agente captura o telefone do aluno (E.164 sem +)
-          e grava em <Code>user_profile.phone</Code>.
+          <strong>CTA</strong> — pílula{" "}
+          <em>&quot;Continuar estudo pelo WhatsApp&quot;</em> no header do{" "}
+          <Code>ChatHeader</Code> (sinaliza retomada de contexto) ou botão{" "}
+          <em>&quot;Receber no WhatsApp&quot;</em> no rodapé da sidebar (descoberta
+          inicial). Ambos abrem o mesmo <Code>WhatsappModal</Code>.
         </li>
         <li>
-          No <Code>/tutor</Code> (ou em qualquer lugar com botão{" "}
-          <strong>Receber no WhatsApp</strong>), o <Code>WhatsappModal</Code> mostra o
-          número salvo e oferece o botão <em>&quot;Receber mensagem agora&quot;</em>.
+          <strong>Modal bootstrap</strong> — ao montar, faz{" "}
+          <Code>GET /api/whatsapp/link/status</Code> pra checar se já existe vínculo
+          (<Code>user_whatsapp</Code> row pro user logado):
+          <ul className="ml-5 list-disc">
+            <li>
+              <strong>Anônimo</strong> → CTA &quot;Entrar com CEFIS&quot; pra{" "}
+              <Code>/login</Code>.
+            </li>
+            <li>
+              <strong>Logado + não pareado</strong> →{" "}
+              <Code>POST /api/whatsapp/link</Code> gera OTP via{" "}
+              <Code>crypto.randomBytes(3).toString(&quot;hex&quot;).toUpperCase()</Code>{" "}
+              (6 chars A-F0-9), TTL 10min, grava em <Code>whatsapp_link_codes</Code>.
+              Modal mostra código + telefone do bot + countdown.
+            </li>
+            <li>
+              <strong>Logado + já pareado</strong> → tela &quot;Já vinculado&quot; com
+              número formatado + botão &quot;Receber mensagem agora&quot; (invite direto
+              via <Code>/api/whatsapp/invite</Code>) e opção de gerar novo código.
+            </li>
+          </ul>
         </li>
         <li>
-          Click → <Code>POST /api/whatsapp/invite</Code> dispara mensagem outbound via
-          Evolution diretamente para o telefone do aluno. Rate-limit de ~15min por número.
+          <strong>Usuário envia OTP</strong> — abre o WhatsApp dele, manda o código de 6
+          chars pro número do bot. Não há wa.me / deep link — copy + manual envio garante
+          que ele realmente possui o telefone.
         </li>
         <li>
-          A partir daí, qualquer resposta do aluno no zap entra pelo{" "}
-          <Code>/v1/evolution/webhook</Code> do service Bun, que resolve o{" "}
-          <Code>user_id</Code> pelo telefone e roda <Code>askTutor()</Code>.
+          <strong>Inbound</strong> — Evolution → <Code>/v1/evolution/webhook</Code> (Bun) →
+          HMAC relay → <Code>/api/whatsapp/process</Code>. O handler detecta{" "}
+          <Code>OTP_REGEX = /^[A-F0-9]{`{6}`}$/</Code>,{" "}
+          chama <Code>tryLinkCode(code, phone)</Code>: marca{" "}
+          <Code>whatsapp_link_codes.used_at</Code>, cria/atualiza{" "}
+          <Code>user_whatsapp</Code> {`(phone ↔ user_id ↔ linked_at)`}, e envia mensagem
+          de boas-vindas pelo zap.
+        </li>
+        <li>
+          <strong>Polling</strong> — enquanto OTP está visível, modal polla{" "}
+          <Code>/api/whatsapp/link/status</Code> a cada 3s. Quando{" "}
+          <Code>paired=true</Code> aparece, modal troca pra estado &quot;Vinculado!&quot;
+          com confirmação.
+        </li>
+        <li>
+          <strong>Mensagens futuras</strong> — após pareado, qualquer pergunta do aluno no
+          zap entra pelo mesmo webhook. <Code>findUserByPhone()</Code> resolve{" "}
+          <Code>user_id</Code> via <Code>user_whatsapp.phone</Code> e roda{" "}
+          <Code>askTutor()</Code>.
         </li>
       </ol>
+
+      <Callout tone="info" title="Onde mora o phone do aluno">
+        <p>
+          A <strong>fonte canônica do vínculo</strong> é{" "}
+          <Code>user_whatsapp</Code> (phone ↔ user_id, 1-1, criada pelo OTP redeem). O{" "}
+          <Code>user_profile.phone</Code> coletado no onboarding fica como hint/backup pra
+          envios proativos (cron de quiz/lembretes) — esses não precisam de OTP porque o
+          disparo já é cleo do bot pro aluno e não cria vínculo novo.
+        </p>
+      </Callout>
+
+      <Callout tone="info" title="Princípio: nunca expor 'Evolution' ao usuário">
+        <p>
+          Em toda copy user-facing (modal, botões, empty states, mock da home) a palavra é
+          sempre <strong>&quot;WhatsApp&quot;</strong> ou <strong>&quot;zap&quot;</strong>.
+          &quot;Evolution&quot; só aparece em código, comentários, settings keys,{" "}
+          <Code>/admin</Code> e aqui em <Code>/docs</Code>.
+        </p>
+      </Callout>
 
       <h3 className="text-xl font-semibold">Estrutura do serviço</h3>
       <Pre>{`services/wa/src/
@@ -1363,7 +1435,10 @@ function Seguranca() {
           de origem.
         </li>
         <li>
-          OTP de pareamento via <Code>crypto.randomBytes</Code>, TTL 10min, uso único.
+          OTP de pareamento WhatsApp via <Code>crypto.randomBytes</Code> (6 chars hex
+          maiúsculo), TTL 10min, uso único. Geração gated em login CEFIS — anônimo recebe
+          401 em <Code>/api/whatsapp/link</Code>. Redeem via webhook consumindo o código
+          enviado pelo próprio aluno garante posse do telefone.
         </li>
         <li>
           Não logar conteúdo de chaves, senhas, mensagens privadas. Em emergência, log
