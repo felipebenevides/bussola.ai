@@ -25,7 +25,9 @@ export const metadata = {
     "Portfólio de Felipe Benevides — Gerente de Engenharia / Full Stack Sênior. C#, .NET, Node.js, React, Next.js, AWS e liderança técnica.",
 };
 
-const PHOTO_PATH = "/felipe.jpg";
+// Foto hospedada em Supabase Storage (bucket público `bussola/headerph/`).
+const PHOTO_PATH =
+  "https://veamcojwkdwgagjoftya.supabase.co/storage/v1/object/public/bussola/headerph/felipe.jpg";
 
 const STACK = [
   {
