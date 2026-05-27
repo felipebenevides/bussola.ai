@@ -319,7 +319,7 @@ export function TutorShell({
           role: "assistant",
           content:
             (firstName ? `Beleza ${firstName}! ` : "Beleza! ") +
-            "Para indexar um curso CEFIS eu preciso só do **ID do curso** — me envie o número (ex: `1132`) ou o link `https://cefis.com.br/curso/1132`. Depois eu cuido do resto: aulas, transcrições e embeddings.",
+            "Para indexar um curso CEFIS eu preciso só do **ID do curso** — me envie o número (ex: `1132`) ou o link `https://cefis.com.br/portal/cursos/1132`. Depois eu cuido do resto: aulas, transcrições e embeddings.",
           time: nowTime(),
         },
       ],

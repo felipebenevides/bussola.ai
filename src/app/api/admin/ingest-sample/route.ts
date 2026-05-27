@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
           average_rating: course.averageRating ?? null,
           rating_quantity: course.ratingQuantity ?? null,
           lesson_count: course.lessonCount ?? null,
-          cefis_url: `https://cefis.com.br/curso/${course.id}`,
+          cefis_url: `https://cefis.com.br/portal/cursos/${course.id}`,
           last_synced_at: new Date().toISOString(),
         },
         { onConflict: "id" }
@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
             has_transcription: !!lesson.vttContent,
             stream_sources: lesson.stream_sources ?? null,
             preview_url: lesson.preview_url ?? null,
-            cefis_url: `https://cefis.com.br/curso/${course.id}/aula/${lesson.id}`,
+            cefis_url: `https://cefis.com.br/portal/cursos/${course.id}?lesson=${lesson.id}`,
             last_synced_at: new Date().toISOString(),
           },
           { onConflict: "id" }

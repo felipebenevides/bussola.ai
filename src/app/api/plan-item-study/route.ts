@@ -3,7 +3,7 @@ import { z } from "zod";
 import { genObject } from "@/lib/ai";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getCurrentUserId } from "@/lib/cefis-server";
-import { ragSearch } from "@/lib/tutor-agent";
+import { ragSearch, buildLessonDeepLink } from "@/lib/tutor-agent";
 import { formatDuration } from "@/lib/utils";
 
 export const runtime = "nodejs";
@@ -294,7 +294,7 @@ Gere o material de estudo extenso e didático agora.`;
       courseTitle: c.course_title,
       lessonTitle: c.lesson_title,
       startSeconds: c.start_seconds,
-      deepLink: `https://cefis.com.br/curso/${c.course_id}/aula/${c.lesson_id}?t=${c.start_seconds}`,
+      deepLink: buildLessonDeepLink(c.course_id, c.lesson_id, c.start_seconds),
     })),
   });
 }

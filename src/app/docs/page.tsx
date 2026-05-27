@@ -353,7 +353,7 @@ function KillerFeature() {
       </ol>
 
       <Pre>{`buildLessonDeepLink(courseId, lessonId, startSeconds)
-  → https://cefis.com.br/curso/{courseId}/aula/{lessonId}?t={s}`}</Pre>
+  → https://cefis.com.br/portal/cursos/{courseId}?lesson={lessonId}&t={s}`}</Pre>
 
       <Callout tone="success" title="Por que isso ganha pontos">
         <p>
@@ -949,10 +949,15 @@ function Cefis() {
 
       <h3 className="text-xl font-semibold">Deep-link</h3>
       <Pre>{`buildLessonDeepLink(courseId, lessonId, startSeconds)
-  → "https://cefis.com.br/curso/{courseId}/aula/{lessonId}?t={Math.floor(startSeconds)}"`}</Pre>
+  → "https://cefis.com.br/portal/cursos/{courseId}?lesson={lessonId}&t={Math.floor(startSeconds)}"
+
+buildCourseDeepLink(courseId)
+  → "https://cefis.com.br/portal/cursos/{courseId}"`}</Pre>
       <p className="text-sm text-zinc-500">
-        Ponto único de mudança. Se o formato real do CEFIS for diferente, ajustar ali
-        atualiza todo o produto.
+        Formato confirmado pelo time CEFIS (2026-05-26). O parâmetro <Code>t</Code> vai
+        como query extra — se o player suportar, abre no segundo exato; se não, é
+        ignorado e o link continua válido. Ponto único de mudança em{" "}
+        <Code>src/lib/tutor-agent.ts</Code>.
       </p>
     </section>
   );

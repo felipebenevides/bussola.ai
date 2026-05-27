@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { genObject } from "@/lib/ai";
-import { ragSearch, buildLessonDeepLink } from "@/lib/tutor-agent";
+import { ragSearch, buildLessonDeepLink, buildCourseDeepLink } from "@/lib/tutor-agent";
 import { formatDuration } from "@/lib/utils";
 
 export const runtime = "nodejs";
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
   const suggestedCourses = courses.slice(0, 3).map((c) => ({
     courseId: c.course_id,
     title: c.title,
-    url: c.cefis_url ?? `https://cefis.com.br/curso/${c.course_id}`,
+    url: c.cefis_url ?? buildCourseDeepLink(c.course_id),
   }));
 
   return NextResponse.json({

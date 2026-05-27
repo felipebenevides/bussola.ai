@@ -51,13 +51,22 @@ export interface TutorAnswer {
 }
 
 /**
- * Constrói o deep-link para a CEFIS no segundo exato da aula.
- * Formato presumido: https://cefis.com.br/curso/{courseId}/aula/{lessonId}?t={seconds}
- * Se o link real for diferente, ajustar aqui (ponto único de mudança).
+ * Constrói o deep-link real do portal CEFIS para uma aula específica.
+ * Formato confirmado: https://cefis.com.br/portal/cursos/{courseId}?lesson={lessonId}
+ * O parâmetro `t` (segundos) vai como query extra — se o player CEFIS suportar,
+ * abre no segundo exato; se não, é ignorado e o link continua válido.
  */
 export function buildLessonDeepLink(courseId: number, lessonId: number, startSeconds: number): string {
   const t = Math.max(0, Math.floor(startSeconds));
-  return `https://cefis.com.br/curso/${courseId}/aula/${lessonId}?t=${t}`;
+  const base = `https://cefis.com.br/portal/cursos/${courseId}?lesson=${lessonId}`;
+  return t > 0 ? `${base}&t=${t}` : base;
+}
+
+/**
+ * Link do curso no portal CEFIS (sem aula específica).
+ */
+export function buildCourseDeepLink(courseId: number): string {
+  return `https://cefis.com.br/portal/cursos/${courseId}`;
 }
 
 export async function ragSearch(
@@ -261,7 +270,7 @@ ${contextLines.join("\n\n")}`;
     .map((i) => ({
       courseId: courses[i].course_id,
       title: courses[i].title,
-      url: courses[i].cefis_url ?? `https://cefis.com.br/curso/${courses[i].course_id}`,
+      url: courses[i].cefis_url ?? buildCourseDeepLink(courses[i].course_id),
     }));
 
   // Override defensivo: o LLM às vezes marca grounded=false mesmo tendo citado
