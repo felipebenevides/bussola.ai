@@ -23,7 +23,7 @@ import {
  * Mock estático mas interativo do /tutor — reproduz fielmente:
  * - SidebarHeader com avatar do user logado + pulse online + nome
  * - Seletor de plano em discussão
- * - Botões "Indexar novo curso" (emerald) + "Plano Empresarial" (violet)
+ * - Botões "Novo curso" (emerald · abre modal de fonte) + "Plano Empresarial" (violet)
  * - Busca + lista de cursos (Todos + Indexados)
  * - JourneyWidget compacto (gamificação)
  * - SidebarFooter (Receber no WhatsApp + Meu plano)
@@ -162,14 +162,14 @@ function MockPlanSelector() {
 function MockSidebarButtons() {
   return (
     <div className="space-y-1.5 border-b px-3 py-2.5" style={{ borderColor: "var(--wa-border)" }}>
-      {/* Indexar novo curso */}
+      {/* Novo curso (CEFIS · PDF · YouTube) */}
       <div className="group flex w-full items-center gap-2.5 rounded-lg bg-gradient-to-br from-[#00a884] to-[#06846a] px-2.5 py-2 text-left shadow-sm">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 backdrop-blur">
           <Plus className="h-4 w-4 text-white" />
         </span>
         <span className="flex-1 leading-tight">
-          <span className="block text-[12px] font-semibold text-white">Indexar novo curso</span>
-          <span className="block text-[9px] text-emerald-50/80">Agente de onboarding · CEFIS</span>
+          <span className="block text-[12px] font-semibold text-white">Novo curso</span>
+          <span className="block text-[9px] text-emerald-50/80">CEFIS · PDF · YouTube</span>
         </span>
         <Sparkles className="h-3.5 w-3.5 text-white/70" />
       </div>
@@ -595,10 +595,26 @@ function MockMacFrame({ onInteract }: { onInteract: () => void }) {
       </div>
 
       {/* Label */}
-      <div className="mt-3 text-center text-[10px] font-medium uppercase tracking-wider text-zinc-500">
-        Página web · macOS
+      <div className="mt-3 flex flex-col items-center gap-1.5">
+        <div className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">
+          Página web · navega em qualquer SO
+        </div>
+        <div className="flex items-center gap-1.5">
+          <PlatformBadge icon="" label="macOS" />
+          <PlatformBadge icon="🐧" label="Linux" />
+          <PlatformBadge icon="⊞" label="Windows" />
+        </div>
       </div>
     </div>
+  );
+}
+
+function PlatformBadge({ icon, label }: { icon: string; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-zinc-700 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
+      {icon && <span aria-hidden>{icon}</span>}
+      {label}
+    </span>
   );
 }
 
@@ -667,8 +683,14 @@ function MockPhoneFrame({ onInteract }: { onInteract: () => void }) {
       </div>
 
       {/* Label do device */}
-      <div className="mt-3 text-center text-[10px] font-medium uppercase tracking-wider text-zinc-500">
-        Aplicativo · PWA
+      <div className="mt-3 flex flex-col items-center gap-1.5">
+        <div className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">
+          Aplicativo · PWA instalável
+        </div>
+        <div className="flex items-center gap-1.5">
+          <PlatformBadge icon="" label="iOS" />
+          <PlatformBadge icon="🤖" label="Android" />
+        </div>
       </div>
     </div>
   );
@@ -757,7 +779,7 @@ function MockMobileSidebar({
           </span>
           <span className="flex-1 leading-tight">
             <span className="block text-[10px] font-semibold text-white">
-              Indexar novo curso
+              Novo curso
             </span>
           </span>
           <Sparkles className="h-2.5 w-2.5 text-white/70" />

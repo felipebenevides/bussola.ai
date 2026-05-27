@@ -13,11 +13,13 @@ import {
   Loader2,
   Menu,
   MessageSquarePlus,
+  Mic,
   Plus,
   Search,
   Send,
   Settings as SettingsIcon,
   Sparkles,
+  Trash2,
   Users,
   X,
 } from "lucide-react";
@@ -27,6 +29,7 @@ import { WhatsappModal } from "@/components/whatsapp-modal";
 import { StudyGroupModal } from "@/components/study-group-modal";
 import { JourneyWidget } from "@/components/journey-widget";
 import { SettingsModal } from "@/components/settings-modal";
+import { NewSourceModal } from "@/components/new-source-modal";
 import { InstallCta } from "@/components/install-cta";
 import type {
   AvailableCourse,
@@ -109,6 +112,7 @@ export function TutorShell({
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [newSourceModalOpen, setNewSourceModalOpen] = useState(false);
   const [courses, setCourses] = useState<CoursesResponse>({ indexed: [], available: [] });
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [coursesError, setCoursesError] = useState<string | null>(null);
@@ -185,6 +189,16 @@ export function TutorShell({
       cancelled = true;
     };
   }, [isLoggedIn]);
+
+  // Abre o modal de nova fonte se ?newSource=1 vier (vindo do /plano)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("newSource") === "1") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setNewSourceModalOpen(true);
+    }
+  }, []);
 
   // Auto-submete query do querystring (?q=...) — usado pelos atalhos do /plano
   const [autoSubmitDone, setAutoSubmitDone] = useState(false);
@@ -526,7 +540,7 @@ export function TutorShell({
         <div className="border-b px-3 py-3" style={{ borderColor: "var(--wa-border)" }}>
           <button
             type="button"
-            onClick={openOnboarding}
+            onClick={() => setNewSourceModalOpen(true)}
             className="group flex w-full items-center gap-3 rounded-lg bg-gradient-to-br from-[#00a884] to-[#06846a] px-3 py-2.5 text-left shadow-sm transition-transform hover:scale-[1.01] active:scale-[0.99]"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur">
@@ -534,10 +548,10 @@ export function TutorShell({
             </span>
             <span className="flex-1">
               <span className="block text-sm font-semibold text-white">
-                Indexar novo curso
+                Novo curso
               </span>
               <span className="block text-[11px] text-emerald-50/80">
-                Agente de onboarding · CEFIS
+                CEFIS · PDF · YouTube
               </span>
             </span>
             <Sparkles className="h-4 w-4 text-white/70 transition-transform group-hover:rotate-12" />
@@ -736,6 +750,7 @@ export function TutorShell({
           input={input}
           onChange={setInput}
           onSubmit={onboarding.active ? handleOnboardingSubmit : handleSubmit}
+          onAudioTranscribed={onboarding.active ? undefined : (text) => void send(text)}
           disabled={loading || onboarding.ingesting}
           placeholder={
             onboarding.active
@@ -766,6 +781,15 @@ export function TutorShell({
       <SettingsModal
         open={settingsModalOpen}
         onClose={() => setSettingsModalOpen(false)}
+      />
+
+      <NewSourceModal
+        open={newSourceModalOpen}
+        onClose={() => setNewSourceModalOpen(false)}
+        onCefis={() => {
+          setNewSourceModalOpen(false);
+          openOnboarding();
+        }}
       />
     </div>
   );
@@ -1473,58 +1497,333 @@ interface ComposerProps {
   input: string;
   onChange: (v: string) => void;
   onSubmit: (e: React.FormEvent) => void;
+  /** Quando definido, mostra microfone à direita (input vazio) e envia transcrição via Whisper. */
+  onAudioTranscribed?: (text: string) => void;
   disabled: boolean;
   placeholder: string;
 }
 
+type RecordingState =
+  | { kind: "idle" }
+  | { kind: "recording"; startedAt: number; seconds: number }
+  | { kind: "uploading" }
+  | { kind: "error"; message: string };
+
+function pickAudioMimeType(): string {
+  if (typeof window === "undefined" || typeof MediaRecorder === "undefined") return "";
+  const candidates = ["audio/webm;codecs=opus", "audio/webm", "audio/ogg;codecs=opus", "audio/mp4"];
+  for (const m of candidates) {
+    if (MediaRecorder.isTypeSupported(m)) return m;
+  }
+  return "";
+}
+
+function formatRecTime(sec: number): string {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
 const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function Composer(
-  { input, onChange, onSubmit, disabled, placeholder },
+  { input, onChange, onSubmit, onAudioTranscribed, disabled, placeholder },
   ref
 ) {
-  const isDisabled = disabled || input.trim().length === 0;
+  const hasText = input.trim().length > 0;
+  const canSendText = !disabled && hasText;
+  const canRecord = !!onAudioTranscribed && !disabled;
+
+  const [rec, setRec] = useState<RecordingState>({ kind: "idle" });
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const streamRef = useRef<MediaStream | null>(null);
+  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const cancelledRef = useRef(false);
+
+  function stopStream() {
+    streamRef.current?.getTracks().forEach((t) => t.stop());
+    streamRef.current = null;
+    if (tickRef.current) {
+      clearInterval(tickRef.current);
+      tickRef.current = null;
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      stopStream();
+      const mr = mediaRecorderRef.current;
+      if (mr && mr.state !== "inactive") {
+        try {
+          mr.stop();
+        } catch {
+          /* noop */
+        }
+      }
+    };
+  }, []);
+
+  async function uploadAudio(blob: Blob) {
+    setRec({ kind: "uploading" });
+    try {
+      const ext = blob.type.includes("ogg")
+        ? "ogg"
+        : blob.type.includes("mp4")
+          ? "m4a"
+          : "webm";
+      const form = new FormData();
+      form.append("file", blob, `audio.${ext}`);
+      const res = await fetch("/api/transcribe", { method: "POST", body: form });
+      const json = (await res.json().catch(() => ({}))) as { text?: string; error?: string };
+      if (!res.ok || !json.text) {
+        setRec({
+          kind: "error",
+          message: json.error ?? `Falha ao transcrever (${res.status}).`,
+        });
+        return;
+      }
+      setRec({ kind: "idle" });
+      onAudioTranscribed?.(json.text);
+    } catch (err) {
+      setRec({
+        kind: "error",
+        message: err instanceof Error ? err.message : "Falha de rede.",
+      });
+    }
+  }
+
+  async function startRecording() {
+    if (!canRecord) return;
+    cancelledRef.current = false;
+    chunksRef.current = [];
+
+    if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+      setRec({ kind: "error", message: "Seu navegador não permite gravar áudio aqui." });
+      return;
+    }
+
+    let stream: MediaStream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch {
+      setRec({ kind: "error", message: "Permita o microfone pra gravar áudio." });
+      return;
+    }
+    streamRef.current = stream;
+
+    const mimeType = pickAudioMimeType();
+    let mr: MediaRecorder;
+    try {
+      mr = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+    } catch {
+      stopStream();
+      setRec({ kind: "error", message: "Gravação não suportada neste navegador." });
+      return;
+    }
+    mediaRecorderRef.current = mr;
+
+    mr.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) chunksRef.current.push(e.data);
+    };
+
+    mr.onstop = () => {
+      const blobType = mr.mimeType || mimeType || "audio/webm";
+      const blob = new Blob(chunksRef.current, { type: blobType });
+      stopStream();
+      if (cancelledRef.current || blob.size === 0) {
+        setRec({ kind: "idle" });
+        return;
+      }
+      void uploadAudio(blob);
+    };
+
+    const startedAt = Date.now();
+    mr.start();
+    setRec({ kind: "recording", startedAt, seconds: 0 });
+    tickRef.current = setInterval(() => {
+      setRec((prev) =>
+        prev.kind === "recording"
+          ? { ...prev, seconds: Math.floor((Date.now() - prev.startedAt) / 1000) }
+          : prev
+      );
+    }, 250);
+  }
+
+  function cancelRecording() {
+    cancelledRef.current = true;
+    const mr = mediaRecorderRef.current;
+    if (mr && mr.state !== "inactive") {
+      try {
+        mr.stop();
+      } catch {
+        /* noop */
+      }
+    } else {
+      stopStream();
+      setRec({ kind: "idle" });
+    }
+  }
+
+  function stopAndSend() {
+    const mr = mediaRecorderRef.current;
+    if (mr && mr.state !== "inactive") {
+      try {
+        mr.stop();
+      } catch {
+        cancelRecording();
+      }
+    }
+  }
+
+  // ── Barra de gravação ocupando toda a largura (igual WhatsApp) ──
+  if (rec.kind === "recording" || rec.kind === "uploading") {
+    const isUploading = rec.kind === "uploading";
+    return (
+      <div
+        className="flex items-center gap-3 border-t px-3 py-3 sm:px-6"
+        style={{
+          backgroundColor: "var(--wa-composer)",
+          borderColor: "var(--wa-header-border)",
+        }}
+      >
+        <button
+          type="button"
+          onClick={cancelRecording}
+          disabled={isUploading}
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-red-500 transition-colors hover:bg-red-500/10 disabled:opacity-50"
+          aria-label="Cancelar gravação"
+          title="Cancelar"
+        >
+          <Trash2 className="h-5 w-5" />
+        </button>
+
+        <div
+          className="flex flex-1 items-center gap-3 rounded-full px-4 py-2"
+          style={{ backgroundColor: "var(--wa-input-bg)" }}
+        >
+          {isUploading ? (
+            <>
+              <Loader2 className="h-3 w-3 animate-spin text-emerald-500" aria-hidden />
+              <span
+                className="text-sm font-medium"
+                style={{ color: "var(--wa-text-primary)" }}
+              >
+                Transcrevendo áudio…
+              </span>
+            </>
+          ) : (
+            <>
+              <span
+                className="inline-flex h-3 w-3 animate-pulse rounded-full bg-red-500"
+                aria-hidden
+              />
+              <span
+                className="font-mono text-sm font-semibold tabular-nums"
+                style={{ color: "var(--wa-text-primary)" }}
+              >
+                {formatRecTime(rec.seconds)}
+              </span>
+              <span
+                className="hidden text-xs sm:inline"
+                style={{ color: "var(--wa-text-muted)" }}
+              >
+                Toque no botão verde pra enviar
+              </span>
+            </>
+          )}
+        </div>
+
+        <button
+          type="button"
+          onClick={stopAndSend}
+          disabled={isUploading}
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-md transition-colors hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-70"
+          style={{ backgroundColor: "#059669" }}
+          aria-label={isUploading ? "Enviando" : "Parar e enviar"}
+        >
+          {isUploading ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <Send className="h-4 w-4 translate-x-[1px]" />
+          )}
+        </button>
+      </div>
+    );
+  }
+
+  // ── Composer normal ──
+  const isTextDisabled = !canSendText;
   return (
     <form
       onSubmit={onSubmit}
-      className="flex items-end gap-2 border-t px-3 py-3 sm:px-6"
+      className="flex flex-col gap-1 border-t px-3 py-3 sm:px-6"
       style={{
         backgroundColor: "var(--wa-composer)",
         borderColor: "var(--wa-header-border)",
       }}
     >
-      <div
-        className="flex flex-1 items-end gap-2 rounded-2xl px-3 py-1.5"
-        style={{ backgroundColor: "var(--wa-input-bg)" }}
-      >
-        <textarea
-          ref={ref}
-          rows={1}
-          value={input}
-          onChange={(e) => onChange(e.target.value)}
-          disabled={disabled}
-          placeholder={placeholder}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              onSubmit(e);
+      <div className="flex items-end gap-2">
+        <div
+          className="flex flex-1 items-end gap-2 rounded-2xl px-3 py-1.5"
+          style={{ backgroundColor: "var(--wa-input-bg)" }}
+        >
+          <textarea
+            ref={ref}
+            rows={1}
+            value={input}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={disabled}
+            placeholder={placeholder}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                onSubmit(e);
+              }
+            }}
+            className="max-h-32 flex-1 resize-none bg-transparent py-2 text-sm leading-snug focus:outline-none disabled:opacity-50"
+            style={{ color: "var(--wa-text-primary)" }}
+          />
+        </div>
+
+        {hasText || !canRecord ? (
+          <button
+            type="submit"
+            disabled={isTextDisabled}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-md transition-all hover:bg-emerald-500 disabled:cursor-not-allowed"
+            style={
+              isTextDisabled
+                ? { backgroundColor: "var(--wa-active)", color: "var(--wa-text-muted)" }
+                : { backgroundColor: "#059669" }
             }
-          }}
-          className="max-h-32 flex-1 resize-none bg-transparent py-2 text-sm leading-snug focus:outline-none disabled:opacity-50"
-          style={{ color: "var(--wa-text-primary)" }}
-        />
+            aria-label="Enviar"
+          >
+            <Send className="h-4 w-4 translate-x-[1px]" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={startRecording}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-md transition-colors hover:bg-emerald-500"
+            style={{ backgroundColor: "#059669" }}
+            aria-label="Gravar áudio"
+            title="Gravar áudio"
+          >
+            <Mic className="h-5 w-5" />
+          </button>
+        )}
       </div>
-      <button
-        type="submit"
-        disabled={isDisabled}
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-md transition-all hover:bg-emerald-500 disabled:cursor-not-allowed"
-        style={
-          isDisabled
-            ? { backgroundColor: "var(--wa-active)", color: "var(--wa-text-muted)" }
-            : { backgroundColor: "#059669" }
-        }
-        aria-label="Enviar"
-      >
-        <Send className="h-4 w-4 translate-x-[1px]" />
-      </button>
+
+      {rec.kind === "error" && (
+        <p className="px-2 text-xs text-red-500">
+          {rec.message}{" "}
+          <button
+            type="button"
+            onClick={() => setRec({ kind: "idle" })}
+            className="underline"
+          >
+            ok
+          </button>
+        </p>
+      )}
     </form>
   );
 });

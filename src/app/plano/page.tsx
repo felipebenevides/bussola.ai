@@ -12,6 +12,7 @@ import { getSettings } from "@/lib/settings";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Card, CardContent } from "@/components/ui/card";
 import { GeneratePlanButton } from "./generate-button";
+import { NewSourceButton } from "./new-source-button";
 import { PlanItemActions } from "./plan-item-actions";
 
 export const dynamic = "force-dynamic";
@@ -107,6 +108,7 @@ export default async function PlanoPage({
           {allPlans.length > 1 && plan && (
             <PlanSwitcher current={plan.id} plans={allPlans} />
           )}
+          <NewSourceButton variant="ghost" />
           <Link
             href={plan ? `/tutor?planId=${encodeURIComponent(plan.id)}` : "/tutor"}
             className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
