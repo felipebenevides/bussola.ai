@@ -58,6 +58,7 @@ export default function AdminPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState<"settings" | "analytics">("settings");
 
   async function loadSettings(pwd: string) {
     setError(null);
@@ -190,7 +191,7 @@ export default function AdminPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">🧭 Bússola — Admin</h1>
-          <p className="text-sm text-zinc-500">Credenciais e parâmetros do produto.</p>
+          <p className="text-sm text-zinc-500">Credenciais, parâmetros e acessos do produto.</p>
         </div>
         <Button
           variant="ghost"
@@ -205,6 +206,34 @@ export default function AdminPage() {
         </Button>
       </div>
 
+      <div className="flex gap-1 border-b border-zinc-200 dark:border-zinc-800">
+        <button
+          type="button"
+          onClick={() => setTab("settings")}
+          className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
+            tab === "settings"
+              ? "border-emerald-600 text-emerald-700 dark:text-emerald-400"
+              : "border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+          }`}
+        >
+          Configurações
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab("analytics")}
+          className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
+            tab === "analytics"
+              ? "border-emerald-600 text-emerald-700 dark:text-emerald-400"
+              : "border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+          }`}
+        >
+          Acessos · Analytics
+        </button>
+      </div>
+
+      {tab === "analytics" ? (
+        <AnalyticsPanel password={password} />
+      ) : (
       <form onSubmit={handleSave} className="space-y-6">
         {/* Providers IA + CEFIS */}
         <Card>
@@ -450,6 +479,228 @@ export default function AdminPage() {
           </Button>
         </div>
       </form>
+      )}
     </div>
   );
+}
+
+// ────────────────────────────────────────────────────────────────────
+// AnalyticsPanel — mostra agregados de /api/analytics/stats
+// ────────────────────────────────────────────────────────────────────
+
+interface StatsResponse {
+  totals: {
+    sessions: number;
+    anonymous: number;
+    identified: number;
+    distinctEmails: number;
+    distinctPhones: number;
+    events: number;
+  };
+  topPaths: Array<{ path: string; count: number }>;
+  recentIdentified: Array<{
+    session_id: string;
+    user_id: string | null;
+    email: string | null;
+    phone: string | null;
+    pageViews: number;
+    paths: string[];
+    firstSeen: string;
+    lastSeen: string;
+  }>;
+}
+
+function AnalyticsPanel({ password }: { password: string }) {
+  const [data, setData] = useState<StatsResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function load() {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/analytics/stats", {
+        headers: { "x-admin-password": password },
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.error ?? `Erro ${res.status}`);
+      setData(j as StatsResponse);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    void load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-zinc-500">
+          Cobertura: últimos ~5000 eventos. Atualizado sob demanda.
+        </p>
+        <Button variant="ghost" size="sm" onClick={load} disabled={loading}>
+          {loading ? "Atualizando..." : "Atualizar"}
+        </Button>
+      </div>
+
+      {error && <p className="text-sm text-red-600">{error}</p>}
+
+      {data && (
+        <>
+          <Card>
+            <CardHeader>
+              <CardTitle>Totais</CardTitle>
+              <CardDescription>
+                Cada sessão é um cookie (90 dias). &quot;Identificada&quot; = entrou com CEFIS,
+                informou e-mail ou telefone no onboarding.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+                <Stat label="Sessões" value={data.totals.sessions} />
+                <Stat label="Identificadas" value={data.totals.identified} accent="emerald" />
+                <Stat label="Anônimas" value={data.totals.anonymous} />
+                <Stat label="E-mails únicos" value={data.totals.distinctEmails} />
+                <Stat label="Telefones únicos" value={data.totals.distinctPhones} />
+                <Stat label="Eventos totais" value={data.totals.events} />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Páginas mais acessadas</CardTitle>
+              <CardDescription>Top 12 por número de page views.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {data.topPaths.length === 0 ? (
+                <p className="text-sm text-zinc-500">Nada por enquanto.</p>
+              ) : (
+                <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                  {data.topPaths.map((p) => (
+                    <li key={p.path} className="flex items-center justify-between py-2 text-sm">
+                      <code className="truncate font-mono text-xs text-zinc-700 dark:text-zinc-300">
+                        {p.path}
+                      </code>
+                      <span className="ml-3 shrink-0 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                        {p.count}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Sessões identificadas recentes</CardTitle>
+              <CardDescription>
+                Últimas 25 sessões que entraram com CEFIS ou informaram contato.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="overflow-x-auto">
+              {data.recentIdentified.length === 0 ? (
+                <p className="text-sm text-zinc-500">Nada por enquanto.</p>
+              ) : (
+                <table className="w-full text-left text-xs">
+                  <thead className="text-[10px] uppercase tracking-wider text-zinc-500">
+                    <tr>
+                      <th className="py-2 pr-3">Quem</th>
+                      <th className="py-2 pr-3">Páginas</th>
+                      <th className="py-2 pr-3">Últ. visita</th>
+                      <th className="py-2 pr-3">Caminho recente</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                    {data.recentIdentified.map((s) => (
+                      <tr key={s.session_id} className="align-top">
+                        <td className="py-2 pr-3">
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">
+                            {s.email ?? s.phone ?? s.user_id?.slice(0, 8) ?? "—"}
+                          </div>
+                          {s.email && s.phone && (
+                            <div className="text-[10px] text-zinc-500">{s.phone}</div>
+                          )}
+                          {s.user_id && (
+                            <div className="text-[10px] text-zinc-400">
+                              user {s.user_id.slice(0, 8)}…
+                            </div>
+                          )}
+                        </td>
+                        <td className="py-2 pr-3 font-mono">{s.pageViews}</td>
+                        <td className="py-2 pr-3 text-zinc-600 dark:text-zinc-400">
+                          {formatRelative(s.lastSeen)}
+                        </td>
+                        <td className="py-2 pr-3">
+                          <div className="flex flex-wrap gap-1">
+                            {s.paths.slice(0, 4).map((p) => (
+                              <code
+                                key={p}
+                                className="rounded bg-zinc-100 px-1.5 py-0.5 text-[10px] text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                              >
+                                {p}
+                              </code>
+                            ))}
+                            {s.paths.length > 4 && (
+                              <span className="text-[10px] text-zinc-500">
+                                +{s.paths.length - 4}
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </CardContent>
+          </Card>
+        </>
+      )}
+    </div>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: number;
+  accent?: "emerald";
+}) {
+  return (
+    <div className="rounded-lg border border-zinc-200 bg-zinc-50/50 p-3 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <div
+        className={`text-2xl font-bold tabular-nums ${
+          accent === "emerald" ? "text-emerald-700 dark:text-emerald-400" : "text-zinc-900 dark:text-zinc-100"
+        }`}
+      >
+        {value.toLocaleString("pt-BR")}
+      </div>
+      <div className="text-[11px] uppercase tracking-wider text-zinc-500">{label}</div>
+    </div>
+  );
+}
+
+function formatRelative(iso: string): string {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  const diff = Date.now() - date.getTime();
+  const sec = Math.floor(diff / 1000);
+  if (sec < 60) return `${sec}s atrás`;
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min}min atrás`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `${hr}h atrás`;
+  const day = Math.floor(hr / 24);
+  if (day < 30) return `${day}d atrás`;
+  return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
 }
