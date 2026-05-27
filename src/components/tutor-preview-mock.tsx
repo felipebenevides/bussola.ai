@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
   BookOpen,
   Check,
@@ -16,6 +16,7 @@ import {
   Settings as SettingsIcon,
   Sparkles,
   Users,
+  X,
 } from "lucide-react";
 
 /**
@@ -62,41 +63,9 @@ export function TutorPreviewMock() {
           </p>
         </div>
 
-        <div className="mx-auto flex items-center justify-center gap-6 lg:gap-8">
-          {/* Desktop: browser-chrome mock (escondido em <lg) */}
-          <div
-            role="link"
-            tabIndex={0}
-            onClick={goToTutor}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") goToTutor(e);
-            }}
-            className="group relative hidden w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl shadow-2xl ring-1 ring-zinc-200 transition-transform hover:-translate-y-1 dark:ring-zinc-800 lg:block xl:max-w-4xl"
-            aria-label="Abrir o tutor"
-          >
-            <div className="pointer-events-none absolute right-4 top-4 z-20 rounded-full bg-emerald-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
-              Abrir tutor →
-            </div>
-
-            {/* Browser-like chrome */}
-            <div className="flex items-center gap-1.5 border-b border-zinc-200 bg-zinc-100 px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-              <span className="ml-3 inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-0.5 text-[10px] text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                bussola.ai/tutor
-              </span>
-            </div>
-
-            <div
-              className="grid h-[680px] grid-cols-[280px_1fr] xl:h-[720px] xl:grid-cols-[320px_1fr]"
-              style={{ backgroundColor: "var(--wa-app)" }}
-            >
-              <MockSidebar />
-              <MockChat onInteract={goToTutor} />
-            </div>
-          </div>
+        <div className="mx-auto flex items-end justify-center gap-6 lg:gap-8">
+          {/* Desktop Mac mock — escondido em <lg */}
+          <MockMacFrame onInteract={goToTutor} />
 
           {/* Celular PWA — sempre visível */}
           <MockPhoneFrame onInteract={goToTutor} />
@@ -567,7 +536,84 @@ function MockMessages() {
 
 // ─── Phone frame (mobile mock) ───────────────────────────────────
 
+// ─── Mac frame (desktop mock) ────────────────────────────────────
+
+function MockMacFrame({ onInteract }: { onInteract: () => void }) {
+  return (
+    <div
+      role="link"
+      tabIndex={0}
+      onClick={onInteract}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onInteract();
+        }
+      }}
+      className="group relative hidden cursor-pointer transition-transform hover:-translate-y-1 lg:block"
+      aria-label="Abrir o tutor"
+    >
+      <div className="pointer-events-none absolute left-1/2 top-3 z-30 -translate-x-1/2 rounded-full bg-emerald-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+        Abrir tutor →
+      </div>
+
+      {/* MacBook chassis: bezel alumínio + tela + camera notch */}
+      <div className="relative rounded-[1.5rem] border-[12px] border-zinc-800 bg-zinc-900 p-1 shadow-2xl ring-1 ring-zinc-700 dark:border-zinc-950 dark:ring-zinc-900">
+        {/* Notch top center (M-series) */}
+        <div className="pointer-events-none absolute left-1/2 top-0 z-20 h-2 w-20 -translate-x-1/2 rounded-b-md bg-zinc-950" />
+
+        {/* Tela */}
+        <div
+          className="relative overflow-hidden rounded-[0.9rem]"
+          style={{ backgroundColor: "var(--wa-app)" }}
+        >
+          {/* Browser-like chrome dentro da tela */}
+          <div className="flex items-center gap-1.5 border-b border-zinc-200 bg-zinc-100 px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+            <span className="ml-3 inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-0.5 text-[10px] text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              bussola.ai/tutor
+            </span>
+          </div>
+
+          {/* App */}
+          <div
+            className="grid h-[640px] w-[760px] grid-cols-[280px_1fr] xl:h-[680px] xl:w-[880px] xl:grid-cols-[320px_1fr]"
+            style={{ backgroundColor: "var(--wa-app)" }}
+          >
+            <MockSidebar />
+            <MockChat onInteract={onInteract} />
+          </div>
+        </div>
+      </div>
+
+      {/* Base / stand do MacBook */}
+      <div className="relative mx-auto -mt-px h-3 w-[105%] rounded-b-2xl bg-gradient-to-b from-zinc-700 to-zinc-800 shadow-lg dark:from-zinc-800 dark:to-zinc-900">
+        <div className="absolute left-1/2 top-0 h-1 w-16 -translate-x-1/2 rounded-b-full bg-zinc-900 dark:bg-black" />
+      </div>
+
+      {/* Label */}
+      <div className="mt-3 text-center text-[10px] font-medium uppercase tracking-wider text-zinc-500">
+        Página web · macOS
+      </div>
+    </div>
+  );
+}
+
+// ─── Phone frame (mobile mock) ───────────────────────────────────
+
 function MockPhoneFrame({ onInteract }: { onInteract: () => void }) {
+  // Sidebar visível por padrão. Hambúrguer alterna localmente sem dispar
+  // onInteract (precisa de stopPropagation porque o wrapper redireciona).
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSidebarOpen((v) => !v);
+  };
+
   return (
     <div
       role="link"
@@ -609,7 +655,11 @@ function MockPhoneFrame({ onInteract }: { onInteract: () => void }) {
             </span>
           </div>
 
-          <MockMobileTutor onInteract={onInteract} />
+          {sidebarOpen ? (
+            <MockMobileSidebar onCloseSidebar={toggleSidebar} onInteract={onInteract} />
+          ) : (
+            <MockMobileTutor onOpenSidebar={toggleSidebar} onInteract={onInteract} />
+          )}
         </div>
 
         {/* Home indicator */}
@@ -624,7 +674,212 @@ function MockPhoneFrame({ onInteract }: { onInteract: () => void }) {
   );
 }
 
-function MockMobileTutor({ onInteract }: { onInteract: () => void }) {
+// Sidebar do celular — versão portrait do MockSidebar, mais compacta.
+function MockMobileSidebar({
+  onCloseSidebar,
+  onInteract,
+}: {
+  onCloseSidebar: (e: React.MouseEvent) => void;
+  onInteract: () => void;
+}) {
+  // Cliques nos itens da lista fecham a sidebar sem navegar — exceto qq
+  // outro clique fora dos handlers stopPropagation, que dispara onInteract.
+  void onInteract;
+
+  const selectCourse = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // simula "abriu o curso" → fecha sidebar
+    onCloseSidebar(e);
+  };
+
+  return (
+    <div className="flex h-full flex-col" style={{ backgroundColor: "var(--wa-sidebar)" }}>
+      {/* Header — avatar user logado */}
+      <div
+        className="flex items-center justify-between border-b px-3 py-2"
+        style={{
+          backgroundColor: "var(--wa-header)",
+          borderColor: "var(--wa-header-border)",
+        }}
+      >
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="relative">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 text-xs font-bold text-white shadow-md ring-2 ring-emerald-500/40">
+              M
+            </div>
+            <span
+              className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border-[1.5px] bg-emerald-500"
+              style={{ borderColor: "var(--wa-header)" }}
+            />
+          </div>
+          <div className="min-w-0 leading-tight">
+            <div
+              className="truncate text-[11px] font-semibold"
+              style={{ color: "var(--wa-text-primary)" }}
+            >
+              Maria Silva
+            </div>
+            <div className="text-[9px]" style={{ color: "var(--wa-text-muted)" }}>
+              CEFIS · logado
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onCloseSidebar}
+          className="rounded-full p-1"
+          aria-label="Fechar sidebar"
+          style={{ color: "var(--wa-text-secondary)" }}
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Plano em discussão (compacto) */}
+      <div className="border-b px-2.5 py-1.5" style={{ borderColor: "var(--wa-border)" }}>
+        <div
+          className="mb-0.5 text-[8px] font-bold uppercase tracking-wider"
+          style={{ color: "var(--wa-text-muted)" }}
+        >
+          Plano em discussão
+        </div>
+        <div className="flex h-7 items-center justify-between rounded-md border border-zinc-300 bg-white px-1.5 text-[10px] font-medium text-zinc-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100">
+          <span className="truncate">Negociar honorários · ativo</span>
+          <ChevronRight className="h-2.5 w-2.5 rotate-90 opacity-50" />
+        </div>
+      </div>
+
+      {/* CTAs */}
+      <div className="space-y-1 border-b px-2 py-1.5" style={{ borderColor: "var(--wa-border)" }}>
+        <div className="flex items-center gap-1.5 rounded-md bg-gradient-to-br from-[#00a884] to-[#06846a] px-2 py-1.5 shadow-sm">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15">
+            <Plus className="h-3 w-3 text-white" />
+          </span>
+          <span className="flex-1 leading-tight">
+            <span className="block text-[10px] font-semibold text-white">
+              Indexar novo curso
+            </span>
+          </span>
+          <Sparkles className="h-2.5 w-2.5 text-white/70" />
+        </div>
+        <div className="flex items-center gap-1.5 rounded-md border border-violet-500/40 bg-gradient-to-br from-violet-600/20 to-fuchsia-600/10 px-2 py-1">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white">
+            <Users className="h-3 w-3" />
+          </span>
+          <span className="flex-1 text-[10px] font-semibold text-violet-700 dark:text-violet-200">
+            Plano Empresarial
+          </span>
+          <span className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-1 text-[7px] font-bold uppercase text-white">
+            exclusivo
+          </span>
+        </div>
+      </div>
+
+      {/* Cursos */}
+      <nav className="flex-1 overflow-hidden">
+        <button
+          type="button"
+          onClick={selectCourse}
+          className="flex w-full items-center gap-2 px-3 py-1.5"
+          style={{ backgroundColor: "var(--wa-active)" }}
+        >
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-inner">
+            <Library className="h-3 w-3 text-white/90" />
+          </span>
+          <div className="min-w-0 flex-1 text-left leading-tight">
+            <div
+              className="truncate text-[10px] font-medium"
+              style={{ color: "var(--wa-text-primary)" }}
+            >
+              Todos os cursos
+            </div>
+            <div className="truncate text-[9px]" style={{ color: "var(--wa-text-muted)" }}>
+              3 indexados · busca global
+            </div>
+          </div>
+        </button>
+        <div
+          className="px-3 pt-1.5 text-[8px] font-bold uppercase tracking-wider"
+          style={{ color: "var(--wa-text-muted)" }}
+        >
+          Indexados (3)
+        </div>
+        <button
+          type="button"
+          onClick={selectCourse}
+          className="flex w-full items-center gap-2 px-3 py-1.5 text-left"
+        >
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#2a6f55] to-[#1d4d3c] shadow-inner">
+            <BookOpen className="h-3 w-3 text-emerald-50" />
+          </span>
+          <div className="min-w-0 flex-1 leading-tight">
+            <div className="flex items-center justify-between gap-1">
+              <span
+                className="truncate text-[10px] font-medium"
+                style={{ color: "var(--wa-text-primary)" }}
+              >
+                Negociação Harvard
+              </span>
+              <span className="rounded-full bg-emerald-100 px-1 text-[8px] font-bold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+                58
+              </span>
+            </div>
+            <div className="truncate text-[9px]" style={{ color: "var(--wa-text-muted)" }}>
+              24 aulas · 58 trechos
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          onClick={selectCourse}
+          className="flex w-full items-center gap-2 px-3 py-1.5 text-left"
+        >
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#2a6f55] to-[#1d4d3c] shadow-inner">
+            <BookOpen className="h-3 w-3 text-emerald-50" />
+          </span>
+          <div className="min-w-0 flex-1 leading-tight">
+            <span
+              className="block truncate text-[10px] font-medium"
+              style={{ color: "var(--wa-text-primary)" }}
+            >
+              Gestão de Processos
+            </span>
+            <div className="truncate text-[9px]" style={{ color: "var(--wa-text-muted)" }}>
+              14 aulas · só metadados
+            </div>
+          </div>
+        </button>
+      </nav>
+
+      {/* JourneyWidget mini */}
+      <div className="border-t px-2 py-1.5" style={{ borderColor: "var(--wa-border)" }}>
+        <div className="flex items-center justify-between rounded-md bg-gradient-to-br from-sky-400 to-blue-600 px-1.5 py-1 shadow-md">
+          <div className="flex items-center gap-1">
+            <span className="text-sm">🗺️</span>
+            <div className="leading-tight">
+              <div className="text-[8px] font-bold uppercase tracking-wider text-white/90">
+                Aventureiro
+              </div>
+              <div className="text-[7px] text-white/70">310 XP · 62%</div>
+            </div>
+          </div>
+          <span className="flex items-center gap-0.5 rounded-full bg-orange-500/30 px-1 text-[8px] font-bold text-white">
+            <Flame className="h-2 w-2" />
+            12
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MockMobileTutor({
+  onInteract,
+  onOpenSidebar,
+}: {
+  onInteract: () => void;
+  onOpenSidebar: (e: React.MouseEvent) => void;
+}) {
   return (
     <div
       className="flex h-full flex-col"
@@ -638,7 +893,15 @@ function MockMobileTutor({ onInteract }: { onInteract: () => void }) {
           borderColor: "var(--wa-header-border)",
         }}
       >
-        <Menu className="h-4 w-4" style={{ color: "var(--wa-text-secondary)" }} />
+        <button
+          type="button"
+          onClick={onOpenSidebar}
+          className="rounded-full p-1"
+          aria-label="Abrir lista de cursos"
+          style={{ color: "var(--wa-text-secondary)" }}
+        >
+          <Menu className="h-4 w-4" />
+        </button>
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 text-base shadow-md">
           🧭
         </div>
