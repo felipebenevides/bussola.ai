@@ -233,28 +233,41 @@ export default function SobrePage() {
 
             <div className="max-w-2xl space-y-4 text-base leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
               <p>
-                <strong className="text-zinc-950 dark:text-white">32 anos</strong>, paulistano,
-                cristão, casado há 10 anos e pai de quatro — Bryan, Helena, Noah e Heloísa, que
-                ainda está a caminho. Fé e família grande são o motor que mantém o foco em código
-                que vai pra produção e gente que cresce junto.
+                <strong className="text-zinc-950 dark:text-white">32 anos</strong>, casado há 10
+                anos e pai de quatro (Bryan, Helena, Noah e a Heloísa, que está a caminho). A fé e
+                a família são a base e o motor para manter o foco em tudo o que construo.
               </p>
               <p>
                 <strong className="text-zinc-950 dark:text-white">
-                  Engenheiro de Computação pela FIEO
+                  Engenheiro especialista focado em IA
                 </strong>{" "}
-                com mais de uma década resolvendo problema de verdade no código: comecei dev .NET na
-                Wipro em 2017, passei por BTG em sistemas bancários, Itaú lançando ETFs de alta
-                visibilidade como{" "}
-                <strong className="text-zinc-950 dark:text-white">TECK11 e HTECK11</strong>, Imobi
-                Places em arquitetura hexagonal na AWS. Hoje lidero o time de engenharia da{" "}
-                <strong className="text-zinc-950 dark:text-white">IZA</strong> reportando direto ao
-                CEO, mentoreio devs em 1:1 e desenho arquiteturas que escalam com o negócio.
+                com mais de uma década de experiência resolvendo problemas complexos e de alta
+                criticidade em produção. Minha trajetória inclui passagens sólidas por grandes
+                players do mercado: atuei como desenvolvedor .NET na{" "}
+                <strong className="text-zinc-950 dark:text-white">Wipro</strong>, passei pelo{" "}
+                <strong className="text-zinc-950 dark:text-white">BTG Pactual</strong> trabalhando
+                em sistemas bancários de alta performance, e no{" "}
+                <strong className="text-zinc-950 dark:text-white">Itaú</strong> liderei o
+                lançamento de ETFs de alta visibilidade, como{" "}
+                <strong className="text-zinc-950 dark:text-white">TECK11 e HTECK11</strong>. Também
+                assinei a arquitetura hexagonal e escalável na AWS para a{" "}
+                <strong className="text-zinc-950 dark:text-white">Imobi Places</strong>.
               </p>
               <p>
-                C#/.NET no sangue, paixão genuína por{" "}
-                <strong className="text-zinc-950 dark:text-white">IA aplicada</strong> e a humildade
-                de defender monolito quando o contexto pede — porque arquitetura boa é a que cabe
-                no problema, não no hype.
+                Atualmente, lidero o time de engenharia da{" "}
+                <strong className="text-zinc-950 dark:text-white">IZA</strong>, reportando
+                diretamente ao CEO, onde sou responsável por desenhar arquiteturas que acompanham
+                o ritmo de crescimento do negócio, além de mentorar desenvolvedores em sessões de
+                1:1 para acelerar sua evolução profissional.
+              </p>
+              <p>
+                Tenho o ecossistema <strong className="text-zinc-950 dark:text-white">C#/.NET</strong>{" "}
+                no sangue, uma paixão genuína por{" "}
+                <strong className="text-zinc-950 dark:text-white">IA aplicada</strong> ao mundo
+                real e a maturidade técnica para defender monolitos quando o contexto exige —
+                porque arquitetura boa é aquela que resolve o problema de forma eficiente, e não a
+                que segue o hype do mercado. Como líder, meu foco está em entregar código
+                resiliente e impulsionar o crescimento das pessoas ao meu redor.
               </p>
             </div>
 
