@@ -231,14 +231,42 @@ export default function SobrePage() {
               </span>
             </h1>
 
-            <p className="max-w-2xl text-base leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
-              Engenheiro de software com trajetória do{" "}
-              <strong className="text-zinc-950 dark:text-white">back/full-stack</strong> até
-              liderança — Tech Lead e Engineering Manager. Setores de alta criticidade: meios de
-              pagamento, mercado financeiro, imobiliário, fidelização e seguros. Paixão por{" "}
-              <strong className="text-zinc-950 dark:text-white">IA aplicada</strong> e
-              arquiteturas complexas, sem dogma — monolito quando o contexto pede.
-            </p>
+            <div className="max-w-2xl space-y-4 text-base leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
+              <p>
+                <strong className="text-zinc-950 dark:text-white">32 anos</strong>, paulistano,
+                cristão, casado há 10 anos e pai de quatro — Bryan, Helena, Noah e Heloísa, que
+                ainda está a caminho. Fé e família grande são o motor que mantém o foco em código
+                que vai pra produção e gente que cresce junto.
+              </p>
+              <p>
+                <strong className="text-zinc-950 dark:text-white">
+                  Engenheiro de Computação pela FIEO
+                </strong>{" "}
+                com mais de uma década resolvendo problema de verdade no código: comecei dev .NET na
+                Wipro em 2017, passei por BTG em sistemas bancários, Itaú lançando ETFs de alta
+                visibilidade como{" "}
+                <strong className="text-zinc-950 dark:text-white">TECK11 e HTECK11</strong>, Imobi
+                Places em arquitetura hexagonal na AWS. Hoje lidero o time de engenharia da{" "}
+                <strong className="text-zinc-950 dark:text-white">IZA</strong> reportando direto ao
+                CEO, mentoreio devs em 1:1 e desenho arquiteturas que escalam com o negócio.
+              </p>
+              <p>
+                C#/.NET no sangue, paixão genuína por{" "}
+                <strong className="text-zinc-950 dark:text-white">IA aplicada</strong> e a humildade
+                de defender monolito quando o contexto pede — porque arquitetura boa é a que cabe
+                no problema, não no hype.
+              </p>
+            </div>
+
+            {/* Strip de stats pessoais */}
+            <div className="flex flex-wrap gap-2 pt-1">
+              <StatChip emoji="🎂" label="32 anos" />
+              <StatChip emoji="✝️" label="Cristão" />
+              <StatChip emoji="💍" label="Casado há 10 anos" />
+              <StatChip emoji="👨‍👩‍👧‍👦" label="4 filhos" />
+              <StatChip emoji="⏱️" label="10+ anos de engenharia" />
+              <StatChip emoji="🎓" label="Eng. Computação · FIEO" />
+            </div>
 
             <div className="flex flex-wrap gap-3 pt-2">
               <a
@@ -582,6 +610,17 @@ function ProjectRow({
         )}
       </div>
     </article>
+  );
+}
+
+function StatChip({ emoji, label }: { emoji: string; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+      <span aria-hidden className="text-sm leading-none">
+        {emoji}
+      </span>
+      <span>{label}</span>
+    </span>
   );
 }
 
