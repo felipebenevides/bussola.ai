@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { InstallCta } from "@/components/install-cta";
+import { TutorPreviewMock } from "@/components/tutor-preview-mock";
 import { getCefisClient } from "@/lib/cefis-server";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +39,7 @@ export default async function Home() {
 
       <main className="flex-1">
         <Hero isLoggedIn={isLoggedIn} firstName={firstName} />
+        <TutorPreviewMock />
         <ChannelsSection />
         <MethodSection />
         <CefisSection isLoggedIn={isLoggedIn} />
