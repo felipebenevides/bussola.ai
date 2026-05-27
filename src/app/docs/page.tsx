@@ -447,7 +447,7 @@ function Arquitetura() {
 │                                                                   │
 │   /                /login              /onboarding   /plano       │
 │   /tutor (shell estilo WhatsApp)       /admin        /docs        │
-│   /conectar-whatsapp                                              │
+│   (botão "Receber no WhatsApp" → modal → /api/whatsapp/invite)    │
 └────────────────────────┬─────────────────────────────────────────┘
                          │ HTTPS
                          ▼
@@ -519,9 +519,9 @@ function Fluxos() {
       <h3 className="text-xl font-semibold">Fluxo principal (caminho feliz)</h3>
       <Pre>{`/  →  /login  →  /onboarding  →  /plano  →  /tutor
                                        │
-                                       └─ (opcional) /conectar-whatsapp
+                                       └─ (opcional) botão "Receber no WhatsApp"
                                                │
-                                               └─ tutor no WhatsApp`}</Pre>
+                                               └─ Bússola te chama no zap`}</Pre>
 
       <h3 className="text-xl font-semibold">/login — auth real CEFIS</h3>
       <ol className="ml-5 list-decimal space-y-1">
@@ -857,7 +857,6 @@ function Rotas() {
           ["/tutor?planId=&q=", "Client", "Auto-submete pergunta com contexto do plano (vindo do botão Estudar agora)"],
           ["/agentes", "RSC", "Página visual com os 6 agentes — cards + flow diagram"],
           ["/sobre", "RSC", "Portfólio + descrição da Bússola"],
-          ["/conectar-whatsapp", "Client", "OTP de pareamento (legado, ainda funciona)"],
           ["/admin", "Client", "Backoffice protegido por senha (env)"],
           ["/docs", "RSC", "Esta página"],
         ]}
@@ -981,19 +980,34 @@ function Whatsapp() {
         </ul>
       </Callout>
 
-      <h3 className="text-xl font-semibold">Fluxo de pareamento</h3>
+      <h3 className="text-xl font-semibold">Fluxo de convite (sem pareamento explícito)</h3>
+      <Callout tone="info" title="Instância única, invisível para o usuário">
+        <p>
+          A Bússola usa uma única instância Evolution já conectada. O usuário nunca vê o
+          número do bot nem entra em fluxo de OTP — o telefone dele é capturado no
+          onboarding e a Bússola simplesmente <strong>manda mensagem primeiro</strong>{" "}
+          quando ele aperta o botão.
+        </p>
+      </Callout>
       <ol className="ml-5 list-decimal space-y-1">
-        <li>Aluno logado vai em <Code>/conectar-whatsapp</Code>.</li>
         <li>
-          POST <Code>/api/whatsapp/link</Code> gera OTP com{" "}
-          <Code>crypto.randomBytes</Code>, TTL 10min, uso único, e devolve o número do bot.
+          No <Code>/onboarding</Code>, o agente captura o telefone do aluno (E.164 sem +)
+          e grava em <Code>user_profile.phone</Code>.
         </li>
-        <li>Aluno manda o código pelo zap para o bot.</li>
         <li>
-          Service Bun recebe via webhook, valida OTP em <Code>whatsapp_link</Code>, e
-          marca pareamento como concluído.
+          No <Code>/tutor</Code> (ou em qualquer lugar com botão{" "}
+          <strong>Receber no WhatsApp</strong>), o <Code>WhatsappModal</Code> mostra o
+          número salvo e oferece o botão <em>&quot;Receber mensagem agora&quot;</em>.
         </li>
-        <li>Conversas subsequentes daquele número resolvem direto para o <Code>user_id</Code>.</li>
+        <li>
+          Click → <Code>POST /api/whatsapp/invite</Code> dispara mensagem outbound via
+          Evolution diretamente para o telefone do aluno. Rate-limit de ~15min por número.
+        </li>
+        <li>
+          A partir daí, qualquer resposta do aluno no zap entra pelo{" "}
+          <Code>/v1/evolution/webhook</Code> do service Bun, que resolve o{" "}
+          <Code>user_id</Code> pelo telefone e roda <Code>askTutor()</Code>.
+        </li>
       </ol>
 
       <h3 className="text-xl font-semibold">Estrutura do serviço</h3>

@@ -676,6 +676,7 @@ export function TutorShell({
           onMenu={() => setMobileSidebarOpen(true)}
           onCloseOnboarding={closeOnboarding}
           onOpenSettings={() => setSettingsModalOpen(true)}
+          onOpenWhatsapp={() => setWaModalOpen(true)}
           accent={onboarding.active ? "violet" : selectedCourse ? "emerald" : "blue"}
         />
 
@@ -1055,6 +1056,7 @@ function ChatHeader({
   onMenu,
   onCloseOnboarding,
   onOpenSettings,
+  onOpenWhatsapp,
   accent,
 }: {
   title: string;
@@ -1063,6 +1065,7 @@ function ChatHeader({
   onMenu: () => void;
   onCloseOnboarding: () => void;
   onOpenSettings: () => void;
+  onOpenWhatsapp: () => void;
   accent: "emerald" | "blue" | "violet";
 }) {
   const accentRing =
@@ -1128,13 +1131,14 @@ function ChatHeader({
           <ArrowLeft className="h-5 w-5" />
         </button>
       ) : (
-        <Link
-          href="/conectar-whatsapp"
+        <button
+          type="button"
+          onClick={onOpenWhatsapp}
           className="hidden items-center gap-2 rounded-full bg-emerald-100/80 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-200/80 dark:bg-emerald-600/15 dark:text-emerald-300 dark:hover:bg-emerald-600/25 sm:inline-flex"
         >
           <span>💬</span>
           <span>Receber no WhatsApp</span>
-        </Link>
+        </button>
       )}
     </header>
   );

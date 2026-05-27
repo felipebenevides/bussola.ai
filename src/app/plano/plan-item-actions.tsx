@@ -34,6 +34,7 @@ export function PlanItemActions({
   fallbackHref,
   deepLink,
   botPhone,
+  userPhone,
 }: {
   planItemId: string;
   planId: string;
@@ -41,6 +42,7 @@ export function PlanItemActions({
   fallbackHref: string;
   deepLink: string | null;
   botPhone?: string | null;
+  userPhone?: string | null;
 }) {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -171,6 +173,7 @@ export function PlanItemActions({
           planId={planId}
           planItemId={planItemId}
           botPhone={botPhone ?? null}
+          userPhone={userPhone ?? null}
           onClose={() => setViewerOpen(false)}
           onRegenerate={generate}
         />
@@ -187,6 +190,7 @@ function StudyViewer({
   planId,
   planItemId,
   botPhone,
+  userPhone,
   onClose,
   onRegenerate,
 }: {
@@ -195,6 +199,7 @@ function StudyViewer({
   planId: string;
   planItemId: string;
   botPhone: string | null;
+  userPhone: string | null;
   onClose: () => void;
   onRegenerate: () => void;
 }) {
@@ -268,8 +273,14 @@ function StudyViewer({
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200 bg-zinc-50 px-6 py-3 dark:border-zinc-800 dark:bg-zinc-950">
           <ChannelToggle
             botPhone={botPhone}
+            userPhone={userPhone}
             label="Continuar"
-            whatsappText={`Quero continuar o estudo sobre "${itemTitle}". Me explica os pontos principais e me mostra a aula CEFIS.`}
+            whatsappText={
+              `📚 *Continuação do estudo*\n\n` +
+              `Item do seu plano: "${itemTitle}"\n\n` +
+              `Resumo dos pontos principais:\n${trimMarkdownForWhatsapp(study.body)}\n\n` +
+              `Manda *menu* pra ver opções ou pergunta direto.`
+            }
           />
           <div className="flex gap-2">
             <Link
@@ -293,6 +304,39 @@ function StudyViewer({
       </div>
     </div>
   );
+}
+
+/**
+ * Reduz o markdown extenso do estudo (h2, listas, ...) num resumo curto
+ * pra caber numa mensagem de WhatsApp sem virar wall of text. Mantém
+ * heading "## Conceitos-chave" e os 3 primeiros bullets de cada seção.
+ */
+function trimMarkdownForWhatsapp(body: string, maxChars = 1200): string {
+  const lines = body.split("\n");
+  const out: string[] = [];
+  let chars = 0;
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+    // mantém H2 (## Algo) e primeiros itens; pula H1 e prose extensa
+    if (line.startsWith("# ")) continue;
+    if (line.startsWith("## ")) {
+      if (chars > 0) out.push("");
+      out.push(line.replace(/^##\s+/, "▶ ").replace(/\*\*/g, "*"));
+    } else if (line.startsWith("### ")) {
+      out.push("• " + line.replace(/^###\s+/, "").replace(/\*\*/g, "*"));
+    } else if (line.startsWith("- ") || /^\d+\./.test(line)) {
+      out.push(line.replace(/\*\*/g, "*"));
+    } else if (chars < 600) {
+      // parágrafo curto, só os primeiros pra não estourar
+      out.push(line.replace(/\*\*/g, "*"));
+    }
+    chars = out.join("\n").length;
+    if (chars > maxChars) break;
+  }
+  let result = out.join("\n");
+  if (result.length > maxChars) result = result.slice(0, maxChars - 3) + "…";
+  return result;
 }
 
 function GeneratingOverlay({ itemTitle }: { itemTitle: string }) {

@@ -413,7 +413,9 @@ export default function AdminPage() {
                   placeholder="5511999999999"
                 />
                 <p className="text-xs text-zinc-500">
-                  Aparece em <code>/conectar-whatsapp</code> como destino do código de pareamento.
+                  Número da instância Evolution que envia as mensagens. O usuário não vê
+                  esse número diretamente — o convite é disparado pelo botão{" "}
+                  <strong>Receber no WhatsApp</strong> dentro do app.
                 </p>
               </div>
               <div className="space-y-2">

@@ -9,6 +9,7 @@ import {
   type PlanView,
 } from "@/lib/plan";
 import { getSettings } from "@/lib/settings";
+import { supabaseAdmin } from "@/lib/supabase";
 import { Card, CardContent } from "@/components/ui/card";
 import { GeneratePlanButton } from "./generate-button";
 import { PlanItemActions } from "./plan-item-actions";
@@ -72,13 +73,27 @@ export default async function PlanoPage({
     plan = await getActivePlanForUser(userId);
   }
 
-  // Bot phone pro ChannelToggle nos cards
+  // Bot phone pro fallback do ChannelToggle (wa.me)
   let botPhone: string | null = null;
   try {
     const settings = await getSettings();
     botPhone = settings.evolution_bot_phone ?? null;
   } catch {
     // sem botPhone — toggle não aparece
+  }
+
+  // Phone do aluno (salvo no onboarding) — quando presente, ChannelToggle
+  // envia via Evolution em vez de abrir wa.me externo
+  let userPhone: string | null = null;
+  try {
+    const { data } = await supabaseAdmin()
+      .from("user_profile")
+      .select("phone")
+      .eq("user_id", userId)
+      .maybeSingle();
+    userPhone = (data?.phone as string | null) ?? null;
+  } catch {
+    // sem profile — toggle cai pro fallback wa.me
   }
 
   return (
@@ -133,7 +148,12 @@ export default async function PlanoPage({
             <GeneratePlanButton label="Refazer plano" variant="outline" />
           </div>
 
-          <WeekView items={plan.items} planId={plan.id} botPhone={botPhone} />
+          <WeekView
+            items={plan.items}
+            planId={plan.id}
+            botPhone={botPhone}
+            userPhone={userPhone}
+          />
         </section>
       )}
     </main>
@@ -195,10 +215,12 @@ function WeekView({
   items,
   planId,
   botPhone,
+  userPhone,
 }: {
   items: PlanItemView[];
   planId: string;
   botPhone: string | null;
+  userPhone: string | null;
 }) {
   const byDay = new Map<number, PlanItemView[]>();
   for (const it of items) {
@@ -224,7 +246,13 @@ function WeekView({
             </p>
             <ul className="space-y-3">
               {(byDay.get(d) ?? []).map((it) => (
-                <PlanItemRow key={it.id} item={it} planId={planId} botPhone={botPhone} />
+                <PlanItemRow
+                  key={it.id}
+                  item={it}
+                  planId={planId}
+                  botPhone={botPhone}
+                  userPhone={userPhone}
+                />
               ))}
             </ul>
           </CardContent>
@@ -238,10 +266,12 @@ function PlanItemRow({
   item,
   planId,
   botPhone,
+  userPhone,
 }: {
   item: PlanItemView;
   planId: string;
   botPhone: string | null;
+  userPhone: string | null;
 }) {
   const badge = SOURCE_BADGES[item.source] ?? {
     label: item.source,
@@ -274,6 +304,7 @@ function PlanItemRow({
         fallbackHref={`/tutor?planId=${encodeURIComponent(planId)}`}
         deepLink={item.deep_link}
         botPhone={botPhone}
+        userPhone={userPhone}
       />
     </li>
   );

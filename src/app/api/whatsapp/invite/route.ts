@@ -11,6 +11,9 @@ export const maxDuration = 30;
 const BodySchema = z.object({
   phone: z.string().min(10).max(20),
   name: z.string().max(80).optional().nullable(),
+  /** Mensagem customizada — se vier, substitui o welcome menu padrão.
+   *  Usado pelo ChannelToggle pra continuar conteúdo no WhatsApp. */
+  text: z.string().max(2000).optional().nullable(),
 });
 
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 min
@@ -65,7 +68,12 @@ export async function POST(req: NextRequest) {
     // se a checagem falhar, segue — preferimos enviar a bloquear no caminho feliz
   }
 
-  const text = inviteMessage((body.name ?? "").trim() || null);
+  const customText = (body.text ?? "").trim();
+  const text = customText
+    ? customText.length > 2000
+      ? customText.slice(0, 1990) + "…"
+      : customText
+    : inviteMessage((body.name ?? "").trim() || null);
 
   try {
     await waSendText(phone, text);
