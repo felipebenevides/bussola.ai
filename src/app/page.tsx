@@ -75,6 +75,7 @@ function SiteHeader({ isLoggedIn, firstName }: { isLoggedIn: boolean; firstName:
           {isLoggedIn && <NavLink href="/plano">Plano</NavLink>}
           <NavLink href="/agentes">Agentes</NavLink>
           <NavLink href="/docs">Docs</NavLink>
+          <NavLink href="/sobre">Portfólio</NavLink>
           {isLoggedIn ? (
             <Link
               href="/tutor"
@@ -293,8 +294,8 @@ function MethodSection() {
           />
           <MethodCard
             emoji="🏆"
-            title="Gamificação significativa"
-            text="Jornada do Herói em 5 níveis (Aprendiz → Lenda), XP por engajamento real, streak diário. Não é badge enfeite — é métrica de constância."
+            title="Gamificação Duolingo-style"
+            text="Jornada do Herói em 5 níveis (Aprendiz → Lenda), liga semanal (Bronze → Diamante), gemas por conteúdo de qualidade, meta diária de XP, streak com protetor de ofensiva e mascote 🧭 com fala por fase. Não é badge enfeite — é métrica de constância."
           />
           <MethodCard
             emoji="🤝"
@@ -444,7 +445,7 @@ function FeaturesSection() {
           <Feature
             icon="🗺️"
             title="Plano da sua semana"
-            text="Aulas reais da CEFIS misturadas com reforço IA, no horário que cabe na sua rotina. Streak diário, XP e lembrete pelo WhatsApp."
+            text="Aulas reais da CEFIS misturadas com reforço IA, no horário que cabe na sua rotina. Streak diário, meta de XP, liga semanal (Bronze→Diamante) e lembrete pelo WhatsApp."
           />
           <Feature
             icon="▶"

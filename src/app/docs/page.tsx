@@ -886,7 +886,6 @@ function Rotas() {
           ["/api/whatsapp/group", "POST/GET", "Cria grupo no zap (até 5 participantes, expira 7d). Beta: anônimo OK"],
           ["/api/whatsapp/group/add-participant", "POST", "Adiciona até esgotar quota de 5 num grupo existente"],
           ["/api/whatsapp/invite", "POST", "Bot inicia conversa com o número informado (rate-limit 3/15min)"],
-          ["/api/whatsapp/link", "POST/GET", "Gera/valida OTP de pareamento (legado)"],
           ["/api/whatsapp/process", "POST", "Endpoint interno chamado pelo service Bun (HMAC)"],
           ["/api/whatsapp/webhook", "*", "Deprecated — 410. Webhook agora vive em services/wa"],
           ["/api/cron/reminders", "GET", "Vercel Cron (0,30 11-23 UTC) → lembretes WhatsApp baseados em disponibilidade"],
@@ -1099,28 +1098,48 @@ function JornadaSection() {
       <SectionTitle
         id="jornada"
         eyebrow="Engajamento"
-        title="Jornada do Herói (gamificação)"
+        title="Jornada do Herói (gamificação Duolingo-style)"
       />
 
       <p>
-        Modelo de 5 níveis baseado no monomito de Joseph Campbell, computado em runtime
-        em <Code>src/lib/journey.ts</Code> a partir das interações reais do aluno.
+        Modelo inspirado nos pilares de gamificação do Duolingo (XP + streak + ligas +
+        gemas + meta diária + protetor de ofensiva), com narrativa do monomito de Joseph
+        Campbell. Tudo computado em runtime em <Code>src/lib/journey.ts</Code> a partir
+        das interações reais do aluno — sem evento sintético, sem schema novo.
+        <br />
         Endpoint <Code>GET /api/journey</Code> devolve o snapshot completo.
       </p>
 
-      <h3 className="text-xl font-semibold">Níveis</h3>
+      <h3 className="text-xl font-semibold">Níveis (com fala do mascote por fase)</h3>
       <Table
-        headers={["Slug", "Nome", "Fase Campbell", "Emoji", "minXp", "nextXp"]}
+        headers={["Slug", "Nome", "Fase Campbell", "Emoji", "minXp", "nextXp", "Mascote diz"]}
         rows={[
-          ["aprendiz",     "Aprendiz",     "Chamado da Aventura",          "🧭", "0",   "30"],
-          ["aventureiro",  "Aventureiro",  "Cruzando o Limiar",            "🚪", "30",  "100"],
-          ["estrategista", "Estrategista", "Provas, Aliados e Inimigos",   "⚔️", "100", "250"],
-          ["mestre",       "Mestre",       "Ordália e Recompensa",         "🏆", "250", "600"],
-          ["lenda",        "Lenda",        "Retorno com o Elixir",         "🌟", "600", "—"],
+          ["aprendiz",     "Aprendiz",     "Chamado da Aventura",          "🧭", "0",   "30",  "Toda jornada começa com um passo."],
+          ["aventureiro",  "Aventureiro",  "Cruzando o Limiar",            "🚪", "30",  "100", "Você cruzou o limiar."],
+          ["estrategista", "Estrategista", "Provas, Aliados e Inimigos",   "⚔️", "100", "250", "Você não improvisa — você planeja."],
+          ["mestre",       "Mestre",       "Ordália e Recompensa",         "🏆", "250", "600", "Você domina o que assustava no começo."],
+          ["lenda",        "Lenda",        "Retorno com o Elixir",         "🌟", "600", "—",   "Você é a Bússola de quem está começando."],
         ]}
       />
 
-      <h3 className="text-xl font-semibold">Cálculo de XP e streak</h3>
+      <h3 className="text-xl font-semibold">Ligas semanais</h3>
+      <p>
+        Definida pelo XP acumulado nos <strong>últimos 7 dias</strong> (não cumulativo).
+        Funciona como rotatividade — semana de baixa atividade derruba o aluno de liga,
+        semana intensa promove.
+      </p>
+      <Table
+        headers={["Slug", "Nome", "Emoji", "minWeeklyXp"]}
+        rows={[
+          ["bronze",    "Bronze",    "🥉", "0"],
+          ["prata",     "Prata",     "🥈", "50"],
+          ["ouro",      "Ouro",      "🥇", "150"],
+          ["esmeralda", "Esmeralda", "💚", "300"],
+          ["diamante",  "Diamante",  "💎", "500"],
+        ]}
+      />
+
+      <h3 className="text-xl font-semibold">Cálculo de XP, gemas e streak</h3>
       <ul className="ml-5 list-disc space-y-1">
         <li>
           <strong>+10 XP</strong> por pergunta do aluno (count em{" "}
@@ -1128,12 +1147,22 @@ function JornadaSection() {
           <Code>whatsapp_messages.direction=&apos;in&apos; AND kind=&apos;text&apos;</Code>)
         </li>
         <li>
-          <strong>+5 XP</strong> por resposta do tutor com citação (heurística:
-          citations jsonb não vazio)
+          <strong>+5 XP + 1 💎 gema</strong> por resposta do tutor com citação
+          (heurística: citations jsonb não vazio). Gema premia conteúdo de qualidade —
+          tutor que entregou aula CEFIS no segundo certo.
+        </li>
+        <li>
+          <strong>Meta diária</strong>: 30 XP/dia (<Code>DAILY_XP_GOAL</Code> em
+          journey.ts). Bater = +1 dia no streak garantido.
         </li>
         <li>
           <strong>Streak</strong>: dias consecutivos com pelo menos 1 pergunta nos
           últimos 30 dias (UTC). Quebra na primeira lacuna.
+        </li>
+        <li>
+          <strong>Protetor de ofensiva</strong>: aluno ganha 1 protetor com streak ≥ 3,
+          +1 a cada múltiplo de 7. Atualmente UI-only (não decrementa real — placeholder
+          pra feature futura de auto-perdão de 1 dia).
         </li>
         <li>
           <strong>recentDays</strong>: array YYYY-MM-DD pro calendar do modal (grid
@@ -1143,10 +1172,15 @@ function JornadaSection() {
 
       <h3 className="text-xl font-semibold">UI</h3>
       <p>
-        <Code>{`<JourneyWidget />`}</Code> no sidebar do tutor. Pill com gradient por
-        nível, barra de XP animada (ease-out 900ms ao montar), flame pulsante do
-        streak. Clica e abre <Code>JourneyModal</Code> com hero header, 3 stats,
-        ladder dos 5 níveis e calendário visual.
+        <Code>{`<JourneyWidget />`}</Code> no sidebar do tutor: pill com gradient por
+        nível, barra de XP animada (ease-out 900ms), flame do streak 🔥, pin de gemas
+        💎 e barra extra de meta diária.
+      </p>
+      <p>
+        Clique abre <Code>JourneyModal</Code> com 9 seções: hero header, fala do
+        mascote 🧭, meta de hoje, liga semanal (card com gradient da liga), 4 stats
+        (perguntas/citações/streak/gemas), protetor de ofensiva (quando aplicável),
+        ladder dos 5 níveis, calendário 30 dias, dicas de como ganhar mais XP.
       </p>
     </section>
   );

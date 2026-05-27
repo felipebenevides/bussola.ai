@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronRight, Flame, Sparkles, Trophy, X } from "lucide-react";
+import {
+  ChevronRight,
+  Flame,
+  Gem,
+  Shield,
+  Sparkles,
+  Target,
+  Trophy,
+  X,
+} from "lucide-react";
 
 interface JourneyLevel {
   slug: string;
@@ -10,11 +19,21 @@ interface JourneyLevel {
   emoji: string;
   minXp: number;
   nextXp: number | null;
+  mascotQuote?: string;
 }
 
 interface JourneyLadderItem extends JourneyLevel {
   unlocked: boolean;
   current: boolean;
+}
+
+interface JourneyLeague {
+  slug: string;
+  name: string;
+  emoji: string;
+  minWeeklyXp: number;
+  nextMinWeeklyXp: number | null;
+  gradient: string;
 }
 
 interface JourneyResponse {
@@ -28,6 +47,15 @@ interface JourneyResponse {
   lastActivityAt: string | null;
   recentDays: string[];
   ladder: JourneyLadderItem[];
+  // Duolingo-style
+  weeklyXp: number;
+  league: JourneyLeague;
+  leagueProgress: number;
+  gems: number;
+  todayXp: number;
+  dailyGoal: number;
+  dailyProgress: number;
+  streakFreezesAvailable: number;
 }
 
 const ACCENT_BY_LEVEL: Record<string, { from: string; to: string; ring: string; text: string }> = {
@@ -148,15 +176,26 @@ export function JourneyWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
               <div className="text-[10px] text-white/70">{data.level.phase}</div>
             </div>
           </div>
-          {data.streak > 0 && (
-            <span
-              title={`${data.streak} ${data.streak === 1 ? "dia" : "dias"} seguidos`}
-              className="flex items-center gap-0.5 rounded-full bg-orange-500/30 px-2 py-0.5 text-[10px] font-bold text-white ring-1 ring-orange-300/40"
-            >
-              <Flame className="h-3 w-3 animate-pulse" />
-              {data.streak}
-            </span>
-          )}
+          <div className="flex items-center gap-1.5">
+            {data.gems > 0 && (
+              <span
+                title={`${data.gems} gemas conquistadas`}
+                className="flex items-center gap-0.5 rounded-full bg-cyan-500/30 px-2 py-0.5 text-[10px] font-bold text-white ring-1 ring-cyan-300/40"
+              >
+                <Gem className="h-3 w-3" />
+                {data.gems}
+              </span>
+            )}
+            {data.streak > 0 && (
+              <span
+                title={`${data.streak} ${data.streak === 1 ? "dia" : "dias"} seguidos`}
+                className="flex items-center gap-0.5 rounded-full bg-orange-500/30 px-2 py-0.5 text-[10px] font-bold text-white ring-1 ring-orange-300/40"
+              >
+                <Flame className="h-3 w-3 animate-pulse" />
+                {data.streak}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-black/30">
@@ -170,6 +209,21 @@ export function JourneyWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
           <span className="flex items-center gap-1">
             ver jornada <ChevronRight className="h-3 w-3" />
           </span>
+        </div>
+
+        {/* Meta diária — barra fininha extra */}
+        <div className="relative mt-2 flex items-center gap-1.5 text-[10px] text-white/80">
+          <Target className="h-2.5 w-2.5" />
+          <span className="font-semibold">
+            Meta hoje: {data.todayXp}/{data.dailyGoal} XP
+          </span>
+          {data.todayXp >= data.dailyGoal && <span className="ml-1">✅</span>}
+        </div>
+        <div className="relative mt-0.5 h-1 w-full overflow-hidden rounded-full bg-black/30">
+          <div
+            className="h-full bg-orange-300 transition-all duration-300"
+            style={{ width: `${Math.round(data.dailyProgress * 100)}%` }}
+          />
         </div>
       </button>
 
@@ -217,9 +271,10 @@ function JourneyModal({
       />
 
       <div
-        className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
+        className="relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
         onClick={(e) => e.stopPropagation()}
       >
+        <div className="overflow-y-auto">
         {/* Hero header */}
         <div className={`relative overflow-hidden bg-gradient-to-br ${a.from} ${a.to} px-6 pb-6 pt-7 text-white`}>
           <span className="pointer-events-none absolute -right-6 -top-6 text-[180px] leading-none opacity-15">
@@ -264,8 +319,87 @@ function JourneyModal({
           </div>
         </div>
 
+        {/* Mascote — fala da Bússola por nível */}
+        {data.level.mascotQuote && (
+          <div className="border-b border-zinc-200 bg-gradient-to-r from-emerald-50/60 to-transparent px-5 py-3 dark:border-zinc-800 dark:from-emerald-950/30">
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-xl shadow-sm">
+                🧭
+              </span>
+              <div className="flex-1">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                  Bússola diz
+                </div>
+                <p className="text-xs italic leading-snug text-zinc-700 dark:text-zinc-200">
+                  &ldquo;{data.level.mascotQuote}&rdquo;
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Meta diária */}
+        <div className="border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
+          <div className="mb-2 flex items-center justify-between text-xs font-semibold text-zinc-600 dark:text-zinc-300">
+            <span className="flex items-center gap-1.5">
+              <Target className="h-3.5 w-3.5 text-orange-500" /> Meta de hoje
+            </span>
+            <span className="text-[10px] text-zinc-500">
+              {data.todayXp}/{data.dailyGoal} XP
+            </span>
+          </div>
+          <div className="h-3 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+            <div
+              className={`h-full transition-all ${
+                data.dailyProgress >= 1
+                  ? "bg-gradient-to-r from-emerald-400 to-emerald-600"
+                  : "bg-gradient-to-r from-orange-400 to-amber-500"
+              }`}
+              style={{ width: `${Math.max(4, Math.round(data.dailyProgress * 100))}%` }}
+            />
+          </div>
+          <p className="mt-1.5 text-[11px] text-zinc-500">
+            {data.dailyProgress >= 1
+              ? "✅ Meta batida! +1 dia no streak garantido."
+              : `Faltam ${Math.max(0, data.dailyGoal - data.todayXp)} XP — uma pergunta vale 10.`}
+          </p>
+        </div>
+
+        {/* Liga semanal */}
+        <div className="border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
+          <div className="mb-2 flex items-center justify-between text-xs font-semibold text-zinc-600 dark:text-zinc-300">
+            <span className="flex items-center gap-1.5">
+              <Trophy className="h-3.5 w-3.5 text-yellow-500" /> Liga semanal
+            </span>
+            <span className="text-[10px] text-zinc-500">
+              {data.weeklyXp} XP esta semana
+            </span>
+          </div>
+          <div
+            className={`flex items-center gap-3 rounded-xl bg-gradient-to-br ${data.league.gradient} p-3 text-white shadow-md`}
+          >
+            <span className="text-3xl">{data.league.emoji}</span>
+            <div className="flex-1">
+              <div className="text-sm font-bold">{data.league.name}</div>
+              <div className="text-[10px] text-white/85">
+                {data.league.nextMinWeeklyXp
+                  ? `${data.league.nextMinWeeklyXp - data.weeklyXp} XP pra subir`
+                  : "Liga máxima — você está no topo!"}
+              </div>
+            </div>
+          </div>
+          {data.league.nextMinWeeklyXp && (
+            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <div
+                className={`h-full bg-gradient-to-r ${data.league.gradient}`}
+                style={{ width: `${Math.round(data.leagueProgress * 100)}%` }}
+              />
+            </div>
+          )}
+        </div>
+
         {/* Stats row */}
-        <div className="grid grid-cols-3 gap-3 border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
+        <div className="grid grid-cols-4 gap-2 border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
           <Stat label="Perguntas" value={data.questionsTotal} icon="❓" />
           <Stat label="Citações" value={data.citationsTotal} icon="📍" />
           <Stat
@@ -274,7 +408,25 @@ function JourneyModal({
             icon="🔥"
             highlight={data.streak >= 3}
           />
+          <Stat label="Gemas" value={data.gems} icon="💎" />
         </div>
+
+        {/* Protetores de ofensiva */}
+        {data.streakFreezesAvailable > 0 && (
+          <div className="border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+            <div className="flex items-center gap-3 rounded-lg border border-cyan-300 bg-cyan-50 p-3 dark:border-cyan-900/60 dark:bg-cyan-950/40">
+              <Shield className="h-5 w-5 text-cyan-600 dark:text-cyan-300" />
+              <div className="flex-1">
+                <div className="text-xs font-bold text-cyan-900 dark:text-cyan-200">
+                  {data.streakFreezesAvailable} protetor{data.streakFreezesAvailable > 1 ? "es" : ""} de ofensiva
+                </div>
+                <p className="text-[10px] text-cyan-800/80 dark:text-cyan-300/80">
+                  Se faltar um dia, seu streak não quebra. Conquistado por estudar 3+ dias seguidos.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Ladder */}
         <div className="border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
@@ -355,8 +507,12 @@ function JourneyModal({
           <ul className="space-y-1 text-[11px]">
             <li>• <span className="font-semibold text-emerald-600 dark:text-emerald-400">+10 XP</span> por cada pergunta que você faz (web ou WhatsApp)</li>
             <li>• <span className="font-semibold text-emerald-600 dark:text-emerald-400">+5 XP</span> quando o tutor responde citando uma aula CEFIS</li>
-            <li>• 🔥 Pergunte todo dia para manter o streak — bônus visual e diferenciação</li>
+            <li>• <span className="font-semibold text-cyan-600 dark:text-cyan-400">+1 💎 gema</span> por citação — recompensa por conteúdo de qualidade</li>
+            <li>• 🎯 Bater a meta diária ({data.dailyGoal} XP) garante +1 dia de streak</li>
+            <li>• 🔥 Streak ≥ 3 dias dá protetor de ofensiva — perdoa 1 dia perdido</li>
+            <li>• 🏆 XP da última semana define sua liga: Bronze → Diamante</li>
           </ul>
+        </div>
         </div>
       </div>
     </div>
